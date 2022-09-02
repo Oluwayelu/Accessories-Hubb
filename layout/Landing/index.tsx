@@ -1,33 +1,34 @@
-import Head from "next/head";
+import { NextSeo } from "next-seo";
 import { useRouter } from "next/router";
-import { ReactNode } from "react";
+import { ToastContainer } from "react-toastify";
 import { Header, Footer } from "components";
 
+import type { ReactNode } from "react";
 import type { NextPage } from "next";
 
 type Props = {
   title: string;
+  description?: string;
   screen?: Boolean;
   children: ReactNode;
 };
 
-const LandingLayout: NextPage<Props> = ({ title, screen, children }) => {
+const LandingLayout: NextPage<Props> = ({
+  title,
+  description,
+  screen,
+  children,
+}) => {
   const { pathname } = useRouter();
   const home = pathname === "/";
   return (
-    <div className={` w-full min-h-screen flex flex-col justify-between`}>
-      <Head>
-        <title>{title}</title>
-      </Head>
+    <div className={`w-full min-h-screen flex flex-col justify-between`}>
+      <NextSeo title={title} description={description} />
       <Header />
-      <div
-        className={`${screen && "pt-5 pb-10"} ${
-          home ? "mt-32" : "mt-16 md:mt-32"
-        } bg-gray-100`}
-      >
-        {children}
-      </div>
+      <div className={`bg-gray-50`}>{children}</div>
       <Footer />
+
+      <ToastContainer />
     </div>
   );
 };

@@ -1,7 +1,7 @@
 import db from "database";
 import { NextApiRequest, NextApiResponse } from "next";
 
-const getError = (err) =>
+const getError = (err: any) =>
   err.response && err.response.data && err.response.data.message
     ? err.response.data.message
     : err.message;

@@ -13,6 +13,7 @@ import { FaStar, FaStarHalfAlt } from "react-icons/fa";
 
 import type { IProduct, IState } from "interface";
 import type { NextPage, GetServerSideProps } from "next";
+import { ParsedUrlQuery } from "querystring";
 
 type Props = {
   product: IProduct;
@@ -104,7 +105,13 @@ const ProductPage: NextPage<Props> = ({ product }) => {
 
 export default ProductPage;
 
-export const getServerSideProps: GetServerSideProps = async ({ params }) => {
+interface Params extends ParsedUrlQuery {
+  slug: string;
+}
+export const getServerSideProps: GetServerSideProps<Props, Params> = async (
+  context
+) => {
+  const params = context.params!;
   const { slug } = params;
 
   await db.connect();

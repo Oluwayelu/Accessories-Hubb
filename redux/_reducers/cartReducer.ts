@@ -1,20 +1,21 @@
 import { nextLocalStorage } from "utils";
+import Cookies from "js-cookie";
 import { CART_ADD_ITEM } from "redux/types";
 
 import type { IAction } from "interface";
 
 const initialState = {
-  totalQuantity: nextLocalStorage()?.getItem("totalCartQuantity")
-    ? parseInt(nextLocalStorage()?.getItem("totalCartQuantity")!)
+  totalQuantity: Cookies.get("totalCartQuantity")
+    ? parseInt(Cookies.get("totalCartQuantity")!)
     : 0,
-  cartItems: nextLocalStorage()?.getItem("cartItems")
-    ? JSON.parse(nextLocalStorage()?.getItem("cartItems")!)
+  cartItems: Cookies.get("cartItems")
+    ? JSON.parse(Cookies.get("cartItems")!)
     : [],
-  shippingAddress: nextLocalStorage()?.getItem("shippingAddress")
-    ? JSON.parse(nextLocalStorage()?.getItem("shippingAddress")!)
+  shippingAddress: Cookies.get("shippingAddress")
+    ? JSON.parse(Cookies.get("shippingAddress")!)
     : { location: {} },
-  paymentMethod: nextLocalStorage()?.getItem("paymentMethod")
-    ? JSON.parse(nextLocalStorage()?.getItem("paymentMethod")!)
+  paymentMethod: Cookies.get("paymentMethod")
+    ? Cookies.get("paymentMethod")!
     : "",
 };
 

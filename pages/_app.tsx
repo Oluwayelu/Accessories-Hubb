@@ -5,23 +5,33 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
+import "react-toastify/dist/ReactToastify.css";
 
-import { Provider } from "react-redux";
-import { ThemeProvider } from "next-themes";
+import { DefaultSeo } from "next-seo";
+import { AnimatePresence } from "framer-motion";
+import { PersistGate } from "redux-persist/integration/react";
 
-import { store, wrapper } from "redux/store";
+import { SessionProvider } from "next-auth/react";
+
+import SEO from "config/next-seo.config";
+import { Loader } from "components";
+import { persistor, wrapper } from "redux/store";
 
 import type { AppProps } from "next/app";
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
-    <ThemeProvider attribute="class">
-      <Provider store={store}>
-        <Component {...pageProps} />
-      </Provider>
-    </ThemeProvider>
+    <>
+      <DefaultSeo {...SEO} />
+
+      <PersistGate persistor={persistor} loading={<Loader />}>
+        <SessionProvider session={pageProps.session}>
+          <AnimatePresence exitBeforeEnter>
+            <Component {...pageProps} />
+          </AnimatePresence>
+        </SessionProvider>
+      </PersistGate>
+    </>
   );
 }
 

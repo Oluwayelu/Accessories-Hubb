@@ -1,11 +1,11 @@
+import Cookies from "js-cookie";
 import { IAction } from "interface";
-import { nextLocalStorage } from "utils";
 
-import { USER_INFO } from "../types";
+import { USER_INFO, LOGOUT_USER } from "../types";
 
 const initialState = {
-  userInfo: nextLocalStorage()?.getItem("userInfo")
-    ? JSON.parse(nextLocalStorage()?.getItem("userInfo")!)
+  userInfo: Cookies.get("userInfo")
+    ? JSON.parse(Cookies.get("userInfo"))
     : null,
 };
 
@@ -15,7 +15,11 @@ const userReducer = (state = initialState, action: IAction) => {
       return {
         ...state,
         userInfo: action.payload,
-        loading: false,
+      };
+    case LOGOUT_USER:
+      return {
+        ...state,
+        userInfo: null,
       };
     default:
       return state;

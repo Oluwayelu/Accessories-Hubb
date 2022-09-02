@@ -50,7 +50,7 @@ import storage from "redux-persist/lib/storage";
 
 import { initialState, rootReducer } from "./_reducers";
 
-const makestore = ({ isServer }: { isServer: boolean }) => {
+export const makestore = ({ isServer }: { isServer: boolean }) => {
   if (isServer) {
     return configureStore({
       reducer: rootReducer,

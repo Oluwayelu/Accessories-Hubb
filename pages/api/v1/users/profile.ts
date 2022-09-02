@@ -30,10 +30,7 @@ handler.put(async (req: INextApiRequest, res: NextApiResponse) => {
   const token = signToken(user);
   res.status(200).json({
     token,
-    _id: user._id,
-    name: user.name,
-    email: user.email,
-    isAdmin: user.isAdmin,
+    user,
   });
 });
 

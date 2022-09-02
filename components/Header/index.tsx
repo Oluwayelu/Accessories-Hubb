@@ -2,53 +2,48 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import { SetStateAction, useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useCycle } from "framer-motion";
+import { useSession } from "next-auth/react";
+import { SetStateAction, useLayoutEffect, useState } from "react";
 
-import { motion, useCycle } from "framer-motion";
-
-import { FaOpencart } from "react-icons/fa";
 import {
   AiOutlineSearch,
   AiOutlineUser,
   AiFillHeart,
   AiOutlineMenu,
 } from "react-icons/ai";
+import { FaOpencart } from "react-icons/fa";
 
-import { getError } from "utils/error";
+import { CART, LOGIN, REGISTER } from "routes";
+import { logoutUser } from "redux/_actions/userAction";
 import { MenuIcon, Drawer, Search } from "./components";
 import { getCategories } from "redux/_actions/ProductAction";
-import { IState } from "interface";
+import { useAppSelector, useAppDispatch } from "hooks/useReactRedux";
 
-const userInfo = {
-  _id: "62888d9632498de19b0adea2",
-  email: "admin@ahubb.com",
-  isAdmin: true,
-  lastname: "Oluwayelu",
-  firstname: "Ifeoluwa",
-  middlename: "David",
+import type { FC } from "react";
+import type { NextPage, GetServerSideProps } from "next";
+import { Session } from "next-auth";
+
+type Props = {
+  session?: Session;
 };
 
-const cartItems = {
-  totalQuantity: 3,
-};
-
-const Header = () => {
+const Header: FC<Props> = () => {
+  const { data: session } = useSession();
   const { pathname, push } = useRouter();
   const [openSearch, toggleOpenSearch] = useState(false);
   const [isOpen, toggleOpen] = useCycle(false, true);
 
   const home = pathname === "/";
-  const auth = pathname === "/login" || pathname === "/register";
+  const auth = pathname === LOGIN || pathname === REGISTER;
 
-  const dispatch = useDispatch();
-  const { totalQuantity } = useSelector((state: IState) => state.cart);
-  // const userInfo = useSelector((state: IState) => state.user.userInfo);
-  const categories = useSelector((state: IState) => state.product.category);
+  const dispatch = useAppDispatch();
+  const { totalQuantity } = useAppSelector((state) => state.cart);
+  const categories = useAppSelector((state) => state.product.category);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     dispatch(getCategories());
-  }, []);
+  }, [dispatch]);
 
   const [query, setQuery] = useState("");
   const queryChangeHandler = (e: {
@@ -56,13 +51,14 @@ const Header = () => {
   }) => {
     setQuery(e.target.value);
   };
+
   const submitHandler = (e: { preventDefault: () => void }) => {
     e.preventDefault();
     push(`/search?query=${query}`);
   };
 
   return (
-    <div className="w-full shadow fixed top-0 left-0 right-0 bg-white py-2 flex flex-col items-center justify-around border-b-2 border-b-dark-500 divide-y-2 divide-dark-500 z-50">
+    <div className="w-full shadow sticky top-0 left-0 right-0 bg-white py-1 flex flex-col items-center justify-around border-b-2 border-b-dark-500 z-50">
       <div className="w-full px-3 md:px-5 lg:px-10 flex items-center md:justify-around">
         <MenuIcon toggle={() => toggleOpen()} />
         {/* <AiOutlineMenu className="w-10 h-10" /> */}
@@ -86,28 +82,37 @@ const Header = () => {
           </button>
           <form
             onSubmit={submitHandler}
-            className="relative hidden lg:flex items-center px-2 py-1 border-2 border-gray-600 rounded-full transition-all ease-in-out duration-500 peer"
+            className="relative hidden w-80 lg:flex items-center border-2 border-gray-600 rounded-xl transition-all ease-in-out duration-500 peer overflow-hidden"
           >
             <input
-              placeholder="search..."
+              placeholder="Search For"
               onChange={queryChangeHandler}
-              className="pl-3 border-none inline"
+              className="w-full px-3 border-none inline"
             />
-            <button type="submit">
-              <AiOutlineSearch className="w-5 h-5 md:w-7 md:h-7 text-gray-600" />
+            <button type="submit" className="p-1 bg-primary rounded-lg">
+              <AiOutlineSearch className="w-5 h-5 md:w-7 md:h-7 text-dark" />
             </button>
           </form>
-          {userInfo?.firstname ? (
-            <div className="w-8 h-8 relative flex justify-center items-center rounded-full bg-gray-200 text-gray-600 hover:bg-primary hover:text-white overflow-hidden">
-              <Image
-                layout="fill"
-                alt={userInfo.firstname}
-                src="/images/avatar/guy_4.png"
-                className="filter object-cover"
-              />
+
+          {session?.user ? (
+            <div
+              onClick={() => dispatch(logoutUser())}
+              className="w-8 h-8 relative flex justify-center items-center rounded-full bg-gray-200 text-gray-600 hover:bg-primary hover:text-white overflow-hidden"
+            >
+              {" "}
+              {session.user.image ? (
+                <Image
+                  layout="fill"
+                  alt={session?.user?.name as string}
+                  src={session?.user?.image}
+                  className="filter object-cover"
+                />
+              ) : (
+                <AiOutlineUser className="w-5 h-5 " />
+              )}
             </div>
           ) : (
-            <Link href="/login?redirect=/">
+            <Link href={`${LOGIN}?redirect=/`}>
               <a className="w-8 h-8 flex justify-center items-center rounded-full bg-gray-200 text-gray-600 hover:bg-primary hover:text-white">
                 <AiOutlineUser className="w-5 h-5 " />
               </a>
@@ -115,21 +120,21 @@ const Header = () => {
           )}
           <p className="font-medium hidden md:block">
             Hello,{" "}
-            {userInfo?.firstname ? (
-              <span>{`${userInfo.firstname} ${userInfo.lastname}`}</span>
+            {session?.user?.name ? (
+              <span>{session?.user.name}</span>
             ) : (
               <span>
-                <Link href="/login?redirect=/">
+                <Link href={`${LOGIN}?redirect=/`}>
                   <a className="text-primary">Login</a>
                 </Link>{" "}
                 or{" "}
-                <Link href="/register?redirect=/">
+                <Link href={`${REGISTER}?redirect=/`}>
                   <a className="text-primary">Register</a>
                 </Link>
               </span>
             )}
           </p>
-          <Link href="/cart">
+          <Link href={CART}>
             <a className="relative p-2">
               {totalQuantity > 0 && (
                 <div className="absolute w-5 h-5 flex justify-center items-center top-1 right-0 text-white text-xs bg-primary rounded-full z-30">
@@ -144,19 +149,19 @@ const Header = () => {
       <div
         className={`${
           !home && "hidden"
-        } py-1 px-3 md:px-5 lg:px-10 w-full flex items-center justify-between md:hidden`}
+        } px-3 md:px-5 lg:px-10 w-full flex items-center justify-between md:hidden`}
       >
         <form
           onSubmit={submitHandler}
-          className="relative md:hidden w-full flex items-center px-2 py-1 border-2 border-gray-600 rounded-full transition-all ease-in-out duration-500 peer"
+          className="relative md:hidden w-full flex items-center border-2 border-gray-600 rounded-xl transition-all ease-in-out duration-500 peer overflow-hidden"
         >
           <input
-            placeholder="search..."
+            placeholder="Search For"
             onChange={queryChangeHandler}
             className="w-full pl-3 border-none"
           />
-          <button type="submit">
-            <AiOutlineSearch className="w-7 h-7 text-gray-600" />
+          <button type="submit" className="p-1 bg-primary rounded-lg">
+            <AiOutlineSearch className="w-7 h-7 text-dark" />
           </button>
         </form>
       </div>

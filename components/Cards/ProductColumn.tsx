@@ -30,29 +30,27 @@ const ProductColumn: FunctionComponent<Props> = ({ product, addToCart }) => {
           <FaStar />
           <FaStarHalfAlt />
         </div>
-        <div className="inline-flex items-center space-x-3 ">
-          <p className="text-xl font-bold">
-            &#8358;{product.price.toLocaleString("en-US")}
-          </p>
-          <p className="text-xs font-medium text-gray-400 line-through">
-            &#8358;{(product.price + 6000).toLocaleString("en-US")}
-          </p>
-        </div>
+        <p className="text-xl font-bold">
+          &#8358;{product.price.toLocaleString("en-US")}
+        </p>
+        <p className="text-xs font-medium text-gray-400 line-through">
+          &#8358;{(product.price + 6000).toLocaleString("en-US")}
+        </p>
         <div className="inline-flex items-center space-x-3">
-          <button className="px-3 py-1 rounded inline-flex items-center space-x-1 bg-primary text-white">
+          <button
+            onClick={addToCart}
+            className="px-3 py-1 rounded inline-flex items-center space-x-1 bg-primary text-white"
+          >
             <FaOpencart className="w-5 h-5" />
             <p className="text-xs hidden lg:inline">Add to cart</p>
           </button>
-          <button
-            onClick={addToCart}
-            className="px-3 py-1 rounded border border-primary"
-          >
+          <button className="px-3 py-1 rounded border border-primary">
             <AiFillHeart className="w-5 h-5 text-primary" />
           </button>
         </div>
       </div>
 
-      <div className="bg-gray-100 h-40 w-full md:w-1/2 flex justify-center items-center">
+      <div className="relative bg-gray-50 h-40 w-full md:w-1/2 flex justify-center items-center">
         <div className="relative h-3/4 w-3/4 md:h-2/3 md:w-2/3">
           <Image
             layout="fill"
@@ -60,6 +58,9 @@ const ProductColumn: FunctionComponent<Props> = ({ product, addToCart }) => {
             src={product.image[0]}
             className="rounded-xl filter object-contain object-center"
           />
+        </div>
+        <div className="absolute top-7 right-0 px-3 py-1 rounded-l-lg bg-primary text-xs font-medium">
+          -20%
         </div>
       </div>
     </motion.div>

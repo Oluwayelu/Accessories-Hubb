@@ -55,49 +55,50 @@ const CartCard: FunctionComponent<Props> = ({ product }) => {
             className="filter object-contain object-center"
           />
         </div>
-        <Link href={`/product/${product.slug}`}>
-          <a className="w-full md:text-lg font-medium truncate">
-            {product.name}
-          </a>
-        </Link>
-
-        <div className="text-right">
+        <div className="w-full flex flex-col">
+          <Link href={`/product/${product.slug}`}>
+            <a className="w-full md:text-lg font-medium truncate">
+              {product.name}
+            </a>
+          </Link>
           <p className="text-xl font-bold">
             &#8358;{product.price.toLocaleString("en-US")}
           </p>
           <p className="text-xs font-medium text-gray-400 line-through">
             &#8358;{(product.price + 6000).toLocaleString("en-US")}
           </p>
+
+          <div className="w-full flex space-x-2 divide-x-2 divide-primary">
+            <div className="flex items-end space-x-3">
+              <button
+                onClick={decrement}
+                className="p-1 rounded bg-primary disabled:bg-primary-100"
+                disabled={quantity === 1}
+              >
+                <AiOutlineMinus className="w-4 h-4" />
+              </button>
+              <p>{quantity}</p>
+              <button
+                onClick={increment}
+                disabled={quantity === product.countInStock}
+                className="p-1 rounded bg-primary disabled:bg-primary-100"
+              >
+                <AiOutlinePlus className="w-4 h-4" />
+              </button>
+            </div>
+
+            <button
+              onClick={removeProduct}
+              className="px-3 flex items-center text-[#FD1B1B] space-x-1"
+            >
+              <FaTrash className="w-4 h-4" />
+              <span className="text-xs md:text-sm">Remove</span>
+            </button>
+          </div>
         </div>
       </div>
 
-      <div className="w-full flex justify-between items-center space-x-1">
-        <button
-          onClick={removeProduct}
-          className="flex items-center text-[#FD1B1B] rounded space-x-1"
-        >
-          <FaTrash className="w-4 h-4" />
-          <span className="text-xs md:text-sm">Remove</span>
-        </button>
-
-        <div className="flex items-end space-x-3">
-          <button
-            onClick={decrement}
-            className="p-1 rounded bg-primary disabled:bg-primary-100"
-            disabled={quantity === 1}
-          >
-            <AiOutlineMinus className="w-4 h-4" />
-          </button>
-          <p>{quantity}</p>
-          <button
-            onClick={increment}
-            disabled={quantity === product.countInStock}
-            className="p-1 rounded bg-primary disabled:bg-primary-100"
-          >
-            <AiOutlinePlus className="w-4 h-4" />
-          </button>
-        </div>
-      </div>
+      <div className="w-full flex justify-between items-center space-x-1"></div>
     </motion.div>
   );
 };

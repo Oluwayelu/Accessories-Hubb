@@ -37,7 +37,7 @@ const Footer = () => {
           </div>
         </div>
 
-        <div className="w-full space-y-1">
+        <div className="w-full flex flex-col lg:items-end space-y-1">
           <h1 className="text-xl lg:text-2xl text-white font-medium">
             New to <span className="text-primary">Accessories Hubb</span>
           </h1>
@@ -46,7 +46,7 @@ const Footer = () => {
             Subscribe to our newsletter to get updates on our latest offers
           </p>
 
-          <div className="flex space-x-3">
+          <div className="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-3">
             <input
               type="text"
               name="email"
@@ -54,7 +54,7 @@ const Footer = () => {
               className="px-3 py-2 border-2 border-gray-400 focus:border-primary rounded"
             />
 
-            <button className="px-3 py-2 bg-primary text-white rounded">
+            <button className="w-full md:w-auto px-3 py-2 bg-primary text-white rounded">
               Subscribe
             </button>
           </div>

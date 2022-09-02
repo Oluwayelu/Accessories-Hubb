@@ -3,7 +3,9 @@ import {
   GetServerSidePropsResult,
   NextApiRequest,
 } from "next";
+import { ThunkAction, AnyAction } from "@reduxjs/toolkit";
 import { ParsedUrlQuery } from "querystring";
+import { makestore } from "redux/store";
 
 export interface IAction {
   type: string;
@@ -14,6 +16,7 @@ export interface IUser {
   _id: string;
   email: string;
   name: string;
+  imgUrl: string;
   firstname: string;
   lastname: string;
   middlename: string;
@@ -21,6 +24,8 @@ export interface IUser {
   phoneNumber: string;
   verified: string;
   isAdmin: string;
+  resetPasswordToken: string;
+  resetPasswordExpire: Date;
 }
 
 export interface IReview {
@@ -91,9 +96,25 @@ export interface INextApiRequest extends NextApiRequest {
   user: IUser;
 }
 
+export type SendEmailOptions = {
+  email: string;
+  subject: string;
+  message: string;
+};
+
 export type IGetServerSideProps<
   P extends { [key: string]: any } = { [key: string]: any },
   Q extends ParsedUrlQuery = ParsedUrlQuery
 > = (
   context: GetServerSidePropsContext<Q>
 ) => Promise<GetServerSidePropsResult<P>>;
+
+export type AppStore = ReturnType<typeof makestore>;
+export type AppState = ReturnType<AppStore["getState"]>;
+export type AppDispatch = AppStore["dispatch"];
+export type AppThunkAction<ReturnType = Promise<void>> = ThunkAction<
+  ReturnType,
+  AppState,
+  unknown,
+  AnyAction
+>;

@@ -1,7 +1,5 @@
-import axios from "axios";
-
+import Cookies from "js-cookie";
 import { getError } from "utils/error";
-import { nextLocalStorage } from "utils";
 import { CART_ADD_ITEM, CLEAR_ERROR, GET_ERROR, LOADING } from "redux/types";
 
 import type { IProduct, ICartItems } from "interface";
@@ -39,11 +37,8 @@ export const addToCart: Function =
         0
       );
 
-      nextLocalStorage()?.setItem("cartItems", JSON.stringify(cartItems));
-      nextLocalStorage()?.setItem(
-        "totalCartQuantity",
-        totalQuantity.toString()
-      );
+      Cookies.set("cartItems", JSON.stringify(cartItems));
+      Cookies.set("totalCartQuantity", totalQuantity.toString());
       dispatch({
         type: CART_ADD_ITEM,
         payload: { cartItems, totalQuantity },
@@ -78,11 +73,8 @@ export const removeCart: Function =
         0
       );
 
-      nextLocalStorage()?.setItem("cartItems", JSON.stringify(cartItems));
-      nextLocalStorage()?.setItem(
-        "totalCartQuantity",
-        totalQuantity.toString()
-      );
+      Cookies.set("cartItems", JSON.stringify(cartItems));
+      Cookies.set("totalCartQuantity", totalQuantity.toString());
 
       dispatch({
         type: CART_ADD_ITEM,

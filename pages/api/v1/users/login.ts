@@ -16,12 +16,15 @@ handler.post(async (req: NextApiRequest, res: NextApiResponse) => {
     const token = signToken(user);
     res.status(200).json({
       token,
-      _id: user._id,
-      email: user.email,
-      isAdmin: user.isAdmin,
-      lastname: user.firstname,
-      firstname: user.firstname,
-      middlename: user.middlename,
+      user: {
+        _id: user._id,
+        email: user.email,
+        isAdmin: user.isAdmin,
+        lastname: user.lastname,
+        firstname: user.firstname,
+        middlename: user.middlename,
+      },
+      message: "Login successfull",
     });
   } else {
     res.status(401).send({ message: "Invalid email or password" });

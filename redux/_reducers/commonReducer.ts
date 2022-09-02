@@ -4,7 +4,7 @@ import { IAction } from "interface";
 export const loadingReducer = (state = false, action: IAction) => {
   switch (action.type) {
     case LOADING:
-      return !state;
+      return action.payload ? action.payload : !state;
     default:
       return state;
   }

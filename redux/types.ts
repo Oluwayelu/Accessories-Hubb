@@ -1,7 +1,10 @@
 export const GET_ERROR = "GET_ERROR";
 export const CLEAR_ERROR = "CLEAR_ERROR";
 
+export const LOGOUT_USER = "LOGOUT_USER";
 export const USER_INFO = "GET_USER_INFO";
+
+export const FORGOT_PASSWORD = "FORGOT_PASSWORD";
 
 export const LOADING = "LOADING";
 

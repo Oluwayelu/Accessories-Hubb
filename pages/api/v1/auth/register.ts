@@ -16,10 +16,8 @@ handler.post(async (req: NextApiRequest, res: NextApiResponse) => {
   } else {
     const newUser = new User({
       email: req.body.email,
-      isAdmin: req.body.isAdmin,
       lastname: req.body.lastname,
       firstname: req.body.firstname,
-      middlename: req.body.middlename,
       password: bcrypt.hashSync(req.body.password),
     });
     const user = await newUser.save();
@@ -28,12 +26,15 @@ handler.post(async (req: NextApiRequest, res: NextApiResponse) => {
     const token = signToken(user);
     res.status(200).json({
       token,
-      _id: user._id,
-      email: user.email,
-      isAdmin: user.isAdmin,
-      lastname: user.lastname,
-      firstname: user.firstname,
-      middlename: user.middlename,
+      user: {
+        _id: user._id,
+        email: user.email,
+        isAdmin: user.isAdmin,
+        lastname: user.lastname,
+        firstname: user.firstname,
+        middlename: user.middlename,
+      },
+      verifyLink: `http://localhost:3000/api/v1/auth/email/${token} `,
     });
   }
 });

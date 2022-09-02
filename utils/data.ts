@@ -2,9 +2,10 @@ import bcrypt from "bcryptjs";
 
 export const users = [
   {
-    firstname: "Admin",
-    lastname: "Admin",
-    middlename: "Admin",
+    firstname: "John",
+    lastname: "Doe",
+    middlename: "Green",
+    name: "John Doe",
     email: "admin@ahubb.com",
     imgUrl: "/images/avatar/guy_4.png",
     password: bcrypt.hashSync("admin2022"),
@@ -16,7 +17,8 @@ export const users = [
     middlename: "David",
     firstname: "Ifeoluwa",
     lastname: "Oluwayelu",
-    email: "oluwayeluifeoluwa@gmail.com.com",
+    name: "Ifeoluwa Oluwayelu",
+    email: "oluwayeluifeoluwa@gmail.com",
     password: bcrypt.hashSync("Gbenga200@"),
     phoneNumber: "+2349053156229",
     verified: true,

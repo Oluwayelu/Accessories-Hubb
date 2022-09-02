@@ -6,9 +6,9 @@ import { Landing } from "layout";
 
 import type { NextPage, GetServerSideProps } from "next";
 import { IProduct } from "interface";
-import { ProductCard } from "components";
+import { ProductCard, Select } from "components";
 
-const PAGE_SIZE = 8;
+const PAGE_SIZE = 6;
 
 const prices = [
   {
@@ -29,10 +29,10 @@ const ratings = [1, 2, 3, 4, 5];
 
 type Props = {
   products: IProduct[];
-  countProducts: string;
-  categories: string;
-  brands: string;
-  pages: string;
+  countProducts: string[];
+  categories: string[];
+  brands: string[];
+  pages: string[];
 };
 
 type Filter = {
@@ -55,6 +55,14 @@ const Search: NextPage<Props> = ({
   pages,
 }) => {
   const router = useRouter();
+  const {
+    query = "all",
+    category = "all",
+    brand = "all",
+    price = "all",
+    rating = "all",
+    sort = "featured",
+  } = router.query;
   const filterSearch = ({
     page,
     category,
@@ -104,10 +112,51 @@ const Search: NextPage<Props> = ({
   };
   return (
     <Landing title="Search | Accessories Hubb">
-      <div className="w-full p-3 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3">
-        {products.map((product, index) => (
-          <ProductCard key={index} product={product} type="row" />
-        ))}
+      <div className="w-full flex flex-col md:flex-row md:items-start space-y-3 md:space-y-0 md:space-x-5">
+        <div className="lg:w-1/4 flex flex-col px-3 py-5 rounded bg-white shadow ">
+          <Select
+            label="Categories"
+            value={String(category)}
+            onChange={categoryHandler}
+            options={["all", ...categories]}
+          />
+          <Select
+            label="Brands"
+            value={String(brand)}
+            onChange={brandHandler}
+            options={["all", ...brands]}
+          />
+          <Select
+            label="Sort by"
+            value={String(sort)}
+            onChange={sortHandler}
+            options={["featured", "lowest", "highest", "toprated", "newest"]}
+          />
+        </div>
+        <div className="lg:w-3/4 p-3 space-y-2">
+          <div className="w-full flex justify-between text-lg font-medium">
+            {products.length === 0 ? "No" : countProducts}{" "}
+            {Number(countProducts) === 1 ? "Result" : "Results"}
+            {query !== "all" && query !== "" && " : " + query}
+            {category !== "all" && " : " + category}
+            {brand !== "all" && " : " + brand}
+            {price !== "all" && " : Price " + price}
+            {rating !== "all" && " : Rating " + rating + " & up"}
+            {(query !== "all" && query !== "") ||
+            category !== "all" ||
+            brand !== "all" ||
+            rating !== "all" ||
+            price !== "all" ? (
+              <button onClick={() => router.push("/search")}>Cancel</button>
+            ) : null}
+          </div>
+
+          <div className="w-full grid grid-cols-2 lg:grid-cols-3 gap-3">
+            {products.map((product, index) => (
+              <ProductCard key={index} product={product} type="row" />
+            ))}
+          </div>
+        </div>
       </div>
     </Landing>
   );

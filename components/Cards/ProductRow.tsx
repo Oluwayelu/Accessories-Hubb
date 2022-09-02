@@ -16,11 +16,11 @@ const ProductRow: FunctionComponent<Props> = ({ product, addToCart }) => {
   return (
     <motion.div
       whileHover={{ scale: [1, 0.9] }}
-      whileInView={{ y: [100, 0], opacity: [0, 1] }}
+      whileInView={{ y: [50, 0], opacity: [0, 1] }}
       transition={{ duration: 0.5 }}
       className="w-full bg-white rounded-t-xl text-black shadow transition-all cursor-pointer"
     >
-      <div className="bg-gray-100 h-40 md:h-60 w-full flex justify-center items-center rounded-t-lg">
+      <div className="relative bg-gray-50 h-40 md:h-60 w-full flex justify-center items-center rounded-t-lg">
         <div className="relative h-3/4 w-3/4 md:h-2/3 md:w-2/3">
           <Image
             layout="fill"
@@ -28,6 +28,10 @@ const ProductRow: FunctionComponent<Props> = ({ product, addToCart }) => {
             src={product.image[0]}
             className="rounded-xl filter object-contain object-center"
           />
+        </div>
+
+        <div className="absolute top-7 left-0 px-3 py-1 rounded-r-lg bg-primary text-xs font-medium">
+          -20%
         </div>
       </div>
 

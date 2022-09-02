@@ -24,16 +24,8 @@
 
 // export const wrapper = createWrapper<AppStore>(makeStore);
 
-import { HYDRATE, createWrapper } from "next-redux-wrapper";
-import {
-  configureStore,
-  Action,
-  ThunkAction,
-  ActionCreator,
-  AnyAction,
-  PayloadAction,
-  EnhancedStore,
-} from "@reduxjs/toolkit";
+import { createWrapper } from "next-redux-wrapper";
+import { configureStore } from "@reduxjs/toolkit";
 import thunk from "redux-thunk";
 import {
   persistReducer,
@@ -44,50 +36,35 @@ import {
   PERSIST,
   PURGE,
   REGISTER,
-  Persistor,
 } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 
 import { initialState, rootReducer } from "./_reducers";
+import { AppStore } from "interface";
 
-export const makestore = ({ isServer }: { isServer: boolean }) => {
-  if (isServer) {
-    return configureStore({
-      reducer: rootReducer,
-    });
-  } else {
-    const persistConfig = {
-      key: "root",
-      version: 1,
-      blacklist: [],
-      storage,
-    };
-
-    const persistedReducer = persistReducer(persistConfig, rootReducer);
-
-    type Store = {
-      __persistor: Persistor;
-    } & EnhancedStore;
-    const store = configureStore({
-      reducer: persistedReducer,
-      middleware: (getDefaultMiddleware) =>
-        getDefaultMiddleware({
-          serializableCheck: {
-            ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
-          },
-        }).prepend(thunk),
-      devTools: process.env.NODE_ENV !== "production",
-    });
-
-    store.__persistor = persistStore(store);
-
-    return store;
-  }
+const persistConfig = {
+  key: "root",
+  version: 1,
+  blacklist: [],
+  storage,
 };
 
-export const wrapper = createWrapper(makestore, {
-  debug: true,
+const persistedReducer = persistReducer(persistConfig, rootReducer);
+
+const store = configureStore({
+  reducer: persistedReducer,
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: {
+        ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+      },
+    }).prepend(thunk),
+  devTools: process.env.NODE_ENV !== "production",
 });
+
+export const makestore = () => store;
+export const persistor = persistStore(store);
+export const wrapper = createWrapper<AppStore>(makestore);
 
 // import { useDispatch } from "react-redux";
 // import { useMemo } from "react";

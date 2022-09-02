@@ -1,9 +1,8 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { HYDRATE } from "next-redux-wrapper";
-import { AppState } from "redux/store";
 
 import Cookies from "js-cookie";
-import { IAction, IUser } from "interface";
+import { IAction, IUser, AppState } from "interface";
 
 import { USER_INFO, LOGOUT_USER } from "../types";
 

@@ -45,6 +45,7 @@ export interface IProduct {
   price: number;
   brand: string;
   rating: number;
+  quantity: number;
   numReviews: number;
   countInStock: number;
   description: string;

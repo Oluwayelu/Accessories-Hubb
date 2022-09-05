@@ -25,7 +25,7 @@ const LandingLayout: NextPage<Props> = ({
     <div className={`w-full min-h-screen flex flex-col justify-between`}>
       <NextSeo title={title} description={description} />
       <Header />
-      <div className={`bg-gray-50`}>{children}</div>
+      <div>{children}</div>
       <Footer />
 
       <ToastContainer />

@@ -4,6 +4,7 @@ import { getSession } from "next-auth/react";
 
 import { LOGIN, REGISTER } from "routes";
 import { Landing } from "layout";
+import { fadeInUp } from "variants";
 
 import type { ReactNode } from "react";
 import type { NextPage, GetServerSideProps } from "next";
@@ -21,7 +22,7 @@ const AuthLayout: NextPage<Props> = ({ title, description, children }) => {
     <Landing screen title={title} description={description}>
       <div className="relative w-full min-h-[70vh] px-5 lg:px-10 flex flex-col justify-start items-center overflow-hidden">
         <motion.div
-          whileInView={{ y: [100, 0] }}
+          variants={fadeInUp}
           className="w-full md:w-1/2 lg:w-1/3 py-5 space-y-5 z-20"
         >
           <div className="w-full md:p-5 md:bg-white rounded-xl md:shadow-lg space-y-5">

@@ -1,5 +1,6 @@
 import { NextSeo } from "next-seo";
 import { useRouter } from "next/router";
+import { motion } from "framer-motion";
 import { ToastContainer } from "react-toastify";
 import { Header, Footer } from "components";
 
@@ -22,14 +23,19 @@ const LandingLayout: NextPage<Props> = ({
   const { pathname } = useRouter();
   const home = pathname === "/";
   return (
-    <div className={`w-full min-h-screen flex flex-col justify-between`}>
+    <motion.div
+      exit={{ opacity: 0 }}
+      initial="initial"
+      animate="animate"
+      className={`w-full min-h-screen flex flex-col justify-between`}
+    >
       <NextSeo title={title} description={description} />
       <Header />
       <div>{children}</div>
       <Footer />
 
       <ToastContainer />
-    </div>
+    </motion.div>
   );
 };
 

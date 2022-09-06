@@ -2,7 +2,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import { useCycle } from "framer-motion";
+import { useCycle, motion } from "framer-motion";
 import { useSession } from "next-auth/react";
 import { SetStateAction, useLayoutEffect, useState } from "react";
 
@@ -14,6 +14,7 @@ import {
 } from "react-icons/ai";
 import { FaOpencart } from "react-icons/fa";
 
+import { fadeInDown } from "variants";
 import { CART, LOGIN, REGISTER } from "routes";
 import { logoutUser } from "redux/_actions/userAction";
 import { MenuIcon, Drawer, Search } from "./components";
@@ -58,7 +59,10 @@ const Header: FC<Props> = () => {
   };
 
   return (
-    <div className="w-full shadow sticky top-0 left-0 right-0 bg-white py-1 flex flex-col items-center justify-around border-b-2 border-b-dark-500 z-50">
+    <motion.div
+      variants={fadeInDown}
+      className="w-full shadow sticky top-0 left-0 right-0 bg-white py-1 flex flex-col items-center justify-around border-b-2 border-b-dark-500 z-50"
+    >
       <div className="w-full px-3 md:px-5 lg:px-10 flex items-center md:justify-around">
         <MenuIcon toggle={() => toggleOpen()} />
         {/* <AiOutlineMenu className="w-10 h-10" /> */}
@@ -185,7 +189,7 @@ const Header: FC<Props> = () => {
             </Link>
           ))}
       </div>
-    </div>
+    </motion.div>
   );
 };
 

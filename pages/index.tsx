@@ -11,6 +11,7 @@ import { CategoryCard, CircleCard, Parallax, ProductCard } from "components";
 import { motion } from "framer-motion";
 import { Product } from "models";
 import { Landing } from "layout";
+import { stagger } from "variants";
 
 import type { NextPage } from "next";
 import type { IProduct, IState } from "interface";
@@ -119,12 +120,15 @@ const Home: NextPage<Props> = ({ topRatedProducts }) => {
       </div>
 
       <div className="w-full py-5 lg:py-10 px-3 md:px-5 lg:px-10 space-y-5">
-        <div className="w-full flex flex-shrink-0 justify-start lg:justify-center items-center overflow-x-auto scroll-p-5 snap-x scroll-smooth space-x-5 md:space-x-10">
+        <motion.div
+          variants={stagger}
+          className="w-full flex flex-shrink-0 justify-start lg:justify-center items-center overflow-x-auto scroll-p-5 snap-x scroll-smooth space-x-5 md:space-x-10"
+        >
           {categories &&
             categories.map((product, i) => (
               <CategoryCard key={i} product={product} />
             ))}
-        </div>
+        </motion.div>
       </div>
 
       <div className="w-full py-10 px-3 md:px-5 lg:px-10 md:py-20 flex flex-col lg:flex-row justify-start items-start lg:space-x-5">
@@ -134,58 +138,55 @@ const Home: NextPage<Props> = ({ topRatedProducts }) => {
               Special Items
             </h1>
 
-            <div className="w-full p-3 space-y-3">
+            <motion.div variants={stagger} className="w-full p-3 space-y-3">
               {categories.map((product, index) => (
                 <ProductCard key={index} product={product} type="special" />
               ))}
-            </div>
+            </motion.div>
           </div>
         </div>
 
-        <motion.div
-          whileInView={{ y: [100, 0], opacity: [0, 1] }}
-          className="w-full lg:w-3/4 space-y-10"
-        >
-          <motion.div
-            whileInView={{ y: [100, 0], opacity: [0, 1] }}
-            className="w-full space-y-5 cursor-pointer"
-          >
+        <div className="w-full lg:w-3/4 space-y-10">
+          <div className="w-full space-y-5 cursor-pointer">
             <h1 className="text-2xl font-medium">Top Rated Products</h1>
-            <div className="w-full py-2 flex flex-shrink-0 justify-start items-center overflow-x-auto scroll-p-5 snap-x scroll-smooth space-x-5 md:space-x-10">
+            <motion.div
+              variants={stagger}
+              className="w-full py-2 flex flex-shrink-0 justify-start items-center overflow-x-auto scroll-p-5 snap-x scroll-smooth space-x-5 md:space-x-10"
+            >
               {topRatedProducts.map((product, i) => (
                 <CircleCard key={i} product={product} />
               ))}
-            </div>
-          </motion.div>
+            </motion.div>
+          </div>
 
-          <motion.div
-            whileInView={{ y: [100, 0], opacity: [0, 1] }}
-            className="w-full bg-white shadow rounded-t-xl overflow-hidden"
-          >
+          <div className="w-full bg-white shadow rounded-t-xl overflow-hidden">
             <h1 className="w-full py-2 pl-3 text-2xl font-medium bg-primary-100 ">
               New Products
             </h1>
-            <div className="w-full p-3 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3">
+            <motion.div
+              variants={stagger}
+              className="w-full p-3 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3"
+            >
               {topRatedProducts.map((product: IProduct, index: number) => (
                 <ProductCard key={index} product={product} type="row" />
               ))}
-            </div>
-          </motion.div>
+            </motion.div>
+          </div>
 
-          <motion.div
-            whileInView={{ y: [100, 0], opacity: [0, 1] }}
-            className="w-full bg-white shadow rounded-t-xl overflow-hidden"
-          >
+          <div className="w-full bg-white shadow rounded-t-xl overflow-hidden">
             <h1 className="w-full py-2 pl-3 text-2xl font-medium bg-primary-100 ">
               Top Selling Headphones
             </h1>
-            <div className="w-full p-3 grid grid-cols-2  gap-3">
+            <motion.div
+              variants={stagger}
+              className="w-full p-3 grid grid-cols-2  gap-3"
+            >
               {topRatedProducts.map((product: IProduct, index: number) => (
                 <ProductCard key={index} product={product} type="column" />
               ))}
-            </div>
-          </motion.div>
-        </motion.div>
+            </motion.div>
+          </div>
+        </div>
       </div>
     </Landing>
   );
@@ -208,4 +209,6 @@ export async function getServerSideProps() {
     },
   };
 }
+
+
 

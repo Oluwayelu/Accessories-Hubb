@@ -2,6 +2,8 @@ import Link from "next/link";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { useDispatch, useSelector } from "react-redux";
+
+import { fadeInUp, fadeInLeft } from "variants";
 import { addToCart, removeCart } from "redux/_actions/cartAction";
 
 import { AiOutlinePlus, AiOutlineMinus } from "react-icons/ai";
@@ -45,16 +47,22 @@ const CartCard: FunctionComponent<Props> = ({ product }) => {
   };
 
   return (
-    <motion.div className="w-full px-5 py-2 rounded shadow bg-white">
+    <motion.div
+      variants={fadeInUp}
+      className="w-full px-5 py-2 rounded shadow bg-white"
+    >
       <div className="w-full flex items-start space-x-3">
-        <div className="w-20 h-16 md:w-40 md:h-32 relative">
+        <motion.div
+          variants={fadeInLeft}
+          className="w-20 h-16 md:w-40 md:h-32 relative"
+        >
           <Image
             layout="fill"
             src={product.image[0]}
             alt={product.name}
             className="filter object-contain object-center"
           />
-        </div>
+        </motion.div>
         <div className="w-full flex flex-col">
           <Link href={`/product/${product.slug}`}>
             <a className="w-full md:text-lg font-medium truncate">

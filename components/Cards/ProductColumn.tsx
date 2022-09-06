@@ -1,8 +1,11 @@
+import Link from "next/link";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { AiFillHeart } from "react-icons/ai";
 import { FaOpencart } from "react-icons/fa";
 import { FaStar, FaStarHalfAlt } from "react-icons/fa";
+
+import { fadeInUp } from "variants";
 
 import type { IProduct } from "interface";
 import type { FunctionComponent, MouseEventHandler } from "react";
@@ -15,14 +18,15 @@ type Props = {
 const ProductColumn: FunctionComponent<Props> = ({ product, addToCart }) => {
   return (
     <motion.div
-      whileInView={{ y: [100, 0], opacity: [0, 1] }}
-      transition={{ duration: 0.5 }}
+      variants={fadeInUp}
       className="w-full bg-white flex flex-col-reverse md:flex-row items-start text-black shadow transition-all cursor-pointer"
     >
       <div className="w-full md:w-1/2 p-3 md:p-5 inline-flex flex-col justify-start">
-        <h1 className="text-base md:text-xl font-light truncate">
-          {product.name}
-        </h1>
+        <Link href={`/product/${product.slug}`}>
+          <a className="text-base md:text-xl font-light truncate">
+            {product.name}
+          </a>
+        </Link>
         <div className="inline-flex space-x-1 text-primary">
           <FaStar />
           <FaStar />

@@ -4,6 +4,8 @@ import { motion } from "framer-motion";
 import { FaOpencart } from "react-icons/fa";
 import { FaStar, FaStarHalfAlt } from "react-icons/fa";
 
+import { fadeInUp } from "variants";
+
 import type { IProduct } from "interface";
 import type { FunctionComponent, MouseEventHandler } from "react";
 
@@ -15,9 +17,7 @@ type Props = {
 const ProductRow: FunctionComponent<Props> = ({ product, addToCart }) => {
   return (
     <motion.div
-      whileHover={{ scale: [1, 0.9] }}
-      whileInView={{ y: [50, 0], opacity: [0, 1] }}
-      transition={{ duration: 0.5 }}
+      variants={fadeInUp}
       className="w-full bg-white rounded-t-xl text-black shadow transition-all cursor-pointer"
     >
       <div className="relative bg-gray-50 h-40 md:h-60 w-full flex justify-center items-center rounded-t-lg">

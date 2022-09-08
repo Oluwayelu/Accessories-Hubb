@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
 import { FaOpencart } from "react-icons/fa";
+import { useSession } from "next-auth/react";
 
 import { Landing } from "layout";
 import { CartCard } from "components";
@@ -13,6 +14,7 @@ import type { IState } from "interface";
 
 const Cart = () => {
   const { push } = useRouter();
+  const { data: session } = useSession();
   const { totalQuantity, cartItems } = useSelector(
     (state: IState) => state.cart
   );
@@ -74,16 +76,20 @@ const Cart = () => {
               <Link href="/">
                 <a className="text-primary font-medium">Continue shopping</a>
               </Link>
-              <Link href={LOGIN}>
-                <a className="w-full md:w-60 flex justify-center shadow py-2 bg-primary font-medium rounded">
-                  Sign in to your account
-                </a>
-              </Link>
-              <Link href={REGISTER}>
-                <a className="w-full md:w-60 flex justify-center shadow py-2 bg-white font-medium rounded">
-                  Sign up now
-                </a>
-              </Link>
+              {!session?.user && (
+                <div>
+                  <Link href={LOGIN}>
+                    <a className="w-full md:w-60 flex justify-center shadow py-2 bg-primary font-medium rounded">
+                      Sign in to your account
+                    </a>
+                  </Link>
+                  <Link href={REGISTER}>
+                    <a className="w-full md:w-60 flex justify-center shadow py-2 bg-white font-medium rounded">
+                      Sign up now
+                    </a>
+                  </Link>
+                </div>
+              )}
             </div>
           )}
         </div>

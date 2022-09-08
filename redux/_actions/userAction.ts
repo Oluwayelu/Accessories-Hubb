@@ -28,7 +28,7 @@ export const loginUser: Function =
         email,
         password,
         callbackUrl,
-        redirect: false,
+        redirect: true,
       })) as unknown as SignInResponse;
 
       if (res?.error) {

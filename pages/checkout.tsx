@@ -6,7 +6,7 @@ import { Landing } from "layout";
 import dynamic from "next/dynamic";
 import { GetServerSideProps } from "next";
 import { getSession } from "next-auth/react";
-import { LOGIN } from "routes";
+import { CHECKOUT, LOGIN } from "routes";
 
 const Checkout = ({ session }: any) => {
   return (
@@ -24,7 +24,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   if (!session) {
     return {
       redirect: {
-        destination: LOGIN,
+        destination: LOGIN + "?redirect=" + CHECKOUT,
         permanent: false,
       },
     };

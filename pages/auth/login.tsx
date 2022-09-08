@@ -1,5 +1,6 @@
 import * as Yup from "yup";
 import { Formik } from "formik";
+import { useRouter } from "next/router";
 import { useDispatch } from "react-redux";
 import { getCsrfToken, getSession } from "next-auth/react";
 
@@ -17,6 +18,8 @@ type Props = {
 
 const Login: NextPage<Props> = ({ csrfToken }) => {
   const dispatch = useDispatch();
+  const router = useRouter();
+
   return (
     <Auth title="Login">
       <Formik
@@ -32,7 +35,12 @@ const Login: NextPage<Props> = ({ csrfToken }) => {
         })}
         onSubmit={async (values, { setStatus, setSubmitting }) => {
           setStatus();
-          dispatch(loginUser(values, "/"));
+          dispatch(
+            loginUser(
+              values,
+              router.query.redirect ? router.query.redirect : "/"
+            )
+          );
 
           setSubmitting(false);
         }}

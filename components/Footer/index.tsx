@@ -61,7 +61,7 @@ const Footer = () => {
         </div>
       </div>
 
-      <div className="bg-dark-100 text-gray-200 px-3 md:px-5 lg:px-10 py-3 md:py-10 w-full flex flex-col justify-start items-start">
+      <div className="bg-dark-200 text-gray-200 px-3 md:px-5 lg:px-10 py-3 md:py-10 w-full flex flex-col justify-start items-start">
         <div className="w-full xl:w-2/3 flex flex-col md:flex-row justify-start items-start">
           <div className="w-1/2 space-y-1">
             <h1 className="text-xl lg:text-2xl text-white font-medium">

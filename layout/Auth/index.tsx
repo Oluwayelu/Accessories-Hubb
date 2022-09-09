@@ -32,18 +32,20 @@ const AuthLayout: NextPage<Props> = ({ title, description, children }) => {
           </div>
 
           <div className="w-full flex justify-center items-center space-x-2">
-            <div className="w-full h-0.5 rounded-full bg-gray-500" />
-            <div className="w-full whitespace-nowrap">
+            <div className="w-full h-0.5 rounded-full bg-dark-200" />
+            <div className="w-full whitespace-nowrap text-dark-200">
               {pathname === LOGIN
                 ? "New to Accessories Hubb?"
                 : "Already have an account?"}
             </div>
-            <div className="w-full h-0.5 rounded-full bg-gray-500" />
+            <div className="w-full h-0.5 rounded-full bg-dark-200" />
           </div>
 
           <Link href={pathname === LOGIN ? REGISTER : LOGIN} passHref>
-            <button className="py-2 w-full font-medium bg-gray-300 rounded shadow">
-              {pathname === LOGIN ? "Create an account" : "Login to account"}
+            <button className="py-2 w-full font-medium border-2 border-dark-200 text-dark-200 rounded hover:shadow">
+              {pathname === LOGIN
+                ? "Create a new account"
+                : "Login to your account"}
             </button>
           </Link>
         </motion.div>

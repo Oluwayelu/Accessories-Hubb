@@ -1,7 +1,7 @@
 import nc from "next-connect";
 import db from "database";
-import { User, Product } from "models";
-import { users, products } from "utils/data";
+import { User, Product, Banner } from "models";
+import { users, products, banners } from "utils/data";
 import type { NextApiResponse } from "next";
 
 const handler = nc();
@@ -16,6 +16,8 @@ handler.get(async (req, res: NextApiResponse<Data>) => {
   await User.insertMany(users);
   await Product.deleteMany();
   await Product.insertMany(products);
+  await Banner.deleteMany();
+  await Banner.insertMany(banners);
   await db.disconnect();
   res.status(200).json({ message: "seeded successfully" });
 });

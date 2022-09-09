@@ -73,6 +73,16 @@ export interface ICartItems {
   quantity: number;
 }
 
+export interface IBanner {
+  image: string;
+  title: string;
+  buttonText: string;
+  description: string;
+  discount?: number;
+  saleTime?: number;
+  color?: string;
+}
+
 export interface IState {
   user: {
     userInfo: IUser;

@@ -9,14 +9,19 @@ import { fadeInUp, fadeInDown, fadeInRight, stagger } from "variants";
 import { Landing } from "layout";
 import { Product } from "models";
 import { addToCart } from "redux/_actions/cartAction";
+import {
+  addToFavourite,
+  isFavourite,
+  removeFavourite,
+} from "redux/_actions/favouriteAction";
 
 import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
-import { FaOpencart } from "react-icons/fa";
-import { FaStar, FaStarHalfAlt } from "react-icons/fa";
+import { FaStar, FaStarHalfAlt, FaOpencart, FaAngleLeft } from "react-icons/fa";
 
-import type { IProduct, IState } from "interface";
+import type { AppState, IProduct } from "interface";
 import type { NextPage, GetServerSideProps } from "next";
 import type { ParsedUrlQuery } from "querystring";
+import { SEARCH } from "routes";
 
 type Props = {
   product: IProduct;
@@ -26,14 +31,27 @@ type Props = {
 const ProductPage: NextPage<Props> = ({ product, similarProducts }) => {
   const [activeId, setActiveId] = useState(0);
   const dispatch = useDispatch();
-  const cart = useSelector((state: IState) => state.cart);
+  const cart = useSelector((state: AppState) => state.cart);
+  const favourite = useSelector((state: AppState) => state.favourite);
 
   const addToCartHandler = () => {
     dispatch(addToCart(cart, product));
   };
 
+  const addToFavouriteHandler = () => {
+    !isFavourite(favourite, product)
+      ? dispatch(addToFavourite(favourite, product))
+      : dispatch(removeFavourite(favourite, product));
+  };
+
   return (
     <Landing title={`${product.category} | ${product.name}`}>
+      <Link href={SEARCH}>
+        <a className="flex items-center space-x-px pt-5 px-3 md:px-5 lg:px-20 text-primary ">
+          <FaAngleLeft className="w-4 h-4" />
+          <p className="">Back to products</p>
+        </a>
+      </Link>
       <div className="w-full py-5 px-3 md:px-5 lg:px-20 flex flex-col lg:flex-row justify-center md:justify-start items-center lg:space-x-5">
         <div className="w-full md:w-2/3 lg:w-1/3 flex flex-col items-center">
           <div className="w-full flex justify-center items-center">
@@ -72,9 +90,12 @@ const ProductPage: NextPage<Props> = ({ product, similarProducts }) => {
             <p className="text-primary">{product.category}</p>
             <div className="flex items-start">
               <h1 className="text-xl md:text-2xl">{product.name}</h1>
-              <button>
-                {/* <AiFillHeart className="w-5 h-5 text-primary" /> */}
-                <AiOutlineHeart className="w-5 h-5 text-primary" />
+              <button onClick={addToFavouriteHandler}>
+                {isFavourite(favourite, product) ? (
+                  <AiFillHeart className="w-5 h-5 text-primary" />
+                ) : (
+                  <AiOutlineHeart className="w-5 h-5 text-primary" />
+                )}
               </button>
             </div>
           </motion.div>

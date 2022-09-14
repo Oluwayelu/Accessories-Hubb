@@ -1,13 +1,20 @@
 import Link from "next/link";
 import Image from "next/image";
 import { motion } from "framer-motion";
-import { AiFillHeart } from "react-icons/ai";
+import { useDispatch, useSelector } from "react-redux";
+
 import { FaOpencart } from "react-icons/fa";
 import { FaStar, FaStarHalfAlt } from "react-icons/fa";
+import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 
+import {
+  addToFavourite,
+  isFavourite,
+  removeFavourite,
+} from "redux/_actions/favouriteAction";
 import { fadeInUp } from "variants";
 
-import type { IProduct } from "interface";
+import type { IProduct, AppState } from "interface";
 import type { FunctionComponent, MouseEventHandler } from "react";
 
 type Props = {
@@ -16,6 +23,14 @@ type Props = {
 };
 
 const ProductColumn: FunctionComponent<Props> = ({ product, addToCart }) => {
+  const dispatch = useDispatch();
+  const favourite = useSelector((state: AppState) => state.favourite);
+
+  const addToFavouriteHandler = () => {
+    !isFavourite(favourite, product)
+      ? dispatch(addToFavourite(favourite, product))
+      : dispatch(removeFavourite(favourite, product));
+  };
   return (
     <motion.div
       variants={fadeInUp}
@@ -48,8 +63,15 @@ const ProductColumn: FunctionComponent<Props> = ({ product, addToCart }) => {
             <FaOpencart className="w-5 h-5" />
             <p className="text-xs hidden lg:inline">Add to cart</p>
           </button>
-          <button className="px-3 py-1 rounded border border-primary">
-            <AiFillHeart className="w-5 h-5 text-primary" />
+          <button
+            onClick={addToFavouriteHandler}
+            className="px-3 py-1 rounded border border-primary"
+          >
+            {isFavourite(favourite, product) ? (
+              <AiFillHeart className="w-5 h-5 text-primary" />
+            ) : (
+              <AiOutlineHeart className="w-5 h-5 text-primary" />
+            )}
           </button>
         </div>
       </div>

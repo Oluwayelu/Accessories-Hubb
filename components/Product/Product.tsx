@@ -1,5 +1,5 @@
 import type { NextPage } from "next";
-import type { IProduct, IState } from "interface";
+import type { IProduct, AppState } from "interface";
 
 import { useDispatch, useSelector } from "react-redux";
 import { addToCart } from "redux/_actions/cartAction";
@@ -13,7 +13,7 @@ type Props = {
 
 const Product: NextPage<Props> = ({ product, type }) => {
   const dispatch = useDispatch();
-  const cart = useSelector((state: IState) => state.cart);
+  const cart = useSelector((state: AppState) => state.cart);
 
   const addToCartHandler = () => {
     dispatch(addToCart(cart, product));

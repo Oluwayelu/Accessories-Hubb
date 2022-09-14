@@ -1,7 +1,10 @@
 import Image from "next/image";
+import Slick from "react-slick";
+import "slick-carousel/slick/slick.css";
+// import "slick-carousel/slick/slick-theme.css";
 import { useSelector } from "react-redux";
 
-import { Pagination, Navigation, EffectFade } from "swiper";
+import { Pagination, Navigation, EffectFade, EffectFlip } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
 import {} from "react-loading-skeleton";
 
@@ -9,28 +12,29 @@ import db from "database";
 
 import { CategoryCard, CircleCard, Parallax, ProductCard } from "components";
 import { motion } from "framer-motion";
-import { Product } from "models";
+import { Banner, Product } from "models";
 import { Landing } from "layout";
 import { stagger } from "variants";
 
 import type { NextPage } from "next";
-import type { IProduct, IState } from "interface";
+import type { IBanner, IProduct, IState } from "interface";
 
 type Props = {
   topRatedProducts: IProduct[];
+  banners: IBanner[];
 };
 
-const Home: NextPage<Props> = ({ topRatedProducts }) => {
+const Home: NextPage<Props> = ({ topRatedProducts, banners }) => {
   const categories = useSelector((state: IState) => state.product.category);
 
   return (
     <Landing title="" description="Welcome to Accessoriess Hubb">
       <div className="w-full h-[60vh] md:h-[70vh] flex flex-col md:flex-row justify-center gap-3 z-20">
         <Swiper
-          modules={[Pagination, Navigation, EffectFade]}
+          modules={[Pagination, Navigation, EffectFlip]}
           // navigation
           autoplay={true}
-          loop
+          loop={true}
           // color="#F5BD10"
           effect="fade"
           centeredSlides
@@ -38,83 +42,64 @@ const Home: NextPage<Props> = ({ topRatedProducts }) => {
           slidesPerView={1}
           className="w-full md:w-3/4 h-full bg-primary text-primary rounded-b-xl shadow overflow-hidden"
         >
-          <SwiperSlide>
-            <Parallax image="/images/others/accessories.jpg">
-              <div className="absolute inset-0 w-full h-full px-3 lg:px-10 pt-10 text-dark flex flex-col items-start justify-start space-y-3">
-                <h1 className="text-xl md:text-2xl lg:text-5xl">
-                  Welcome, to{" "}
-                  <span className="text-primary font-bold">
-                    Accessories Hubb
-                  </span>
-                </h1>
-                <p className="lg:text-lg">
-                  Get all your phone and computer accessories at an afordable
-                  price
-                </p>
+          {banners.map((banner, index) => (
+            <SwiperSlide key={index}>
+              <Parallax color={banner.color}>
+                <div className="absolute inset-0 w-full h-full px-3 lg:px-10 pt-10 text-dark flex flex-col items-start justify-start md:justify-center space-y-3">
+                  <div className="w-2/3">
+                    {banner.discount && (
+                      <p className="font-medium">{banner.discount}% discount</p>
+                    )}
+                    <h1 className="text-xl md:text-2xl lg:text-5xl font-semibold">
+                      {banner.title}
+                    </h1>
+                    <p className="lg:text-lg">{banner.description}</p>
+                  </div>
 
-                <button className="bg-primary rounded px-10 py-2 lg:text-lg font-medium">
-                  Start Shopping
-                </button>
-              </div>
-            </Parallax>
-          </SwiperSlide>
-          <SwiperSlide>
-            <Parallax image="/images/others/Phone.jpg">
-              <div className="absolute inset-0 w-full h-full px-3 lg:px-10 text-dark flex flex-col items-start justify-center space-y-3">
-                <h1 className="text-xl md:text-2xl lg:text-5xl">
-                  Welcome, to{" "}
-                  <span className="text-primary font-bold">
-                    Accessories Hubb
-                  </span>
-                </h1>
-                <p className="lg:text-lg">
-                  Get all your phone and computer accessories at an afordable
-                  price
-                </p>
+                  <div className="absolute top-0 md:top-[20%] -right-1/4 md:right-1">
+                    <div className="relative w-80 h-80 lg:w-[400px] lg:h-[400px]">
+                      <Image layout="fill" alt="banner" src={banner.image} />
+                    </div>
+                  </div>
 
-                <button className="bg-primary rounded px-10 py-2 lg:text-lg font-medium">
-                  Start Shopping
-                </button>
-              </div>
-            </Parallax>
-          </SwiperSlide>
-          <SwiperSlide>
-            <Parallax image="/images/others/EarPods.jpg" priority>
-              <div className="absolute inset-0 w-full h-full px-3 lg:px-10 text-dark flex flex-col items-start justify-center space-y-3">
-                <h1 className="text-xl md:text-2xl lg:text-5xl">
-                  Welcome, to{" "}
-                  <span className="text-primary font-bold">
-                    Accessories Hubb
-                  </span>
-                </h1>
-                <p className="lg:text-lg">
-                  Get all your phone and computer accessories at an afordable
-                  price
-                </p>
-
-                <button className="bg-primary rounded px-10 py-2 lg:text-lg font-medium">
-                  Start Shopping
-                </button>
-              </div>
-            </Parallax>
-          </SwiperSlide>
+                  <button
+                    className="rounded px-10 py-2 lg:text-lg font-medium"
+                    style={{ backgroundColor: banner.color }}
+                  >
+                    {banner.buttonText}
+                  </button>
+                </div>
+              </Parallax>
+            </SwiperSlide>
+          ))}
         </Swiper>
+
         <div className="px-5 md:px-0 -mt-20 md:mt-0 w-full md:w-1/4 h-1/3 md:h-full flex md:flex-wrap justify-between gap-3 z-20 md:z-0">
-          <div className="relative w-1/2 md:w-full bg-primary/50 rounded-xl md:rounded-none md:rounded-b-xl overflow-hidden">
-            <Image
-              alt="banner"
-              src="/images/others/Phone.jpg"
-              layout="fill"
-              className="filter obect-contain object-center"
-            />
+          <div
+            className="w-1/2 md:w-full flex justify-center items-center rounded-xl md:rounded-none md:rounded-b-xl overflow-hidden"
+            style={{ backgroundColor: banners[0].color }}
+          >
+            <div className="relative w-2/3 h-3/4">
+              <Image
+                alt="banner"
+                src={banners[0].image}
+                layout="fill"
+                className="filter obect-contain object-center"
+              />
+            </div>
           </div>
-          <div className="relative w-1/2 md:w-full bg-primary/50 rounded-xl overflow-hidden">
-            <Image
-              alt="banner"
-              src="/images/others/EarPods.jpg"
-              layout="fill"
-              className="filter obect-contain object-center"
-            />
+          <div
+            className="w-1/2 md:w-full flex justify-center items-center rounded-xl overflow-hidden"
+            style={{ backgroundColor: banners[1].color }}
+          >
+            <div className="relative w-2/3 h-3/4">
+              <Image
+                alt="banner"
+                src={banners[1].image}
+                layout="fill"
+                className="filter obect-contain object-center"
+              />
+            </div>
           </div>
         </div>
       </div>
@@ -202,13 +187,14 @@ export async function getServerSideProps() {
       rating: -1,
     })
     .limit(8);
+
+  const bannersDocs = await Banner.find({}).lean();
   await db.disconnect();
   return {
     props: {
       topRatedProducts: topRatedProductsDocs.map(db.convertDocToObj),
+      banners: bannersDocs.map(db.convertDocToObj),
     },
   };
 }
-
-
 

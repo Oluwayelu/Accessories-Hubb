@@ -147,8 +147,7 @@ export const banners: IBanner[] = [
     image: "/images/assets/watch_2.webp",
     title: "Get your Smart Watch",
     buttonText: "Get Now",
-    description:
-      "A popular boat smart watch - Lorem ipsum, dolor sit amet consectetur adipisicing elit. Earum odio deleniti quos libero, quibusdam vitae aperiam id minima blanditiis quaerat, deserunt voluptates. Ea voluptatibus placeat deleniti enim suscipit necessitatibus molestiae.",
+    description: "A popular boat smart watch - Lorem ipsum, dolor sit amet.",
     discount: 20,
     saleTime: Date.now() + 30 * 24 * 60 * 60 * 1000,
     color: "#007baa",
@@ -157,10 +156,18 @@ export const banners: IBanner[] = [
     image: "/images/assets/headphones_a_2.webp",
     title: "Boat Headphone up for Grab",
     buttonText: "Shop Now",
-    description:
-      "A popular boat headphone - Lorem ipsum, dolor sit amet consectetur adipisicing elit. Earum odio deleniti quos libero, quibusdam vitae aperiam id minima blanditiis quaerat, deserunt voluptates. Ea voluptatibus placeat deleniti enim suscipit necessitatibus molestiae.",
+    description: "A popular boat headphone - Lorem ipsum, dolor sit amet.",
     discount: 30,
     saleTime: Date.now() + 7 * 24 * 60 * 60 * 1000,
     color: "#cebed2",
+  },
+  {
+    image: "/images/assets/earphones_c_2.webp",
+    title: "A Very Affordable Earphone up at 20% discount",
+    buttonText: "Shop Now",
+    description: "A popular boat earphone - Lorem ipsum, dolor sit amet.",
+    discount: 20,
+    saleTime: Date.now() + 7 * 24 * 60 * 60 * 1000,
+    color: "#abccba",
   },
 ];

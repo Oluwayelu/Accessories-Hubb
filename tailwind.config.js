@@ -1,3 +1,5 @@
+const plugin = require("tailwindcss/plugin");
+
 module.exports = {
   content: [
     "./pages/**/*.{js,ts,jsx,tsx}",
@@ -20,6 +22,7 @@ module.exports = {
           400: "#0f1115",
           500: "#0a0b0e",
         },
+        error: "#FD1B1B",
       },
     },
   },

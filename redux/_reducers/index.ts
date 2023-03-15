@@ -1,7 +1,9 @@
 import Cookies from "js-cookie";
 import { combineReducers } from "redux";
+
 import user from "./userReducer";
 import cart from "./cartReducer";
+import order from "./orderReducer";
 import product from "./productReducer";
 import favourite from "./favouriteReducer";
 
@@ -15,8 +17,9 @@ export const initialState = {};
 export const rootReducer = combineReducers({
   user,
   cart,
-  product,
-  favourite,
-  loading,
   error,
+  order,
+  product,
+  loading,
+  favourite,
 });

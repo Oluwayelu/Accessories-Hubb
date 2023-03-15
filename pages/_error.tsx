@@ -1,8 +1,7 @@
 import Link from "next/link";
 import { useSelector } from "react-redux";
 
-import { Landing } from "layout";
-import { CategoryCard } from "components";
+import { CategoryCard, Landing } from "components";
 
 import type { IProduct, IState } from "interface";
 import type { NextPageContext } from "next";
@@ -10,7 +9,6 @@ interface ErrorProps {
   statusCode?: number;
   title?: string;
 }
-
 const statusCodes: { [code: number]: string } = {
   400: "Bad Request",
   404: "Page not found",

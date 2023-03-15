@@ -3,15 +3,12 @@ import jwt from "jsonwebtoken";
 import type { NextApiResponse } from "next";
 import type { IUser, INextApiRequest } from "interface";
 
-const signToken = (user: IUser) => {
+export const signToken = (user: Partial<IUser>) => {
   return jwt.sign(
     {
       _id: user._id,
       email: user.email,
       isAdmin: user.isAdmin,
-      lastname: user.firstname,
-      firstname: user.firstname,
-      middlename: user.middlename,
     },
 
     process.env.NEXT_APP_JWT_SECRET,
@@ -21,7 +18,7 @@ const signToken = (user: IUser) => {
   );
 };
 
-const isAuth = async (
+export const isAuth = async (
   req: INextApiRequest,
   res: NextApiResponse,
   next: Function
@@ -43,10 +40,10 @@ const isAuth = async (
       }
     );
   } else {
-    res.status(401).send({ message: "Token is not suppiled" });
+    res.status(401).send({ message: "You are not authenticated!" });
   }
 };
-const isAdmin = async (
+export const isAdmin = async (
   req: INextApiRequest,
   res: NextApiResponse,
   next: Function
@@ -57,5 +54,3 @@ const isAdmin = async (
     res.status(401).send({ message: "User is not admin" });
   }
 };
-
-export { signToken, isAuth, isAdmin };

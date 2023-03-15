@@ -1,10 +1,9 @@
 import * as Yup from "yup";
 import { Formik } from "formik";
-import { getSession } from "next-auth/react";
 import { useDispatch } from "react-redux";
+import { getSession } from "next-auth/react";
 
-import { Auth } from "layout";
-import { Input } from "components";
+import { Input, Auth } from "components";
 import { forgotPassword } from "redux/_actions/userAction";
 
 import type { NextPage, GetServerSideProps } from "next";

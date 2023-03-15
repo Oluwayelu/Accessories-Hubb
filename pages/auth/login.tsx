@@ -4,8 +4,7 @@ import { useRouter } from "next/router";
 import { useDispatch } from "react-redux";
 import { getCsrfToken, getSession } from "next-auth/react";
 
-import { Auth } from "layout";
-import { Input } from "components";
+import { Input, Auth } from "components";
 import { loginUser } from "redux/_actions/userAction";
 
 import type { NextPage, GetServerSideProps } from "next";
@@ -74,7 +73,7 @@ const Login: NextPage<Props> = ({ csrfToken }) => {
             <button
               type="submit"
               disabled={values.email === "" || values.password === ""}
-              className="py-2 w-full font-medium bg-primary rounded disabled:bg-primary-100"
+              className="py-3 w-full font-medium bg-primary rounded-xl disabled:bg-primary-100"
             >
               {values.email && values.password ? "Login" : "Continue"}
             </button>

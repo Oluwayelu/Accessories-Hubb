@@ -2,8 +2,7 @@ import * as Yup from "yup";
 import { Formik } from "formik";
 import { useDispatch } from "react-redux";
 
-import { Auth } from "layout";
-import { Input } from "components";
+import { Input, Auth } from "components";
 import { registerUser } from "redux/_actions/userAction";
 
 import type { NextPage } from "next";
@@ -15,6 +14,7 @@ const Register: NextPage = () => {
     <Auth title="Create an account">
       <Formik
         initialValues={{
+          refId: "",
           email: "",
           firstname: "",
           lastname: "",
@@ -97,10 +97,19 @@ const Register: NextPage = () => {
               />
             </div>
 
+            <Input
+              formik
+              name="refId"
+              value={values.refId}
+              onChange={handleChange}
+              placeholder="Referal Id"
+              label="Ref Id"
+            />
+
             <button
               type="submit"
               disabled={values.email === "" || values.password === ""}
-              className="py-2 w-full font-medium bg-primary rounded disabled:bg-primary-100"
+              className="py-2 w-full font-medium bg-primary rounded-xl disabled:bg-primary-100"
             >
               {values.email && values.password ? "Register" : "Continue"}
             </button>

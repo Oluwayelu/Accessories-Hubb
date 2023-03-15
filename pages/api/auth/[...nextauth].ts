@@ -1,4 +1,5 @@
 import bcrypt from "bcryptjs";
+import Cookies from "js-cookie";
 import { MongoDBAdapter } from "@next-auth/mongodb-adapter";
 import NextAuth, { NextAuthOptions } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
@@ -26,6 +27,7 @@ const options: NextAuthOptions = {
           user &&
           bcrypt.compareSync(credentials?.password as string, user.password)
         ) {
+          console.log(user);
           return user;
         }
         throw new Error("Invalid email or password");

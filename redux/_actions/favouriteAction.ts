@@ -55,6 +55,12 @@ export const removeFavourite: Function =
         type: REMOVE_ITEM_FROM_FAVOURITES,
         payload: favouriteItems,
       });
+      toast.success("Product removed from Favourites", {
+        position: "top-right",
+        autoClose: 5000,
+        closeOnClick: true,
+        draggable: true,
+      });
     } catch (err) {
       dispatch({
         type: GET_ERROR,

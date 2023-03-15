@@ -24,21 +24,31 @@ export const loginUser: Function =
   async (dispatch: Function) => {
     dispatch({ type: LOADING });
     try {
-      const res = (await signIn("credentials", {
+      const { data } = await axios.post(`${API_URL}/auth/login`, {
         email,
         password,
-        callbackUrl,
-        redirect: true,
-      })) as unknown as SignInResponse;
+      });
 
-      if (res?.error) {
-        toast.error(res.error, {
-          position: "bottom-left",
-          autoClose: 5000,
-          closeOnClick: true,
-          draggable: true,
-        });
+      if (data) {
+        const res = (await signIn("credentials", {
+          email,
+          password,
+          callbackUrl,
+          redirect: true,
+        })) as unknown as SignInResponse;
+
+        if (res?.error) {
+          toast.error(res.error, {
+            position: "bottom-left",
+            autoClose: 5000,
+            closeOnClick: true,
+            draggable: true,
+          });
+        }
       }
+      dispatch({ type: USER_INFO, payload: data.user });
+      Cookies.set("token", data.token);
+      Cookies.set("userInfo", JSON.stringify(data.user));
 
       dispatch({ type: LOADING, payload: false });
     } catch (err) {
@@ -53,17 +63,19 @@ export const loginUser: Function =
   };
 
 export const registerUser: Function =
-  ({ email, firstname, lastname, password }: IUser) =>
+  ({ email, firstname, lastname, password, refId }: IUser) =>
   async (dispatch: Function) => {
     dispatch({ type: LOADING });
     try {
       const { data } = await axios.post(`${API_URL}/auth/register`, {
+        refId,
         email,
         firstname,
         lastname,
         password,
       });
       dispatch({ type: USER_INFO, payload: data.user });
+      console.log(data.verifyLink);
       Cookies.set("token", data.token);
       Cookies.set("userInfo", JSON.stringify(data.user));
       dispatch({ type: LOADING, payload: false });
@@ -134,6 +146,7 @@ export const logoutUser: Function = () => async (dispatch: Function) => {
   try {
     signOut();
     dispatch({ type: LOGOUT_USER });
+    Cookies.remove("token");
     Cookies.remove("userInfo");
   } catch (err) {
     toast.error(getError(err), {
@@ -144,3 +157,51 @@ export const logoutUser: Function = () => async (dispatch: Function) => {
     });
   }
 };
+
+export const updateProfile: Function =
+  (details: IUser) => async (dispatch: Function) => {
+    try {
+      const { data } = await axios.put(`${API_URL}/users/profile`, details, {
+        headers: {
+          authorization: `Bearer ${Cookies.get("token")}`,
+        },
+      });
+
+      dispatch({ type: USER_INFO, payload: data.user });
+      Cookies.set("token", data.token);
+      Cookies.set("userInfo", JSON.stringify(data.user));
+    } catch (err) {
+      toast.error(getError(err), {
+        position: "bottom-left",
+        autoClose: 5000,
+        closeOnClick: true,
+        draggable: true,
+      });
+    }
+  };
+
+export const updatePassword: Function =
+  (password: string) => async (dispatch: Function) => {
+    try {
+      const { data } = await axios.put(
+        `${API_URL}/users/password`,
+        { password },
+        {
+          headers: {
+            authorization: `Bearer ${Cookies.get("token")}`,
+          },
+        }
+      );
+
+      dispatch({ type: USER_INFO, payload: data.user });
+      Cookies.set("token", data.token);
+      Cookies.set("userInfo", JSON.stringify(data.user));
+    } catch (err) {
+      toast.error(getError(err), {
+        position: "bottom-left",
+        autoClose: 5000,
+        closeOnClick: true,
+        draggable: true,
+      });
+    }
+  };

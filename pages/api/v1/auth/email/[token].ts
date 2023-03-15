@@ -1,14 +1,16 @@
-import nc from "next-connect";
 import db from "database";
+import nc from "next-connect";
 import jwt from "jsonwebtoken";
+
 import { User } from "models";
+import { accountStatusEnum } from "utils/enums";
 
 import type { NextApiResponse } from "next";
 import type { INextApiRequest } from "interface";
 
 const handler = nc();
 
-handler.put(async (req: INextApiRequest, res: NextApiResponse) => {
+handler.get(async (req: INextApiRequest, res: NextApiResponse) => {
   await db.connect();
   const { token } = req.query;
   if (token) {
@@ -22,7 +24,8 @@ handler.put(async (req: INextApiRequest, res: NextApiResponse) => {
 
   const user = await User.findById(req.user._id);
   if (user) {
-    (user.verified = true), (user.emailToken = undefined);
+    user.status = accountStatusEnum.ACTIVE;
+    user.emailToken = undefined;
     await user.save();
 
     return res.status(200).json({

@@ -2,8 +2,7 @@ import * as Yup from "yup";
 import { Formik } from "formik";
 import { useDispatch } from "react-redux";
 
-import { Auth } from "layout";
-import { Input } from "components";
+import { Input, Auth } from "components";
 import { resetPassword } from "redux/_actions/userAction";
 
 import type { NextPage } from "next";

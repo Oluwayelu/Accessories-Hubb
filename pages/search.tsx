@@ -1,14 +1,17 @@
-import db from "database";
-
+import ReactPaginate from "react-paginate";
 import { useRouter } from "next/router";
+import { useState, useEffect } from "react";
+import { FiFilter } from "react-icons/fi";
+import { FaTimes, FaAngleRight, FaAngleLeft } from "react-icons/fa";
+
+import db from "database";
 import { Product } from "models";
-import { Landing } from "layout";
+import { ProductCard, Select, Landing } from "components";
 
 import type { NextPage, GetServerSideProps } from "next";
-import { IProduct } from "interface";
-import { ProductCard, Select } from "components";
+import type { IGetServerSideProps, IProduct } from "interface";
 
-const PAGE_SIZE = 6;
+const PAGE_SIZE = 8;
 
 const prices = [
   {
@@ -63,6 +66,14 @@ const Search: NextPage<Props> = ({
     rating = "all",
     sort = "featured",
   } = router.query;
+
+  const filter = () => {
+    document.getElementById("filter")?.classList.toggle("hidden");
+    document.getElementById("filter")?.classList.toggle("block");
+    document.getElementById("filter-background")?.classList.toggle("hidden");
+    document.getElementById("filter-background")?.classList.toggle("block");
+  };
+
   const filterSearch = ({
     page,
     category,
@@ -95,7 +106,8 @@ const Search: NextPage<Props> = ({
   const categoryHandler = (e: { target: { value: string } }) => {
     filterSearch({ category: e.target.value });
   };
-  const pageHandler = (e: any, page: string) => {
+  const pageHandler = (page: string) => {
+    console.log(page);
     filterSearch({ page });
   };
   const brandHandler = (e: { target: { value: string } }) => {
@@ -110,53 +122,87 @@ const Search: NextPage<Props> = ({
   const ratingHandler = (e: { target: { value: string } }) => {
     filterSearch({ rating: e.target.value });
   };
+
   return (
-    <Landing title="Search | Accessories Hubb">
-      <div className="w-full flex flex-col md:flex-row md:items-start space-y-3 md:space-y-0 md:space-x-5">
-        <div className="lg:w-1/4 flex flex-col px-3 py-5 rounded bg-white shadow ">
-          <Select
-            label="Categories"
-            value={String(category)}
-            onChange={categoryHandler}
-            options={["all", ...categories]}
-          />
-          <Select
-            label="Brands"
-            value={String(brand)}
-            onChange={brandHandler}
-            options={["all", ...brands]}
-          />
-          <Select
-            label="Sort by"
-            value={String(sort)}
-            onChange={sortHandler}
-            options={["featured", "lowest", "highest", "toprated", "newest"]}
-          />
-        </div>
-        <div className="lg:w-3/4 p-3 space-y-2">
-          <div className="w-full flex justify-between text-lg font-medium">
+    <Landing title="Products" className="relative p-5">
+      <div className="max-w-6xl mx-auto flex flex-col space-y-5">
+        <div
+          onClick={filter}
+          id="filter-background"
+          className="absolute inset-0 bg-dark/50 hidden z-20"
+        />
+        <h1 className="text-4xl font-medium">Products</h1>
+        <div className="relative w-full flex items-center justify-between text-lg font-medium">
+          <div className="w-full flex items-center justify-start gap-3">
             {products.length === 0 ? "No" : countProducts}{" "}
             {Number(countProducts) === 1 ? "Result" : "Results"}
-            {query !== "all" && query !== "" && " : " + query}
-            {category !== "all" && " : " + category}
-            {brand !== "all" && " : " + brand}
-            {price !== "all" && " : Price " + price}
-            {rating !== "all" && " : Rating " + rating + " & up"}
+            {query !== "all" && query !== "" && ", " + query}
+            {category !== "all" && ", " + category}
+            {brand !== "all" && ", " + brand}
+            {price !== "all" && ", Price " + price}
+            {rating !== "all" && ", Rating " + rating + " & up"}
             {(query !== "all" && query !== "") ||
             category !== "all" ||
             brand !== "all" ||
             rating !== "all" ||
             price !== "all" ? (
-              <button onClick={() => router.push("/search")}>Cancel</button>
+              <button onClick={() => router.push("/search")}>
+                <FaTimes className="text-red-500" />
+              </button>
             ) : null}
           </div>
-
-          <div className="w-full grid grid-cols-2 lg:grid-cols-3 gap-3">
-            {products.map((product, index) => (
-              <ProductCard key={index} product={product} type="row" />
-            ))}
+          <button onClick={filter} className="p-3 bg-primary-100 rounded-xl">
+            <FiFilter />
+          </button>
+          <div
+            className="card absolute top-10 right-0 lg:w-1/4 flex-col px-3 py-5 rounded bg-white shadow  z-30 hidden"
+            id="filter"
+          >
+            <Select
+              label="Categories"
+              value={String(category)}
+              onChange={categoryHandler}
+              options={["all", ...categories]}
+            />
+            <Select
+              label="Brands"
+              value={String(brand)}
+              onChange={brandHandler}
+              options={["all", ...brands]}
+            />
+            <Select
+              label="Sort by"
+              value={String(sort)}
+              onChange={sortHandler}
+              options={["featured", "lowest", "highest", "toprated", "newest"]}
+            />
           </div>
         </div>
+
+        <div className="w-full grid grid-cols-2 lg:grid-cols-4 gap-3">
+          {products.map((product, index) => (
+            <ProductCard key={index} product={product} type="row" />
+          ))}
+        </div>
+
+        <ReactPaginate
+          breakLabel="..."
+          nextLabel={
+            <div className="p-1 bg-white rounded shadow">
+              <FaAngleRight className="text-primary w-5 h-5" />
+            </div>
+          }
+          onPageChange={(e) => pageHandler((e.selected + 1).toString())}
+          pageRangeDisplayed={1}
+          pageCount={pages as unknown as number}
+          previousLabel={
+            <div className="p-1 bg-white rounded shadow">
+              <FaAngleLeft className="text-primary w-5 h-5" />
+            </div>
+          }
+          activeClassName="text-primary font-medium"
+          className="w-full flex justify-end items-center gap-2"
+        />
       </div>
     </Landing>
   );
@@ -164,18 +210,7 @@ const Search: NextPage<Props> = ({
 
 export default Search;
 
-interface Query {
-  pageSize: number;
-  page: number;
-  category: string;
-  brand: string;
-  price: string;
-  rating: string;
-  sort: string;
-  query: string;
-}
-
-export const getServerSideProps: GetServerSideProps = async ({ query }) => {
+export const getServerSideProps: IGetServerSideProps = async ({ query }) => {
   await db.connect();
   const pageSize = Number(query.pageSize) || PAGE_SIZE;
   const page = query.page || 1;

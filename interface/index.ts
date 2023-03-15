@@ -3,10 +3,12 @@ import {
   GetServerSidePropsResult,
   NextApiRequest,
 } from "next";
-import { ThunkAction, AnyAction } from "@reduxjs/toolkit";
+import { ChangeEventHandler } from "react";
 import { ParsedUrlQuery } from "querystring";
-import { makestore } from "redux/store";
+import { ThunkAction, AnyAction } from "@reduxjs/toolkit";
 
+import { makestore } from "redux/store";
+import { orderStatusEnum } from "utils/enums";
 export interface IAction {
   type: string;
   payload: any;
@@ -17,12 +19,16 @@ export interface IUser {
   email: string;
   name: string;
   imgUrl: string;
+  refId?: string;
   firstname: string;
   lastname: string;
-  middlename: string;
+  middlename?: string;
   password: string;
+  source: string;
+  status: string;
+  gender: string;
+  referees?: string[];
   phoneNumber: string;
-  verified: string;
   isAdmin: string;
   resetPasswordToken: string;
   resetPasswordExpire: Date;
@@ -36,40 +42,24 @@ export interface IReview {
 }
 
 export interface IProduct {
-  _id: string;
-  user: string;
+  _id?: string;
   name: string;
   slug: string;
   category: string;
   image: string[];
   price: number;
+  oldPrice?: number;
   brand: string;
   rating: number;
-  quantity: number;
-  numReviews: number;
+  numReviews?: number;
   countInStock: number;
   description: string;
-  reviews: IReview;
-  featuredImage: string;
-  isFeatured: boolean;
+  reviews?: IReview;
+  featuredImage?: string;
+  isFeatured?: boolean;
 }
 
-export interface ICartItems {
-  _id: string;
-  user: string;
-  name: string;
-  slug: string;
-  category: string;
-  image: string[];
-  price: number;
-  brand: string;
-  rating: number;
-  numReviews: number;
-  countInStock: number;
-  description: string;
-  reviews: IReview;
-  featuredImage: string;
-  isFeatured: boolean;
+export interface ICartItems extends IProduct {
   quantity: number;
 }
 
@@ -83,22 +73,80 @@ export interface IBanner {
   color?: string;
 }
 
-export interface IState {
-  user: {
-    userInfo: IUser;
+export interface IShippingAddress {
+  firstname?: string;
+  lastname?: string;
+  fullName?: string;
+  phoneNumber: string;
+  address: string;
+  city: string;
+  state: string;
+  postalCode?: string;
+  selected?: boolean;
+  country?: string;
+  location?: {
+    lat: string;
+    lng: string;
+    address: string;
+    name: string;
+    vicinity: string;
+    googleAddressId: string;
   };
+}
+
+type OrderItems = {
+  name: string;
+  quantity: number;
+  image: string[];
+  price: number;
+};
+
+export interface IOrder {
+  _id?: string;
+  user: string;
+  orderItems: OrderItems[];
+  shippingAddress: IShippingAddress;
+  paymentMethod: string;
+  paymentResult?: {
+    id: string;
+    status: string;
+    emailAddress: string;
+  };
+  itemsPrice: number;
+  shippingPrice: number;
+  taxPrice: number;
+  totalPrice: number;
+  isPaid?: boolean;
+  isDelivered?: boolean;
+  status: string;
+  paidAt?: Date;
+  deliveredAt?: Date;
+  createdAt?: Date;
+  updatedAt?: Date;
+}
+
+export interface IState {
+  user: { loading: boolean; userInfo: IUser };
   product: {
+    loading: boolean;
     products: IProduct[];
     category: IProduct[];
   };
-  cart: {
+  order: {
+    loading: boolean;
     totalQuantity: number;
+    orderItems: IOrder[];
+    currOrder: IOrder;
+  };
+  cart: {
+    loading: boolean;
+    totalQuantity: number;
+    selectedAddress: number;
     cartItems: ICartItems[];
-    shippingAddress: {
-      location: {};
-    };
+    shippingAddress: IShippingAddress[];
     paymentMethod: string;
   };
+  favourite: { loading: boolean; products: IProduct[] };
   error: string;
   loading: boolean;
 }
@@ -112,6 +160,8 @@ export type SendEmailOptions = {
   subject: string;
   message: string;
 };
+
+export type IHandleChange = ChangeEventHandler<HTMLInputElement>;
 
 export type IGetServerSideProps<
   P extends { [key: string]: any } = { [key: string]: any },

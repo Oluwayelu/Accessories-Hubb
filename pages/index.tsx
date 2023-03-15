@@ -1,113 +1,135 @@
-import Image from "next/image";
-import Slick from "react-slick";
-import "slick-carousel/slick/slick.css";
-// import "slick-carousel/slick/slick-theme.css";
+import Link from "next/link";
+import { useState } from "react";
+import { EffectFade } from "swiper";
+import { motion } from "framer-motion";
+import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
-
-import { Pagination, Navigation, EffectFade, EffectFlip } from "swiper";
+import { FaAngleRight } from "react-icons/fa";
 import { Swiper, SwiperSlide } from "swiper/react";
-import {} from "react-loading-skeleton";
 
 import db from "database";
-
-import { CategoryCard, CircleCard, Parallax, ProductCard } from "components";
-import { motion } from "framer-motion";
-import { Banner, Product } from "models";
-import { Landing } from "layout";
+import {
+  Search,
+  Landing,
+  Parallax,
+  CircleCard,
+  ProductCard,
+  CategoryCard,
+  CategorySection,
+  Banner as BannerCard,
+} from "components";
 import { stagger } from "variants";
+import { Banner, Product } from "models";
 
 import type { NextPage } from "next";
+import type { SetStateAction } from "react";
 import type { IBanner, IProduct, IState } from "interface";
 
 type Props = {
+  newProducts: IProduct[];
   topRatedProducts: IProduct[];
+  topSellingHeadphones: IProduct[];
   banners: IBanner[];
 };
 
-const Home: NextPage<Props> = ({ topRatedProducts, banners }) => {
+const Home: NextPage<Props> = ({
+  newProducts,
+  topRatedProducts,
+  topSellingHeadphones,
+  banners,
+}) => {
+  const { push } = useRouter();
+  const [query, setQuery] = useState("");
+  const queryChangeHandler = (e: {
+    target: { value: SetStateAction<string> };
+  }) => {
+    setQuery(e.target.value);
+  };
+
   const categories = useSelector((state: IState) => state.product.category);
 
+  const submitHandler = (e: { preventDefault: () => void }) => {
+    e.preventDefault();
+    push(`/search?query=${query}`);
+  };
+
   return (
-    <Landing title="" description="Welcome to Accessoriess Hubb">
-      <div className="w-full h-[60vh] md:h-[70vh] flex flex-col md:flex-row justify-center gap-3 z-20">
+    <Landing
+      title=""
+      description="Welcome to Accessoriess Hubb"
+      className="p-3"
+    >
+      <div className="relative max-w-6xl mt-5 mx-auto h-[50vh] lg:h-[70vh] flex justify-center items-center rounded-3xl shadow-xl over">
         <Swiper
-          modules={[Pagination, Navigation, EffectFlip]}
-          // navigation
+          modules={[EffectFade]}
           autoplay={true}
           loop={true}
-          // color="#F5BD10"
           effect="fade"
           centeredSlides
-          // pagination={{ clickable: true }}
           slidesPerView={1}
-          className="w-full md:w-3/4 h-full bg-primary text-primary rounded-b-xl shadow overflow-hidden"
+          className="relative w-full h-full rounded-3xl"
         >
           {banners.map((banner, index) => (
             <SwiperSlide key={index}>
-              <Parallax color={banner.color}>
-                <div className="absolute inset-0 w-full h-full px-3 lg:px-10 pt-10 text-dark flex flex-col items-start justify-start md:justify-center space-y-3">
-                  <div className="w-2/3">
-                    {banner.discount && (
-                      <p className="font-medium">{banner.discount}% discount</p>
-                    )}
-                    <h1 className="text-xl md:text-2xl lg:text-5xl font-semibold">
-                      {banner.title}
-                    </h1>
-                    <p className="lg:text-lg">{banner.description}</p>
-                  </div>
-
-                  <div className="absolute top-0 md:top-[20%] -right-1/4 md:right-1">
-                    <div className="relative w-80 h-80 lg:w-[400px] lg:h-[400px]">
-                      <Image layout="fill" alt="banner" src={banner.image} />
-                    </div>
-                  </div>
-
-                  <button
-                    className="rounded px-10 py-2 lg:text-lg font-medium"
-                    style={{ backgroundColor: banner.color }}
-                  >
-                    {banner.buttonText}
-                  </button>
-                </div>
-              </Parallax>
+              <Parallax banner={banner} />
             </SwiperSlide>
           ))}
         </Swiper>
 
-        <div className="px-5 md:px-0 -mt-20 md:mt-0 w-full md:w-1/4 h-1/3 md:h-full flex md:flex-wrap justify-between gap-3 z-20 md:z-0">
-          <div
-            className="w-1/2 md:w-full flex justify-center items-center rounded-xl md:rounded-none md:rounded-b-xl overflow-hidden"
-            style={{ backgroundColor: banners[0].color }}
+        <Search />
+        <div className="absolute md:bottom-1/2 w-3/4 md:w-1/2 flex items-center gap-2 bg-white px-4 rounded-lg overflow-visible z-20">
+          {/* <button
+            className="p-3 my-2 w-10 h-10 bg-primary flex items-center justify-center rounded-full"
+            // onClick={handleSubmit}
           >
-            <div className="relative w-2/3 h-3/4">
-              <Image
-                alt="banner"
-                src={banners[0].image}
-                layout="fill"
-                className="filter obect-contain object-center"
-              />
-            </div>
-          </div>
-          <div
-            className="w-1/2 md:w-full flex justify-center items-center rounded-xl overflow-hidden"
-            style={{ backgroundColor: banners[1].color }}
-          >
-            <div className="relative w-2/3 h-3/4">
-              <Image
-                alt="banner"
-                src={banners[1].image}
-                layout="fill"
-                className="filter obect-contain object-center"
-              />
-            </div>
-          </div>
+            <AiOutlineSearch />
+          </button>
+
+          <form className="w-full">
+            <input
+              type="search"
+              name="search"
+              placeholder="Search Product"
+              className="border-none w-full h-full border-0 m-0 py-0 "
+              // onChange={handleChange}
+              // value={search}
+            />
+          </form> */}
         </div>
       </div>
 
-      <div className="w-full py-5 lg:py-10 px-3 md:px-5 lg:px-10 space-y-5">
+      <div className="relative max-w-xl md:max-w-4xl mx-auto -mt-36 lg:-mt-60 hidden md:flex justify-center gap-3 z-20">
+        {topRatedProducts
+          .slice(0, 3)
+          .map((product: IProduct, index: number) => (
+            <ProductCard key={index} product={product} type="row" />
+          ))}
+      </div>
+
+      {/* <div className="relative px-5 max-w-xl mx-auto h-[50vh] -mt-40  flex gap-3 z-40">
+        {banners.map((banner, key) => (
+          <div
+            key={key}
+            className="w-1/2 h-full flex justify-center items-center rounded-xl overflow-hidden"
+            style={{ backgroundColor: banner.color }}
+          >
+            <div className="relative w-2/3 h-2/3">
+              <Image
+                alt="banner"
+                src={banner.image}
+                layout="fill"
+                className="filter obect-contain object-center"
+              />
+            </div>
+          </div>
+        ))}
+      </div> */}
+
+      <div className="max-w-6xl mx-auto my-5 bg-white rounded-3xl text-center py-5 lg:py-10 px-3 md:px-5 lg:px-10 shadow space-y-5">
+        <h1 className="font-medium text-2xl">Categories</h1>
         <motion.div
           variants={stagger}
-          className="w-full flex flex-shrink-0 justify-start lg:justify-center items-center overflow-x-auto scroll-p-5 snap-x scroll-smooth space-x-5 md:space-x-10"
+          className="w-full flex flex-shrink-0 justify-center items-center overflow-x-auto scroll-p-5 snap-x scroll-smooth space-x-5 md:space-x-10"
         >
           {categories &&
             categories.map((product, i) => (
@@ -116,62 +138,52 @@ const Home: NextPage<Props> = ({ topRatedProducts, banners }) => {
         </motion.div>
       </div>
 
-      <div className="w-full py-10 px-3 md:px-5 lg:px-10 md:py-20 flex flex-col lg:flex-row justify-start items-start lg:space-x-5">
-        <div className="w-full lg:w-1/4">
-          <div className="w-full shadow rounded-t-xl overflow-hidden">
-            <h1 className="w-full py-2 pl-3 text-2xl font-medium bg-primary-100 ">
-              Special Items
-            </h1>
-
-            <motion.div variants={stagger} className="w-full p-3 space-y-3">
-              {categories.map((product, index) => (
-                <ProductCard key={index} product={product} type="special" />
-              ))}
-            </motion.div>
-          </div>
-        </div>
-
-        <div className="w-full lg:w-3/4 space-y-10">
-          <div className="w-full space-y-5 cursor-pointer">
+      <div className="max-w-6xl mx-auto space-y-10">
+        <div className="w-full space-y-5 cursor-pointer">
+          <div className="w-full flex items-center justify-between">
             <h1 className="text-2xl font-medium">Top Rated Products</h1>
-            <motion.div
-              variants={stagger}
-              className="w-full py-2 flex flex-shrink-0 justify-start items-center overflow-x-auto scroll-p-5 snap-x scroll-smooth space-x-5 md:space-x-10"
-            >
-              {topRatedProducts.map((product, i) => (
-                <CircleCard key={i} product={product} />
-              ))}
-            </motion.div>
+            <div className="inline-flex items-center gap-2">
+              See all <FaAngleRight />
+            </div>
           </div>
-
-          <div className="w-full bg-white shadow rounded-t-xl overflow-hidden">
-            <h1 className="w-full py-2 pl-3 text-2xl font-medium bg-primary-100 ">
-              New Products
-            </h1>
-            <motion.div
-              variants={stagger}
-              className="w-full p-3 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3"
-            >
-              {topRatedProducts.map((product: IProduct, index: number) => (
-                <ProductCard key={index} product={product} type="row" />
-              ))}
-            </motion.div>
-          </div>
-
-          <div className="w-full bg-white shadow rounded-t-xl overflow-hidden">
-            <h1 className="w-full py-2 pl-3 text-2xl font-medium bg-primary-100 ">
-              Top Selling Headphones
-            </h1>
-            <motion.div
-              variants={stagger}
-              className="w-full p-3 grid grid-cols-2  gap-3"
-            >
-              {topRatedProducts.map((product: IProduct, index: number) => (
-                <ProductCard key={index} product={product} type="column" />
-              ))}
-            </motion.div>
-          </div>
+          <motion.div
+            variants={stagger}
+            className="w-full py-2 flex flex-shrink-0 justify-start items-center overflow-x-auto scroll-p-5 snap-x scroll-smooth space-x-5 md:space-x-10"
+          >
+            {topRatedProducts.map((product, i) => (
+              <CircleCard key={i} product={product} />
+            ))}
+          </motion.div>
         </div>
+        <BannerCard
+          image={banners[0].image}
+          info={banners[0].description}
+          btntext="Explore All"
+          bgColor={banners[0].color}
+        />
+        <div className="w-full">
+          <h1 className="w-full py-2 pl-3 text-2xl font-medium ">
+            New Products
+          </h1>
+          <motion.div
+            variants={stagger}
+            className="w-full p-3 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3"
+          >
+            {newProducts.map((product: IProduct, index: number) => (
+              <ProductCard key={index} product={product} type="row" />
+            ))}
+          </motion.div>
+        </div>
+        <CategorySection
+          title="Top Selling Headphones"
+          category="Headphones"
+          bgColor="#007baa"
+        />
+        <CategorySection
+          title="Wrist Watch for grabs"
+          category="Watch"
+          bgColor="#cceaff"
+        />
       </div>
     </Landing>
   );
@@ -188,11 +200,32 @@ export async function getServerSideProps() {
     })
     .limit(8);
 
+  const newProductsDocs = await Product.find({}, "-reviews")
+    .lean()
+    .sort({
+      createdAt: -1,
+    })
+    .limit(8);
+
+  const topSellingHeadphonesDocs = await Product.find(
+    {
+      category: "Headphones",
+    },
+    "-reviews"
+  )
+    .lean()
+    .sort({
+      rating: -1,
+    })
+    .limit(8);
+
   const bannersDocs = await Banner.find({}).lean();
   await db.disconnect();
   return {
     props: {
+      newProducts: newProductsDocs.map(db.convertDocToObj),
       topRatedProducts: topRatedProductsDocs.map(db.convertDocToObj),
+      topSellingHeadphones: topSellingHeadphonesDocs.map(db.convertDocToObj),
       banners: bannersDocs.map(db.convertDocToObj),
     },
   };

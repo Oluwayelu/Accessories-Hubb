@@ -18,12 +18,10 @@ handler.put(async (req: INextApiRequest, res: NextApiResponse) => {
   user.lastname = req.body.lastname ? req.body.lastname : user.lastname;
   user.firstname = req.body.firstname ? req.body.firstname : user.firstname;
   user.middlename = req.body.middlename ? req.body.middlename : user.middlename;
+  user.gender = req.body.gender ? req.body.gender : user.gender;
   user.phoneNumber = req.body.phoneNumber
     ? req.body.phoneNumber
     : user.phoneNumber;
-  user.password = req.body.password
-    ? bcrypt.hashSync(req.body.password)
-    : user.password;
   await user.save();
   await db.disconnect();
 

@@ -13,7 +13,9 @@ handler.use(isAuth);
 
 handler.get(async (req: INextApiRequest, res: NextApiResponse) => {
   await db.connect();
-  const orders = await Order.find({ user: req.user._id });
+  const orders = await Order.find({ user: req.user._id }).lean().sort({
+    createdAt: -1,
+  });
   res.status(200).send(orders);
 });
 

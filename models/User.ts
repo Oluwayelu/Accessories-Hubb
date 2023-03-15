@@ -1,7 +1,10 @@
 import bcrypt from "bcryptjs";
 import mongoose from "mongoose";
+import { accountSourceEnum, accountStatusEnum } from "utils/enums";
 
-const userSchema = new mongoose.Schema(
+const { Schema } = mongoose;
+
+const userSchema = new Schema(
   {
     middlename: { type: String },
     name: { type: String },
@@ -10,11 +13,35 @@ const userSchema = new mongoose.Schema(
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
     imgUrl: { type: String },
+    gender: { type: String },
     phoneNumber: { type: String },
-    verified: { type: Boolean, required: true, default: false },
+    confirmationCode: { type: String },
+    status: {
+      type: String,
+      enum: [...Object.values(accountStatusEnum)],
+      default: accountStatusEnum.PENDING,
+    },
+    source: {
+      type: String,
+      enum: [...Object.values(accountSourceEnum)],
+      default: accountSourceEnum.LOCAL,
+    },
     isAdmin: { type: Boolean, required: true, default: false },
-    resetPasswordToken: String,
-    resetPasswordExpire: Date,
+    resetPasswordToken: { type: String },
+    resetPasswordExpire: {
+      type: Date,
+    },
+    lastVisited: { type: Date, default: new Date() },
+    refId: {
+      type: String,
+      required: [true, "referral ID required"],
+    },
+    referees: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "users",
+      },
+    ],
   },
   {
     timestamps: true,

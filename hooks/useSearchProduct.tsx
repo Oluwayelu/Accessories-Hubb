@@ -16,14 +16,13 @@ export const useSearchProduct = () => {
 
   const handleSubmit: FormEventHandler = (e) => {
     e.preventDefault();
-    console.log(query);
+
     push({
       pathname: "/search",
       query: { query },
     });
   };
 
-  console.log(query);
   useEffect(() => {
     const filter = products.filter((x) => {
       return (

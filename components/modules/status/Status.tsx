@@ -1,3 +1,4 @@
+import { Badge } from "components/widgets";
 import { orderStatusEnum } from "utils/enums";
 
 interface Props {
@@ -27,13 +28,7 @@ const Status = ({ status }: Props) => {
     }
   };
 
-  return (
-    <div
-      className={`${getColor()} relative px-3 py-1 flex justify-center items-center rounded-2xl overflow-hidden`}
-    >
-      <p className="text-xs whitespace-nowrap truncate">{status}</p>
-    </div>
-  );
+  return <Badge className={getColor()}>{status}</Badge>;
 };
 
 export default Status;

@@ -8,3 +8,4 @@ export * from "./cards";
 export * from "./banner";
 export * from "./progressBar";
 export * from "./select";
+export * from "./badge";

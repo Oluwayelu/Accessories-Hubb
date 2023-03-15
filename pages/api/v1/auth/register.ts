@@ -38,13 +38,19 @@ handler.post(async (req: NextApiRequest, res: NextApiResponse) => {
       refId: userRefId,
       password: bcrypt.hashSync(password),
     });
+
+    const referalUser = await User.findOne({ refId });
+    if (!referalUser && refId !== "") {
+      return res.status(400).json({ message: "Referal Id does not exist" });
+    }
+
     const user = await newUser.save();
 
     if (refId) {
-      const referalUser = await User.findOne({ refId });
       referalUser.referees.push(user._id);
       referalUser.save();
     }
+
     await db.disconnect();
 
     const token = signToken(user);

@@ -30,10 +30,8 @@ const OrderPage = ({ id }: Props) => {
   const { currOrder, loading } = useAppSelector((state) => state.order);
 
   useEffect(() => {
-    console.log(id);
     dispatch(getOrder(id));
   }, [dispatch, id]);
-  console.log(!currOrder);
   return (
     <Landing
       title={`${currOrder._id?.substring(20, 24)} Order`}
@@ -201,20 +199,19 @@ export const getServerSideProps: GetServerSideProps<Props, Params> = async (
   const params = context.params!;
   const { id } = params;
 
-  // const session = await getSession({ req: context.req });
-  // if (!session) {
-  //   return {
-  //     redirect: {
-  //       destination: LOGIN + "?redirect=/dashboard/orders" + id,
-  //       permanent: false,
-  //     },
-  //   };
-  // }
+  const session = await getSession({ req: context.req });
+  if (!session) {
+    return {
+      redirect: {
+        destination: LOGIN + "?redirect=/dashboard/orders" + id,
+        permanent: false,
+      },
+    };
+  }
+
   return {
     props: {
       id,
     },
   };
 };
-
-// export default dynamic(() => Promise.resolve(OrderPage), { ssr: false });

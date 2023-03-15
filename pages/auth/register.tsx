@@ -1,3 +1,5 @@
+import { useRouter } from "next/router";
+
 import * as Yup from "yup";
 import { Formik } from "formik";
 import { useDispatch } from "react-redux";
@@ -8,13 +10,14 @@ import { registerUser } from "redux/_actions/userAction";
 import type { NextPage } from "next";
 
 const Register: NextPage = () => {
+  const { query } = useRouter();
   const dispatch = useDispatch();
 
   return (
     <Auth title="Create an account">
       <Formik
         initialValues={{
-          refId: "",
+          refId: query.refId ? query.refId : "",
           email: "",
           firstname: "",
           lastname: "",

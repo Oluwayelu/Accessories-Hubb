@@ -41,7 +41,7 @@ handler.post(async (req: NextApiRequest, res: NextApiResponse) => {
 
     const referalUser = await User.findOne({ refId });
     if (!referalUser && refId !== "") {
-      return res.status(400).json({ message: "Referal Id does not exist" });
+      return res.status(400).json({ message: "Invalid referal Id" });
     }
 
     const user = await newUser.save();

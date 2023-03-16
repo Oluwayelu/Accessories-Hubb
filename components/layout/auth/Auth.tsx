@@ -31,7 +31,7 @@ const AuthLayout: NextPage<Props> = ({ title, description, children }) => {
           variants={fadeInUp}
           className="w-full md:w-1/2 lg:w-1/3 py-5 space-y-5 z-20"
         >
-          <div className="w-full p-5 md:px-10 md:bg-white rounded-3xl md:shadow-lg space-y-5">
+          <div className="w-full md:px-10 md:py-5 md:bg-white rounded-3xl md:shadow-lg space-y-5">
             <h1 className="text-3xl font-medium">{title}</h1>
 
             {children}

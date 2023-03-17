@@ -1,5 +1,6 @@
 import bcrypt from "bcryptjs";
 import mongoose from "mongoose";
+import { signToken } from "utils/auth";
 import { accountSourceEnum, accountStatusEnum } from "utils/enums";
 
 const { Schema } = mongoose;
@@ -60,11 +61,11 @@ userSchema.methods.comparePassword = async function (enteredPassword: string) {
   return await bcrypt.compare(enteredPassword, this.password);
 };
 
-userSchema.methods.getResetPasswordToken = function () {
-  const resetToken = Date.now();
+userSchema.methods.getResetPasswordToken = function (email: string) {
+  const resetToken = signToken({ email });
 
   this.resetPasswordToken = resetToken;
-  this.resetPasswordExpire = Date.now() + 10 * 60 * 60 * 1000;
+  this.resetPasswordExpire = Date.now() + 10 * 60 * 1000;
 
   return resetToken;
 };

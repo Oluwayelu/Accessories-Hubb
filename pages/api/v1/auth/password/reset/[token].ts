@@ -1,5 +1,6 @@
 import nc from "next-connect";
 import db from "database";
+import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import { User } from "models";
 import { sendEmail } from "helpers";
@@ -29,7 +30,7 @@ handler.put(async (req: INextApiRequest, res: NextApiResponse) => {
       });
     }
 
-    user.password = req.body.password;
+    user.password = bcrypt.hashSync(req.body.password);
 
     user.resetPasswordToken = undefined;
     user.resetPasswordExpire = undefined;
@@ -39,12 +40,10 @@ handler.put(async (req: INextApiRequest, res: NextApiResponse) => {
     db.disconnect();
 
     res.status(200).json({
-      success: true,
       message: "Password updated successfully",
     });
   } catch (err) {
     res.status(200).json({
-      success: false,
       message: "Could not update Password",
     });
   }

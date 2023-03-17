@@ -23,6 +23,7 @@ handler.put(async (req: INextApiRequest, res: NextApiResponse) => {
   res.status(200).json({
     token,
     user,
+    message: "Password updated successfully",
   });
 });
 

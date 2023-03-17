@@ -2,27 +2,33 @@ import { useRouter } from "next/router";
 
 import * as Yup from "yup";
 import { Formik } from "formik";
-import { useDispatch } from "react-redux";
+import { getCsrfToken, getSession } from "next-auth/react";
 
-import { Input, Auth } from "components";
+import { Input, Auth, Button } from "components";
+import { useAppSelector, useAppDispatch } from "hooks";
 import { registerUser } from "redux/_actions/userAction";
 
-import type { NextPage } from "next";
+import type { NextPage, GetServerSideProps } from "next";
 
-const Register: NextPage = () => {
+type Props = {
+  csrfToken: string;
+};
+
+const Register: NextPage<Props> = ({ csrfToken }) => {
   const { query } = useRouter();
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
+  const { loading } = useAppSelector((state) => state.user);
 
   return (
     <Auth title="Create an account">
       <Formik
         initialValues={{
-          refId: query.refId ? query.refId : "",
           email: "",
           firstname: "",
           lastname: "",
           password: "",
           confirmPassword: "",
+          refId: query.refId ? query.refId : "",
         }}
         validationSchema={Yup.object().shape({
           email: Yup.string()
@@ -38,15 +44,17 @@ const Register: NextPage = () => {
         })}
         onSubmit={(values, { setStatus, setSubmitting }) => {
           setStatus();
+          setSubmitting(true);
           dispatch(registerUser(values));
           setSubmitting(false);
         }}
       >
-        {({ handleSubmit, handleChange, values, touched, errors }) => (
+        {({ handleSubmit, handleChange, values }) => (
           <form
             onSubmit={handleSubmit}
             className="flex flex-col items-start space-y-3"
           >
+            <input name="csrfToken" type="hidden" defaultValue={csrfToken} />
             <div className="w-full flex flex-col lg:flex-row space-y-3 lg:space-y-0 lg:space-x-2">
               <Input
                 formik
@@ -106,16 +114,17 @@ const Register: NextPage = () => {
               value={values.refId}
               onChange={handleChange}
               placeholder="Referal Id"
-              label="Ref Id"
+              label="Ref Id (Optional)"
             />
 
-            <button
+            <Button
               type="submit"
+              loading={loading}
               disabled={values.email === "" || values.password === ""}
-              className="py-2 w-full font-medium bg-primary rounded-xl disabled:bg-primary-100"
+              className="w-full"
             >
-              {values.email && values.password ? "Register" : "Continue"}
-            </button>
+              Register
+            </Button>
 
             <p className="text-sm">
               By creating account, you agree to Accessories Hubb{" "}
@@ -130,3 +139,23 @@ const Register: NextPage = () => {
 };
 
 export default Register;
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const session = await getSession({ req: context.req });
+
+  if (session) {
+    return {
+      redirect: {
+        destination: context.query?.redirect
+          ? (context.query.redirect as string)
+          : "/",
+        permanent: false,
+      },
+    };
+  }
+  return {
+    props: {
+      csrfToken: await getCsrfToken(context),
+    },
+  };
+};

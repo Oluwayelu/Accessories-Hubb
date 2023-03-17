@@ -1,16 +1,20 @@
-import * as Yup from "yup";
-import { Formik } from "formik";
-import { useDispatch } from "react-redux";
-
-import { Input, Auth } from "components";
-import { resetPassword } from "redux/_actions/userAction";
-
-import type { NextPage } from "next";
 import { useRouter } from "next/router";
 
+import * as Yup from "yup";
+import { Formik } from "formik";
+import { getSession } from "next-auth/react";
+
+import { Input, Button, Auth } from "components";
+import { useAppSelector, useAppDispatch } from "hooks";
+import { resetPassword } from "redux/_actions/userAction";
+
+import type { NextPage, GetServerSideProps } from "next";
+
 const Reset: NextPage = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
+
   const { query } = useRouter();
+  const { loading } = useAppSelector((state) => state.user);
 
   return (
     <Auth title="Reset Password">
@@ -65,13 +69,14 @@ const Reset: NextPage = () => {
               placeholder="Confirm Password"
             />
 
-            <button
+            <Button
               type="submit"
+              loading={loading}
               disabled={values.confirmPassword === "" || values.password === ""}
-              className="py-2 w-full font-medium bg-primary rounded disabled:bg-primary-100"
+              className="w-full"
             >
               Reset Password
-            </button>
+            </Button>
 
             <p className="text-sm">
               By continuing you agree to Accessories Hubb{" "}
@@ -86,3 +91,21 @@ const Reset: NextPage = () => {
 };
 
 export default Reset;
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const session = await getSession({ req: context.req });
+
+  if (session) {
+    return {
+      redirect: {
+        destination: context.query?.redirect
+          ? (context.query.redirect as string)
+          : "/",
+        permanent: false,
+      },
+    };
+  }
+  return {
+    props: {},
+  };
+};

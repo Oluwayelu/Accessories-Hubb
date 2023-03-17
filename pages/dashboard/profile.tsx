@@ -6,17 +6,17 @@ import { Formik, ErrorMessage } from "formik";
 import { getSession } from "next-auth/react";
 import { FaMale, FaFemale, FaEdit } from "react-icons/fa";
 
-import { Input, Landing, Loader } from "components";
 import { LOGIN, PROFILE } from "routes";
+import { Input, Button, Landing, Loader } from "components";
 import { useAppDispatch, useAppSelector } from "hooks/useReactRedux";
+import { updatePassword, updateProfile } from "redux/_actions/userAction";
 
 import type { Session } from "next-auth";
 import type { GetServerSideProps } from "next";
-import { updatePassword, updateProfile } from "redux/_actions/userAction";
 
 const Profile = ({ session }: { session: Session }) => {
   const dispatch = useAppDispatch();
-  const { userInfo } = useAppSelector((state) => state.user);
+  const { userInfo, loading } = useAppSelector((state) => state.user);
   return (
     <Landing
       title={`${userInfo.firstname} Profile`}
@@ -159,13 +159,9 @@ const Profile = ({ session }: { session: Session }) => {
                         className="text-error"
                       />
                     </div>
-
-                    <button
-                      type="submit"
-                      className="py-3 w-full flex justify-center items-center font-medium bg-primary rounded-xl disabled:bg-primary-100"
-                    >
-                      {isSubmitting ? <Loader /> : "Update"}
-                    </button>
+                    <Button type="submit" loading={loading} className="w-full">
+                      Update
+                    </Button>
                   </form>
                 )}
               </Formik>
@@ -233,12 +229,9 @@ const Profile = ({ session }: { session: Session }) => {
                       placeholder="Confirm New Password"
                     />
 
-                    <button
-                      type="submit"
-                      className="py-3 w-full font-medium bg-primary rounded-xl disabled:bg-primary-100"
-                    >
+                    <Button type="submit" loading={loading} className="w-full">
                       Update
-                    </button>
+                    </Button>
                   </form>
                 )}
               </Formik>

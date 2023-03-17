@@ -1,23 +1,23 @@
+import Link from "next/link";
+
 import * as Yup from "yup";
 import { Formik } from "formik";
-import { useRouter } from "next/router";
-import { useDispatch } from "react-redux";
 import { getCsrfToken, getSession } from "next-auth/react";
 
-import { Input, Auth } from "components";
+import { FORGOTPASSWORD } from "routes";
+import { Input, Auth, Button } from "components";
 import { loginUser } from "redux/_actions/userAction";
+import { useAppSelector, useAppDispatch } from "hooks";
 
 import type { NextPage, GetServerSideProps } from "next";
-import Link from "next/link";
-import { FORGOTPASSWORD } from "routes";
 
 type Props = {
   csrfToken: string;
 };
 
 const Login: NextPage<Props> = ({ csrfToken }) => {
-  const dispatch = useDispatch();
-  const router = useRouter();
+  const dispatch = useAppDispatch();
+  const { loading } = useAppSelector((state) => state.user);
 
   return (
     <Auth title="Login">
@@ -34,17 +34,13 @@ const Login: NextPage<Props> = ({ csrfToken }) => {
         })}
         onSubmit={async (values, { setStatus, setSubmitting }) => {
           setStatus();
-          dispatch(
-            loginUser(
-              values,
-              router.query.redirect ? router.query.redirect : "/"
-            )
-          );
+          setSubmitting(true);
+          dispatch(loginUser(values));
 
           setSubmitting(false);
         }}
       >
-        {({ handleSubmit, handleChange, values, touched, errors }) => (
+        {({ handleSubmit, handleChange, values }) => (
           <form
             onSubmit={handleSubmit}
             className="flex flex-col items-start space-y-3"
@@ -70,13 +66,15 @@ const Login: NextPage<Props> = ({ csrfToken }) => {
               placeholder="Password"
             />
 
-            <button
+            <Button
               type="submit"
+              loading={loading}
               disabled={values.email === "" || values.password === ""}
-              className="py-3 w-full font-medium bg-primary rounded-xl disabled:bg-primary-100"
+              className="w-full"
             >
-              {values.email && values.password ? "Login" : "Continue"}
-            </button>
+              Login
+            </Button>
+
             <Link href={FORGOTPASSWORD}>
               <a className="self-end text-sm">Forgot Password?</a>
             </Link>

@@ -1,15 +1,17 @@
 import * as Yup from "yup";
 import { Formik } from "formik";
-import { useDispatch } from "react-redux";
 import { getSession } from "next-auth/react";
 
-import { Input, Auth } from "components";
+import { Input, Auth, Button } from "components";
+import { useAppDispatch, useAppSelector } from "hooks";
 import { forgotPassword } from "redux/_actions/userAction";
 
 import type { NextPage, GetServerSideProps } from "next";
 
 const ForgotPassword: NextPage = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
+  const { loading } = useAppSelector((state) => state.user);
+
   return (
     <Auth title="Forgot password" description="Recovery forgotten password">
       <Formik
@@ -43,13 +45,14 @@ const ForgotPassword: NextPage = () => {
               placeholder="example@gmail.com"
             />
 
-            <button
+            <Button
               type="submit"
+              loading={loading}
+              className="w-full"
               disabled={values.email === ""}
-              className="py-2 w-full font-medium bg-primary rounded disabled:bg-primary-100"
             >
               Submit
-            </button>
+            </Button>
 
             <p className="text-sm">
               By continuing you agree to Accessories Hubb{" "}

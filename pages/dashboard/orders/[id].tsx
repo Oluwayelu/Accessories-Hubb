@@ -1,23 +1,14 @@
 import Link from "next/link";
 import Image from "next/image";
-import { useEffect, useLayoutEffect } from "react";
+import { useEffect } from "react";
 
 import { motion } from "framer-motion";
 import { getSession } from "next-auth/react";
-import {
-  FaEye,
-  FaTrash,
-  FaAngleUp,
-  FaAngleDown,
-  FaFolder,
-} from "react-icons/fa";
 import { Status, Landing, Loader } from "components";
-import { fadeInUp, fadeInLeft, stagger } from "variants";
 import { LOGIN } from "routes";
 import { getOrder } from "redux/_actions/orderAction";
 import { useAppDispatch, useAppSelector } from "hooks/useReactRedux";
 
-import type { IOrder } from "interface";
 import type { GetServerSideProps } from "next";
 import type { ParsedUrlQuery } from "querystring";
 
@@ -61,20 +52,20 @@ const OrderPage = ({ id }: Props) => {
                     <div className="w-full">
                       <p>
                         <span className="font-medium">Name:</span>{" "}
-                        {currOrder.shippingAddress.fullName}
+                        {currOrder.shippingAddress?.fullName}
                       </p>
                       <p>
                         <span className="font-medium">Address:</span>{" "}
-                        {currOrder.shippingAddress.address}.{" "}
-                        {currOrder.shippingAddress.city},{" "}
-                        {currOrder.shippingAddress.state}
+                        {currOrder.shippingAddress?.address}.{" "}
+                        {currOrder.shippingAddress?.city},{" "}
+                        {currOrder.shippingAddress?.state}
                       </p>
                       <p>
                         <span className="font-medium">Phone:</span>{" "}
-                        {currOrder.shippingAddress.phoneNumber}
+                        {currOrder.shippingAddress?.phoneNumber}
                       </p>
 
-                      {currOrder.shippingAddress.location && (
+                      {currOrder.shippingAddress?.location && (
                         <a
                           target="_new"
                           className="text-primary"
@@ -142,11 +133,11 @@ const OrderPage = ({ id }: Props) => {
 
               <div>
                 <div className="text-lg flex items-center justify-between space-x-1">
-                  <p>Subtotal ({currOrder.orderItems.length} Items):</p>
+                  <p>Subtotal ({currOrder.orderItems?.length} Items):</p>
                   <p className="font-bold inline-flex items-start">
                     <span className="text-sm"> &#8358;</span>
                     {currOrder.orderItems
-                      .reduce((a, c) => a + c.price * c.quantity, 0)
+                      ?.reduce((a, c) => a + c.price * c.quantity, 0)
                       .toLocaleString("en-US")}
                   </p>
                 </div>
@@ -154,7 +145,7 @@ const OrderPage = ({ id }: Props) => {
                   <p>Tax:</p>
                   <p className="font-bold inline-flex items-start">
                     <span className="text-sm"> &#8358;</span>
-                    {currOrder.taxPrice.toLocaleString("en-US")}
+                    {currOrder.taxPrice?.toLocaleString("en-US")}
                   </p>
                 </div>
                 {currOrder.shippingPrice > 0 ? (
@@ -162,7 +153,7 @@ const OrderPage = ({ id }: Props) => {
                     <p>Shipping:</p>
                     <p className="font-bold inline-flex items-start">
                       <span className="text-sm"> &#8358;</span>
-                      {currOrder.shippingPrice.toLocaleString("en-US")}
+                      {currOrder.shippingPrice?.toLocaleString("en-US")}
                     </p>
                   </div>
                 ) : (
@@ -172,10 +163,10 @@ const OrderPage = ({ id }: Props) => {
                 )}
 
                 <div className="mt-3 pt-3 border-t text-lg flex items-center justify-between space-x-1">
-                  <p>Total ({currOrder.orderItems.length} Items):</p>
+                  <p>Total ({currOrder.orderItems?.length} Items):</p>
                   <p className="font-bold inline-flex items-start">
                     <span className="text-sm"> &#8358;</span>
-                    {currOrder.totalPrice.toLocaleString("en-US")}
+                    {currOrder.totalPrice?.toLocaleString("en-US")}
                   </p>
                 </div>
               </div>

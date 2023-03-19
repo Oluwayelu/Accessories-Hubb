@@ -31,6 +31,7 @@ export const placeOrder: Function =
         closeOnClick: true,
         draggable: true,
       });
+      window.location.href = `/dashboard/orders/${data._id}`;
     } catch (err) {
       toast.error(getError(err), {
         position: "bottom-left",

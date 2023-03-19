@@ -31,8 +31,6 @@ const Orders = () => {
     dispatch(getOrderHistory());
   }, [dispatch]);
 
-  const item = orderItems[0];
-
   return (
     <Landing
       title="Orders history"

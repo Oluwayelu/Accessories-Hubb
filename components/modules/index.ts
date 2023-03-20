@@ -4,6 +4,7 @@ export * from "./header";
 export * from "./drawer";
 export * from "./search";
 export * from "./status";
+export * from "./sidebar";
 export * from "./product";
 export * from "./parallax";
 export * from "./categorySection";

@@ -11,7 +11,11 @@ handler.get(async (req: NextApiRequest, res: NextApiResponse) => {
   await db.connect();
   const order = await Order.findById(req.query.id);
   await db.disconnect();
-  res.status(200).send(order);
+  if (order) {
+    res.status(200).send(order);
+  } else {
+    res.status(400).send({ message: "Order not found" });
+  }
 });
 
 export default handler;

@@ -14,6 +14,18 @@ handler.use(isAuth, isAdmin);
 
 handler.get(async (req: INextApiRequest, res: NextApiResponse) => {
   await db.connect();
+  const orders = await Order.find({})
+    .populate("user", ["name", "imgUrl"])
+    .lean()
+    .sort({
+      createdAt: -1,
+    });
+  const completedOrder = await Order.find({ status: "Completed" })
+    .populate("user", ["name", "imgUrl"])
+    .lean()
+    .sort({
+      createdAt: -1,
+    });
   const ordersCount = await Order.countDocuments();
   const productsCount = await Product.countDocuments();
   const usersCount = await User.countDocuments();
@@ -36,9 +48,15 @@ handler.get(async (req: INextApiRequest, res: NextApiResponse) => {
     },
   ]);
   await db.disconnect();
-  res
-    .status(200)
-    .json({ ordersCount, productsCount, usersCount, ordersPrice, salesData });
+  res.status(200).json({
+    orders,
+    ordersCount,
+    completedOrder,
+    productsCount,
+    usersCount,
+    ordersPrice,
+    salesData,
+  });
 });
 
 export default handler;

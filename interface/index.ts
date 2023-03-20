@@ -8,7 +8,9 @@ import { ParsedUrlQuery } from "querystring";
 import { ThunkAction, AnyAction } from "@reduxjs/toolkit";
 
 import { makestore } from "redux/store";
-import { orderStatusEnum } from "utils/enums";
+
+import type { IconType } from "react-icons/lib";
+
 export interface IAction {
   type: string;
   payload: any;
@@ -103,7 +105,7 @@ type OrderItems = {
 
 export interface IOrder {
   _id?: string;
-  user: string;
+  user?: IUser;
   orderItems: OrderItems[];
   shippingAddress: IShippingAddress;
   paymentMethod: string;
@@ -125,8 +127,23 @@ export interface IOrder {
   updatedAt?: Date;
 }
 
+type SalesData = {
+  _id: string;
+  totalSales: number;
+};
+export interface ISummary {
+  orders: IOrder[];
+  completedOrder: IOrder[];
+  ordersCount: number;
+  ordersPrice: number;
+  productsCount: number;
+  salesData: SalesData[];
+  usersCount: number;
+}
+
 export interface IState {
   user: { loading: boolean; userInfo: IUser };
+  admin: { loading: boolean; summary: ISummary; error: string };
   product: {
     loading: boolean;
     products: IProduct[];
@@ -149,6 +166,18 @@ export interface IState {
   favourite: { loading: boolean; products: IProduct[] };
   error: string;
   loading: boolean;
+}
+
+type SidebarDropdown = {
+  name: string;
+  link: string;
+  Icon: IconType;
+};
+export interface ISidebarRoutes {
+  name: string;
+  link?: string;
+  Icon: IconType;
+  dropdown?: SidebarDropdown[];
 }
 
 export interface INextApiRequest extends NextApiRequest {

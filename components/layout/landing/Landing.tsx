@@ -35,7 +35,7 @@ const LandingLayout: NextPage<Props> = ({
     >
       <NextSeo title={title} description={description} />
       <Header />
-      <div className={className && className}>{children}</div>
+      <div className={`${className} w-full min-h-[92vh]`}>{children}</div>
       {footer && <Footer />}
 
       <ToastContainer />

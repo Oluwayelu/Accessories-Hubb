@@ -37,12 +37,12 @@ export const sidebar: ISidebarRoutes[] = [
     Icon: FiLayout,
     dropdown: [
       {
-        name: "View Producs",
-        link: "/admin/producst",
+        name: "View products",
+        link: "/admin/products",
         Icon: FiLayout,
       },
       {
-        name: "Add new Product",
+        name: "Add new product",
         link: "/admin/product/add-new",
         Icon: FiLayout,
       },
@@ -57,13 +57,13 @@ export const sidebar: ISidebarRoutes[] = [
     name: "Coupons",
     dropdown: [
       {
-        name: "View Producs",
-        link: "/admin/producst",
+        name: "View coupons",
+        link: "/admin/coupons",
         Icon: FiLayout,
       },
       {
-        name: "Add new Product",
-        link: "/admin/product/add-new",
+        name: "Create new coupons",
+        link: "/admin/coupons/create",
         Icon: FiLayout,
       },
     ],
@@ -78,13 +78,13 @@ export const sidebar: ISidebarRoutes[] = [
     name: "Banners",
     dropdown: [
       {
-        name: "View Producs",
-        link: "/admin/producst",
+        name: "View Banners",
+        link: "/admin/banners",
         Icon: FiLayout,
       },
       {
-        name: "Add new Product",
-        link: "/admin/product/add-new",
+        name: "Create new banner",
+        link: "/admin/banners/create",
         Icon: FiLayout,
       },
     ],

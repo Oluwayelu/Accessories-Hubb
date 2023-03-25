@@ -22,7 +22,7 @@ const AdminDashboard = () => {
   }, [dispatch]);
 
   return (
-    <Admin>
+    <Admin title="Admin Dashboard">
       {/* Cards Info */}
       <div className="w-full grid grid-cols-2 lg:grid-cols-4 gap-3 lg:gap-5">
         {/* Card */}

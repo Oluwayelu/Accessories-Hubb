@@ -3,16 +3,17 @@ import { ErrorMessage } from "formik";
 
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 
-import React, { ChangeEvent, ComponentProps, FunctionComponent } from "react";
+import type { ComponentProps } from "react";
 
 type InputProps = ComponentProps<"input">;
 type Props = {
   label?: string;
+  money?: boolean;
   formik?: boolean;
   caption?: string;
 } & InputProps;
 
-const Input = ({ label, formik, caption, ...props }: Props) => {
+const Input = ({ label, money = false, formik, caption, ...props }: Props) => {
   const [password, setPassword] = useState<boolean>(true);
 
   return (
@@ -37,6 +38,15 @@ const Input = ({ label, formik, caption, ...props }: Props) => {
               <FaEyeSlash className="text-gray-400" />
             )}
           </div>
+        </div>
+      ) : money ? (
+        <div
+          className={`${props.className} w-full h-12 flex items-center justify-between border-2 bg-white border-gray-400 focus:border-primary rounded-xl disabled:bg-gray-200 overflow-hidden`}
+        >
+          <div className="h-full px-3 flex items-center bg-gray-200 cursor-pointer">
+            &#8358;
+          </div>
+          <input {...props} className="w-full h-full px-3 bg-transparent" />
         </div>
       ) : (
         <input

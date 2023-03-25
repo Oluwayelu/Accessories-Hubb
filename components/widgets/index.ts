@@ -10,3 +10,4 @@ export * from "./progressBar";
 export * from "./select";
 export * from "./badge";
 export * from "./button";
+export * from "./textarea";

@@ -29,6 +29,7 @@ const orderSchema = new mongoose.Schema(
         googleAddressId: String,
       },
     },
+    coupon: { type: mongoose.Schema.Types.ObjectId, ref: "Coupon" },
     paymentMethod: { type: String, required: true },
     paymentResult: { id: String, status: String, emailAddress: String },
     itemsPrice: { type: Number, required: true },

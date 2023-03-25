@@ -21,7 +21,7 @@ import {
   REGISTER,
 } from "routes";
 import { logoutUser } from "redux/_actions/userAction";
-import { getCategories } from "redux/_actions/ProductAction";
+import { getCategories } from "redux/_actions/productAction";
 import { useAppDispatch, useAppSelector } from "hooks/useReactRedux";
 
 import type { NextPage } from "next";

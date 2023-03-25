@@ -146,6 +146,7 @@ export interface IState {
   admin: { loading: boolean; summary: ISummary; error: string };
   product: {
     loading: boolean;
+    product: IProduct;
     products: IProduct[];
     category: IProduct[];
   };

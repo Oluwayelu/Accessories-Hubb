@@ -2,21 +2,17 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useState } from "react";
+import { motion } from "framer-motion";
 import { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
-import { useCycle, motion, AnimatePresence } from "framer-motion";
 
 import { FiLogOut } from "react-icons/fi";
-import { FaOpencart } from "react-icons/fa";
 import { AiOutlineSearch, AiOutlineUser, AiFillHeart } from "react-icons/ai";
 
-import { CART, LOGIN, ORDERS, PROFILE, REGISTER } from "routes";
+import { useAppDispatch } from "hooks/useReactRedux";
 import { logoutUser } from "redux/_actions/userAction";
-import { Drawer, Dropdown, MenuIcon, SearchMobile } from "components";
-import { useAppSelector, useAppDispatch } from "hooks/useReactRedux";
-
-import type { FC } from "react";
-import type { Session } from "next-auth";
+import { LOGIN, ORDERS, PROFILE, REGISTER } from "routes";
+import { Dropdown, MenuIcon, SearchMobile } from "components";
 
 type Props = {
   isOpen: boolean;
@@ -24,16 +20,14 @@ type Props = {
 };
 
 const AdminHeader = ({ isOpen, toggleOpen }: Props) => {
+  const { pathname } = useRouter();
   const { data: session } = useSession();
-  const { pathname, push } = useRouter();
   const [openSearch, toggleOpenSearch] = useState(false);
 
   const home = pathname === "/";
   const auth = pathname === LOGIN || pathname === REGISTER;
 
   const dispatch = useAppDispatch();
-  const { totalQuantity } = useAppSelector((state) => state.cart);
-
   return (
     <div className="w-full h-[8vh] shadow sticky top-0 left-0 right-0 bg-white py-1 flex flex-col items-center justify-around border-b-2 border-b-dark-500 z-50">
       <motion.div
@@ -88,17 +82,6 @@ const AdminHeader = ({ isOpen, toggleOpen }: Props) => {
           >
             <AiOutlineSearch className="w-7 h-7 text-gray-600 lg:hidden" />
           </button>
-
-          <Link href={CART}>
-            <a className="relative p-2">
-              {totalQuantity > 0 && (
-                <div className="absolute w-5 h-5 flex justify-center items-center top-1 right-0 text-white text-xs bg-primary rounded-full z-30">
-                  {totalQuantity}
-                </div>
-              )}
-              <FaOpencart className="w-7 h-7" />
-            </a>
-          </Link>
 
           {session?.user && (
             <Dropdown

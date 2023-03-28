@@ -55,18 +55,7 @@ export const sidebar: ISidebarRoutes[] = [
   },
   {
     name: "Coupons",
-    dropdown: [
-      {
-        name: "View coupons",
-        link: "/admin/coupons",
-        Icon: FiLayout,
-      },
-      {
-        name: "Create new coupons",
-        link: "/admin/coupons/create",
-        Icon: FiLayout,
-      },
-    ],
+    link: "/admin/coupons",
     Icon: FiLayout,
   },
   {

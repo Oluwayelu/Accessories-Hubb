@@ -11,9 +11,9 @@ handler.use(isAuth);
 
 handler.get(async (req: INextApiRequest, res: NextApiResponse) => {
   await db.connect();
-  const coupon = await Coupon.find({ title: req.query.title });
+  const coupons = await Coupon.find();
   await db.disconnect();
-  res.status(200).send(coupon);
+  res.status(200).send(coupons);
 });
 
 export default handler;

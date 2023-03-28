@@ -126,6 +126,11 @@ export interface IOrder {
   createdAt?: Date;
   updatedAt?: Date;
 }
+export interface ICoupon {
+  title: string;
+  discount: number;
+  saleTime: Date;
+}
 
 type SalesData = {
   _id: string;
@@ -149,6 +154,10 @@ export interface IState {
     product: IProduct;
     products: IProduct[];
     category: IProduct[];
+  };
+  coupon: {
+    loading: boolean;
+    coupons: ICoupon[];
   };
   order: {
     loading: boolean;

@@ -1,19 +1,73 @@
 import axios from "axios";
-import { IProduct } from "interface";
 import Cookies from "js-cookie";
 import { toast } from "react-toastify";
-import { GET_COUPON_FAILED, GET_COUPON_REQUEST } from "redux/types";
 
 import { getError } from "utils/error";
+import {
+  COUPON_FAILED,
+  COUPON_REQUEST,
+  CREATE_COUPON_SUCCESS,
+  GET_COUPON_SUCCESS,
+} from "redux/types";
+
+import type { ICoupon } from "interface";
 
 export const applyCoupon: Function =
   (title: string, totalPrice: number) => async (dispatch: Function) => {
     try {
-      dispatch({ type: GET_COUPON_REQUEST });
-      const { data } = await axios.get(`/api/v1/products/${title}`);
+      dispatch({ type: COUPON_REQUEST });
+      const { data } = await axios.get(`/api/v1/products/coupon/${title}`);
       console.log(data);
     } catch (err) {
-      dispatch({ type: GET_COUPON_FAILED });
+      toast.error(getError(err), {
+        position: "bottom-left",
+        autoClose: 5000,
+        closeOnClick: true,
+        draggable: true,
+      });
+    }
+  };
+
+export const getCoupons: Function = () => async (dispatch: Function) => {
+  try {
+    dispatch({ type: COUPON_REQUEST });
+    const { data } = await axios.get(`/api/v1/admin/products/coupon`, {
+      headers: { authorization: `Bearer ${Cookies.get("token")}` },
+    });
+
+    dispatch({ type: GET_COUPON_SUCCESS, payload: data });
+  } catch (err) {
+    dispatch({ type: COUPON_FAILED });
+    toast.error(getError(err), {
+      position: "bottom-left",
+      autoClose: 5000,
+      closeOnClick: true,
+      draggable: true,
+    });
+  }
+};
+
+export const createCoupon: Function =
+  (value: Partial<ICoupon>) => async (dispatch: Function) => {
+    try {
+      dispatch({ type: COUPON_REQUEST });
+      const { data } = await axios.post(
+        `/api/v1/admin/products/coupon`,
+        value,
+        {
+          headers: { authorization: `Bearer ${Cookies.get("token")}` },
+        }
+      );
+
+      toast.success(data.message, {
+        position: "top-right",
+        autoClose: 5000,
+        closeOnClick: true,
+        draggable: true,
+      });
+      dispatch({ type: CREATE_COUPON_SUCCESS, payload: data.coupon });
+    } catch (err) {
+      dispatch({ type: COUPON_FAILED });
       toast.error(getError(err), {
         position: "bottom-left",
         autoClose: 5000,

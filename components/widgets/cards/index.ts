@@ -7,3 +7,4 @@ export { default as CategoryCard } from "./Category";
 export { default as ProductRow } from "./ProductRow";
 export { default as ProductColumn } from "./ProductColumn";
 export { default as ProductSpecial } from "./ProductSpecial";
+export { default as CouponCard } from "./Coupon";

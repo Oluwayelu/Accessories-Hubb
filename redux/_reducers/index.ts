@@ -5,6 +5,7 @@ import user from "./userReducer";
 import cart from "./cartReducer";
 import admin from "./adminReducer";
 import order from "./orderReducer";
+import coupon from "./couponReducer";
 import product from "./productReducer";
 import favourite from "./favouriteReducer";
 
@@ -21,6 +22,7 @@ export const rootReducer = combineReducers({
   admin,
   error,
   order,
+  coupon,
   product,
   loading,
   favourite,

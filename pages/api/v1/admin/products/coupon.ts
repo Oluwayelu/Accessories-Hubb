@@ -11,7 +11,7 @@ handler.use(isAuth, isAdmin);
 
 handler.get(async (req: INextApiRequest, res: NextApiResponse) => {
   await db.connect();
-  const coupon = await Coupon.find({ title: req.query.title });
+  const coupon = await Coupon.find();
   await db.disconnect();
   res.status(200).send(coupon);
 });

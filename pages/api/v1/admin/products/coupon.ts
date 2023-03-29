@@ -19,15 +19,21 @@ handler.get(async (req: INextApiRequest, res: NextApiResponse) => {
 handler.post(async (req: INextApiRequest, res: NextApiResponse) => {
   await db.connect();
   const { title, discount, saleTime } = req.body;
-  const newCoupon = new Coupon({
-    title,
-    discount,
-    saleTime,
-  });
 
-  const coupon = await newCoupon.save();
-  await db.disconnect();
-  res.status(200).json({ message: "Coupon Created", coupon });
+  const couponExist = await Coupon.findOne({ title });
+  if (couponExist) {
+    res.status(401).json({ message: "Coupon title already exists" });
+  } else {
+    const newCoupon = new Coupon({
+      title,
+      discount,
+      saleTime,
+    });
+
+    const coupon = await newCoupon.save();
+    res.status(200).json({ message: "Coupon Created", coupon });
+    await db.disconnect();
+  }
 });
 
 handler.put(async (req: INextApiRequest, res: NextApiResponse) => {

@@ -1,10 +1,12 @@
 import { useEffect } from "react";
 
+import * as Yup from "yup";
+import { Formik } from "formik";
 import { FaPlus } from "react-icons/fa";
 
-import { Admin, Button, CouponCard, Input, Loader, Modal } from "components";
 import { useAppDispatch, useAppSelector } from "hooks";
 import { createCoupon, getCoupons } from "redux/_actions/couponAction";
+import { Admin, Button, CouponCard, Input, Loader, Modal } from "components";
 
 const Coupons = () => {
   const dispatch = useAppDispatch();
@@ -26,43 +28,64 @@ const Coupons = () => {
       ) : (
         <div className="space-y-5">
           <Modal id="create-coupon" title="Create Coupon">
-            <div className="space-y-2">
-              <Input label="Title" name="title" placeholder="Enter title" />
-              <Input
-                type="number"
-                label="Discount"
-                name="discount"
-                placeholder="Enter discount"
-              />
-              <Input
-                label="Sale Time"
-                name="saleTime"
-                placeholder="Enter title"
-              />
-              <Button className="w-full">Create coupon</Button>
-            </div>
+            <Formik
+              initialValues={{
+                title: "",
+                discount: "",
+                saleTime: "",
+              }}
+              validationSchema={Yup.object().shape({
+                title: Yup.string().required("Title is required"),
+                discount: Yup.number().required("Discount is required"),
+                saleTime: Yup.date().required("Sale Time is required"),
+              })}
+              onSubmit={async (values) => {
+                dispatch(createCoupon(values));
+              }}
+            >
+              {({ handleSubmit, handleChange, values }) => (
+                <form onSubmit={handleSubmit} className="space-y-2">
+                  <Input
+                    formik
+                    label="Title"
+                    name="title"
+                    value={values.title}
+                    onChange={handleChange}
+                    placeholder="Enter title"
+                  />
+                  <Input
+                    formik
+                    type="number"
+                    label="Discount"
+                    name="discount"
+                    value={values.discount}
+                    onChange={handleChange}
+                    placeholder="Enter discount"
+                  />
+                  <Input
+                    formik
+                    type="datetime-local"
+                    label="Sale Time"
+                    name="saleTime"
+                    value={values.saleTime}
+                    onChange={handleChange}
+                    placeholder="Enter title"
+                  />
+                  <Button type="submit" className="w-full">
+                    Create coupon
+                  </Button>
+                </form>
+              )}
+            </Formik>
           </Modal>
-          {/* <button
-            onClick={() =>
-              dispatch(
-                createCoupon({
-                  title: "NEW",
-                  discount: 5,
-                  saleTime: new Date(2023, 3, 30),
-                })
-              )
-            }
-          >
-            send
-          </button> */}
           <div className="w-full flex justify-end">
-            <button
+            <Button
               onClick={createCouponModal}
               className="flex items-center p-3 bg-primary-100 rounded-xl shadow space-x-2"
             >
               <FaPlus className="w-5 h-5" />
               <p className="font-medium">Create coupon</p>
-            </button>
+            </Button>
           </div>
           <div className="w-full grid md:grid-cols-3 xl:grid-cols-5 gap-3 md:gap-5">
             {coupons.map((coupon, key) => (

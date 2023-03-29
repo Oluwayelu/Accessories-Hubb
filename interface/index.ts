@@ -127,6 +127,7 @@ export interface IOrder {
   updatedAt?: Date;
 }
 export interface ICoupon {
+  _id: string;
   title: string;
   discount: number;
   saleTime: Date;

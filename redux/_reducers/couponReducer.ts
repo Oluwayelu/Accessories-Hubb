@@ -5,6 +5,7 @@ import {
   COUPON_FAILED,
   COUPON_REQUEST,
   CREATE_COUPON_SUCCESS,
+  DELETE_COUPON_SUCCESS,
   GET_COUPON_SUCCESS,
 } from "../types";
 
@@ -26,6 +27,13 @@ const couponReducer = (state = initialState, { type, payload }: IAction) => {
         ...state,
         loading: false,
         coupons: [...state.coupons, payload],
+      };
+
+    case DELETE_COUPON_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        coupons: payload,
       };
 
     case COUPON_FAILED:

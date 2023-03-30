@@ -1,15 +1,18 @@
 import Link from "next/link";
 import Image from "next/image";
-import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
 
 import { motion } from "framer-motion";
 import { FaEdit, FaTrash } from "react-icons/fa";
 
+import { auth } from "utils/auth";
 import { useAppDispatch, useAppSelector } from "hooks";
 import { fadeInUp, fadeInRight, stagger } from "variants";
 import { Admin, Button, Loader, RatingStars, Modal } from "components";
 import { deleteProduct, getProduct } from "redux/_actions/productAction";
+
+import type { GetServerSideProps } from "next";
 
 const AdminProduct = () => {
   const { query } = useRouter();
@@ -138,3 +141,11 @@ const AdminProduct = () => {
 };
 
 export default AdminProduct;
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  return auth({
+    admin: true,
+    redirect: context.resolvedUrl,
+    token: context.req.cookies.token,
+  });
+};

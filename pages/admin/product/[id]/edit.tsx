@@ -8,6 +8,7 @@ import { FaImage } from "react-icons/fa";
 
 import db from "database";
 import { Product } from "models";
+import { auth } from "utils/auth";
 import { useAppDispatch, useAppSelector } from "hooks";
 import { getProduct, updateProduct } from "redux/_actions/productAction";
 import { Admin, Input, TextArea, Select, Button, Loader } from "components";
@@ -208,13 +209,16 @@ const AdminProductEdit = ({ categories }: Props) => {
 
 export default AdminProductEdit;
 
-export const getServerSideProps: GetServerSideProps = async () => {
+export const getServerSideProps: GetServerSideProps = async (context) => {
   await db.connect();
   const categories = await Product.find().distinct("category");
 
-  return {
+  return auth({
+    admin: true,
+    redirect: context.resolvedUrl,
+    token: context.req.cookies.token,
     props: {
       categories,
     },
-  };
+  });
 };

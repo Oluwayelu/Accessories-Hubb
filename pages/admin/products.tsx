@@ -2,9 +2,12 @@ import Link from "next/link";
 import Image from "next/image";
 import { useEffect } from "react";
 
+import { auth } from "utils/auth";
 import { useAppDispatch, useAppSelector } from "hooks";
 import { Admin, RatingStars, Loader } from "components";
 import { getProducts } from "redux/_actions/productAction";
+
+import type { GetServerSideProps } from "next";
 
 const Product = () => {
   const dispatch = useAppDispatch();
@@ -86,3 +89,11 @@ const Product = () => {
 };
 
 export default Product;
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  return auth({
+    admin: true,
+    redirect: context.resolvedUrl,
+    token: context.req.cookies.token,
+  });
+};

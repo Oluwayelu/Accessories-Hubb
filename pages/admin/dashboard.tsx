@@ -1,12 +1,10 @@
-import Link from "next/link";
 import { useEffect } from "react";
 
 import { motion } from "framer-motion";
-import { getSession } from "next-auth/react";
 import { AiOutlineUser } from "react-icons/ai";
-import { FaEye, FaAngleUp, FaAngleDown } from "react-icons/fa";
+import { FaAngleUp, FaAngleDown } from "react-icons/fa";
 
-import { LOGIN } from "routes";
+import { auth } from "utils/auth";
 import { fadeInUp, stagger } from "variants";
 import { Admin, AdminCard, Status } from "components";
 import { useAppDispatch, useAppSelector } from "hooks";
@@ -128,18 +126,9 @@ const AdminDashboard = () => {
 export default AdminDashboard;
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const session = await getSession({ req: context.req });
-
-  if (!session) {
-    return {
-      redirect: {
-        destination: LOGIN + "?redirect=/admin/dashboard",
-        permanent: false,
-      },
-    };
-  }
-
-  return {
-    props: { session },
-  };
+  return auth({
+    admin: true,
+    redirect: context.resolvedUrl,
+    token: context.req.cookies.token,
+  });
 };

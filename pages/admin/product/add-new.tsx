@@ -6,6 +6,7 @@ import { toast } from "react-toastify";
 
 import db from "database";
 import { Product } from "models";
+import { auth } from "utils/auth";
 import { useAppDispatch, useAppSelector } from "hooks";
 import { addNewProduct } from "redux/_actions/productAction";
 import { Admin, Input, TextArea, Select, Button } from "components";
@@ -180,13 +181,16 @@ const AddNewProduct = ({ categories }: Props) => {
 
 export default AddNewProduct;
 
-export const getServerSideProps: GetServerSideProps = async () => {
+export const getServerSideProps: GetServerSideProps = async (context) => {
   await db.connect();
   const categories = await Product.find().distinct("category");
 
-  return {
+  return auth({
+    admin: true,
+    redirect: context.resolvedUrl,
+    token: context.req.cookies.token,
     props: {
       categories,
     },
-  };
+  });
 };

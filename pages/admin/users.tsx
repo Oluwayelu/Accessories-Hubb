@@ -1,8 +1,6 @@
 import { useEffect } from "react";
 
-import { getSession } from "next-auth/react";
-
-import { LOGIN } from "routes";
+import { auth } from "utils/auth";
 import { Admin, Loader, UserCard } from "components";
 import { useAppDispatch, useAppSelector } from "hooks";
 import { getUsers } from "redux/_actions/userAction";
@@ -50,18 +48,9 @@ const Customers = () => {
 export default Customers;
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const session = await getSession({ req: context.req });
-
-  if (!session) {
-    return {
-      redirect: {
-        destination: LOGIN + "?redirect=/admin/users",
-        permanent: false,
-      },
-    };
-  }
-
-  return {
-    props: {},
-  };
+  return auth({
+    admin: true,
+    redirect: context.resolvedUrl,
+    token: context.req.cookies.token,
+  });
 };

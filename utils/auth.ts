@@ -1,5 +1,7 @@
 import jwt from "jsonwebtoken";
 
+import { LOGIN } from "routes";
+
 import type { NextApiResponse } from "next";
 import type { IUser, INextApiRequest } from "interface";
 
@@ -14,6 +16,45 @@ export const signToken = (user: Partial<IUser>) => {
     process.env.NEXT_APP_JWT_SECRET,
     {
       expiresIn: "30d",
+    }
+  );
+};
+
+export const auth = ({
+  token,
+  redirect,
+  props = {},
+  admin = false,
+}: {
+  props?: any;
+  token: string;
+  admin?: boolean;
+  redirect?: string;
+}) => {
+  return jwt.verify(
+    token,
+    process.env.NEXT_APP_JWT_SECRET,
+    (err: any, decode: IUser) => {
+      if (err) {
+        return {
+          redirect: {
+            destination: LOGIN + `?redirect=${redirect ? redirect : "/"}`,
+            permanent: false,
+          },
+        };
+      } else {
+        if (admin && !decode.isAdmin) {
+          return {
+            redirect: {
+              destination: "/",
+              permanent: false,
+            },
+          };
+        }
+        return {
+          props,
+        };
+      }
     }
   );
 };

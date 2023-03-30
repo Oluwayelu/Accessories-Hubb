@@ -4,9 +4,12 @@ import * as Yup from "yup";
 import { Formik } from "formik";
 import { FaPlus } from "react-icons/fa";
 
+import { auth } from "utils/auth";
 import { useAppDispatch, useAppSelector } from "hooks";
 import { createCoupon, getCoupons } from "redux/_actions/couponAction";
 import { Admin, Button, CouponCard, Input, Loader, Modal } from "components";
+
+import type { GetServerSideProps } from "next";
 
 const Coupons = () => {
   const dispatch = useAppDispatch();
@@ -99,3 +102,11 @@ const Coupons = () => {
 };
 
 export default Coupons;
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  return auth({
+    admin: true,
+    redirect: context.resolvedUrl,
+    token: context.req.cookies.token,
+  });
+};

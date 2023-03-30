@@ -14,6 +14,7 @@ import NextNProgress from "nextjs-progressbar";
 import { AnimatePresence } from "framer-motion";
 import { PersistGate } from "redux-persist/integration/react";
 import { SessionProvider } from "next-auth/react";
+import { ToastContainer } from "react-toastify";
 
 import SEO from "config/next-seo.config";
 import { Loader } from "components";
@@ -39,6 +40,7 @@ function MyApp({ Component, pageProps }: AppProps) {
             <Component {...pageProps} />
           </AnimatePresence>
         </SessionProvider>
+        <ToastContainer />
       </PersistGate>
     </>
   );

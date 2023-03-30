@@ -1,7 +1,6 @@
 import { NextSeo } from "next-seo";
 import { useRouter } from "next/router";
 import { motion } from "framer-motion";
-import { ToastContainer } from "react-toastify";
 import { Header, Footer } from "components";
 
 import type { ReactNode } from "react";
@@ -37,8 +36,6 @@ const LandingLayout: NextPage<Props> = ({
       <Header />
       <div className={`${className} w-full min-h-[92vh]`}>{children}</div>
       {footer && <Footer />}
-
-      <ToastContainer />
     </motion.div>
   );
 };

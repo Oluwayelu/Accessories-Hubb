@@ -11,7 +11,7 @@ import { FaOpencart } from "react-icons/fa";
 import { AiOutlineSearch, AiOutlineUser, AiFillHeart } from "react-icons/ai";
 
 import { CART, LOGIN, ORDERS, PROFILE, REGISTER } from "routes";
-import { logoutUser } from "redux/_actions/userAction";
+import { logoutUser } from "redux/_actions/authAction";
 import { Drawer, Dropdown, MenuIcon, SearchMobile } from "components";
 import { useAppSelector, useAppDispatch } from "hooks/useReactRedux";
 

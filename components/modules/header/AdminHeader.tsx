@@ -10,7 +10,7 @@ import { FiLogOut } from "react-icons/fi";
 import { AiOutlineSearch, AiOutlineUser, AiFillHeart } from "react-icons/ai";
 
 import { useAppDispatch } from "hooks/useReactRedux";
-import { logoutUser } from "redux/_actions/userAction";
+import { logoutUser } from "redux/_actions/authAction";
 import { LOGIN, ORDERS, PROFILE, REGISTER } from "routes";
 import { Dropdown, MenuIcon, SearchMobile } from "components";
 

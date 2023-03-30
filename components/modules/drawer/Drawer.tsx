@@ -20,7 +20,7 @@ import {
   PROFILE,
   REGISTER,
 } from "routes";
-import { logoutUser } from "redux/_actions/userAction";
+import { logoutUser } from "redux/_actions/authAction";
 import { getCategories } from "redux/_actions/productAction";
 import { useAppDispatch, useAppSelector } from "hooks/useReactRedux";
 

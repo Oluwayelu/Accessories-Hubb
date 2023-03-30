@@ -1,4 +1,3 @@
-import Link from "next/link";
 import Image from "next/image";
 
 import * as Yup from "yup";
@@ -7,16 +6,17 @@ import { getSession } from "next-auth/react";
 import { FaMale, FaFemale, FaEdit } from "react-icons/fa";
 
 import { LOGIN, PROFILE } from "routes";
-import { Input, Button, Landing, Loader } from "components";
+import { Input, Button, Landing } from "components";
 import { useAppDispatch, useAppSelector } from "hooks/useReactRedux";
-import { updatePassword, updateProfile } from "redux/_actions/userAction";
+import { updatePassword, updateProfile } from "redux/_actions/authAction";
 
 import type { Session } from "next-auth";
 import type { GetServerSideProps } from "next";
 
 const Profile = ({ session }: { session: Session }) => {
   const dispatch = useAppDispatch();
-  const { userInfo, loading } = useAppSelector((state) => state.user);
+  const { userInfo, loading } = useAppSelector((state) => state.auth);
+
   return (
     <Landing
       title={`${userInfo.firstname} Profile`}

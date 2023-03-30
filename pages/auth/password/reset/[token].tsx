@@ -6,7 +6,7 @@ import { getSession } from "next-auth/react";
 
 import { Input, Button, Auth } from "components";
 import { useAppSelector, useAppDispatch } from "hooks";
-import { resetPassword } from "redux/_actions/userAction";
+import { resetPassword } from "redux/_actions/authAction";
 
 import type { NextPage, GetServerSideProps } from "next";
 
@@ -14,7 +14,7 @@ const Reset: NextPage = () => {
   const dispatch = useAppDispatch();
 
   const { query } = useRouter();
-  const { loading } = useAppSelector((state) => state.user);
+  const { loading } = useAppSelector((state) => state.auth);
 
   return (
     <Auth title="Reset Password">

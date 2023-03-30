@@ -4,13 +4,13 @@ import { getSession } from "next-auth/react";
 
 import { Input, Auth, Button } from "components";
 import { useAppDispatch, useAppSelector } from "hooks";
-import { forgotPassword } from "redux/_actions/userAction";
+import { forgotPassword } from "redux/_actions/authAction";
 
 import type { NextPage, GetServerSideProps } from "next";
 
 const ForgotPassword: NextPage = () => {
   const dispatch = useAppDispatch();
-  const { loading } = useAppSelector((state) => state.user);
+  const { loading } = useAppSelector((state) => state.auth);
 
   return (
     <Auth title="Forgot password" description="Recovery forgotten password">

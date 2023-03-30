@@ -6,7 +6,7 @@ import { getCsrfToken, getSession } from "next-auth/react";
 
 import { Input, Auth, Button } from "components";
 import { useAppSelector, useAppDispatch } from "hooks";
-import { registerUser } from "redux/_actions/userAction";
+import { registerUser } from "redux/_actions/authAction";
 
 import type { NextPage, GetServerSideProps } from "next";
 
@@ -17,7 +17,7 @@ type Props = {
 const Register: NextPage<Props> = ({ csrfToken }) => {
   const { query } = useRouter();
   const dispatch = useAppDispatch();
-  const { loading } = useAppSelector((state) => state.user);
+  const { loading } = useAppSelector((state) => state.auth);
 
   return (
     <Auth title="Create an account">

@@ -6,7 +6,7 @@ import { FiLogOut, FiSettings } from "react-icons/fi";
 import Item from "./Item";
 import { ADMIN_SETTINGS, sidebar } from "routes";
 import { useAppDispatch, useAppSelector } from "hooks";
-import { logoutUser } from "redux/_actions/userAction";
+import { logoutUser } from "redux/_actions/authAction";
 
 interface Props {
   open: boolean;
@@ -15,7 +15,7 @@ interface Props {
 const Sidebar = ({ open }: Props) => {
   const dispatch = useAppDispatch();
   const { firstname, lastname } = useAppSelector(
-    (state) => state.user.userInfo
+    (state) => state.auth.userInfo
   );
 
   return (

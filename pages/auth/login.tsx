@@ -6,7 +6,7 @@ import { getCsrfToken, getSession } from "next-auth/react";
 
 import { FORGOTPASSWORD } from "routes";
 import { Input, Auth, Button } from "components";
-import { loginUser } from "redux/_actions/userAction";
+import { loginUser } from "redux/_actions/authAction";
 import { useAppSelector, useAppDispatch } from "hooks";
 
 import type { NextPage, GetServerSideProps } from "next";
@@ -17,7 +17,7 @@ type Props = {
 
 const Login: NextPage<Props> = ({ csrfToken }) => {
   const dispatch = useAppDispatch();
-  const { loading } = useAppSelector((state) => state.user);
+  const { loading } = useAppSelector((state) => state.auth);
 
   return (
     <Auth title="Login">

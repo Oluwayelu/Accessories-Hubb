@@ -32,6 +32,7 @@ export interface IUser {
   referees?: string[];
   phoneNumber: string;
   isAdmin: string;
+  lastVisited: Date;
   resetPasswordToken: string;
   resetPasswordExpire: Date;
 }
@@ -148,7 +149,14 @@ export interface ISummary {
 }
 
 export interface IState {
-  user: { loading: boolean; userInfo: IUser };
+  auth: { loading: boolean; userInfo: IUser };
+  user: {
+    loading: boolean;
+    user: IUser;
+    users: IUser[];
+    admins: IUser[];
+    customers: IUser[];
+  };
   admin: { loading: boolean; summary: ISummary; error: string };
   product: {
     loading: boolean;

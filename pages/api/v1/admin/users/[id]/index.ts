@@ -20,11 +20,16 @@ handler.put(async (req: INextApiRequest, res: NextApiResponse) => {
   await db.connect();
   const user = await User.findById(req.query.id);
   if (user) {
-    user.name = req.body.name;
-    user.isAdmin = Boolean(req.body.isAdmin);
+    user.isAdmin = !user.isAdmin;
     await user.save();
+    const users = await User.find();
     await db.disconnect();
-    res.status(200).json({ message: "User Updated Successfully" });
+    res.status(200).json({
+      message: user.isAdmin
+        ? "User is now an admin"
+        : "User is no longer an admin",
+      users,
+    });
   } else {
     await db.disconnect();
     res.status(404).json({ message: "User Not Found" });
@@ -36,8 +41,9 @@ handler.delete(async (req: INextApiRequest, res: NextApiResponse) => {
   const user = await User.findById(req.query.id);
   if (user) {
     await user.remove();
+    const users = await User.find();
     await db.disconnect();
-    res.status(200).json({ message: "User Deleted" });
+    res.status(200).json({ message: "User Deleted", users });
   } else {
     await db.disconnect();
     res.status(404).json({ message: "User Not Found" });

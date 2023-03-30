@@ -1,4 +1,4 @@
-import { FiLayout } from "react-icons/fi";
+import { FiLayout, FiUser, FiMessageCircle } from "react-icons/fi";
 
 import { ISidebarRoutes } from "interface";
 
@@ -59,9 +59,9 @@ export const sidebar: ISidebarRoutes[] = [
     Icon: FiLayout,
   },
   {
-    name: "Customers",
-    link: "/admin/customers",
-    Icon: FiLayout,
+    name: "Users",
+    link: "/admin/users",
+    Icon: FiUser,
   },
   {
     name: "Banners",
@@ -82,6 +82,6 @@ export const sidebar: ISidebarRoutes[] = [
   {
     name: "Messages",
     link: "/admin/messages",
-    Icon: FiLayout,
+    Icon: FiMessageCircle,
   },
 ];

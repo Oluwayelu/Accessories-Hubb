@@ -51,7 +51,7 @@ const Modal = ({ id, title, children, size = "md" }: Props) => {
           variants={fadeInUp}
           initial="initial"
           animate="animate"
-          className={`${getSize()} relative h-fit flex flex-col gap-5 bg-white p-5 rounded-3xl`}
+          className={`${getSize()} relative h-fit flex flex-col gap-3 bg-white p-5 rounded-3xl`}
         >
           <div className="w-full flex items-center justify-between">
             <h2 className="text-xl font-medium">{title}</h2>

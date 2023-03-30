@@ -8,3 +8,4 @@ export { default as ProductRow } from "./ProductRow";
 export { default as ProductColumn } from "./ProductColumn";
 export { default as ProductSpecial } from "./ProductSpecial";
 export { default as CouponCard } from "./Coupon";
+export { default as UserCard } from "./User";

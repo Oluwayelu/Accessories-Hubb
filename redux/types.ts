@@ -69,3 +69,10 @@ export const CREATE_COUPON_FAILED = "CREATE_COUPON_FAILED";
 
 export const DELETE_COUPON_SUCCESS = "DELETE_COUPON_SUCCESS";
 export const DELETE_COUPON_FAILED = "DELETE_COUPON_FAILED";
+
+// customer types
+export const USER_REQUEST = "USER_REQUEST";
+export const USER_FAILED = "USER_FAILED";
+
+export const GET_USERS = "GET_USERS";
+export const GET_USER = "GET_USER";

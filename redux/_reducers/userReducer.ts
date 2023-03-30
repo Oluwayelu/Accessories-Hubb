@@ -1,36 +1,58 @@
 import Cookies from "js-cookie";
-import { IAction } from "interface";
+import { IAction, IUser } from "interface";
 
 import {
   LOGOUT_USER,
   USER_INFO_REQUEST,
   USER_INFO_FAILED,
   USER_INFO_SUCCESS,
+  GET_USERS,
+  GET_USER,
+  USER_REQUEST,
+  USER_FAILED,
 } from "../types";
 
 const initialState = {
   loading: false,
-  userInfo: Cookies.get("userInfo")
-    ? JSON.parse(Cookies.get("userInfo"))
-    : null,
+  users: [],
+  admins: [],
+  customers: [],
+  user: null,
 };
 
-const userReducer = (state = initialState, action: IAction) => {
-  switch (action.type) {
-    case USER_INFO_REQUEST:
+const userReducer = (state = initialState, { type, payload }: IAction) => {
+  switch (type) {
+    case USER_REQUEST:
       return { ...state, loading: true };
     case USER_INFO_SUCCESS:
       return {
         ...state,
         loading: false,
-        userInfo: action.payload,
+        user: payload,
       };
-    case USER_INFO_FAILED:
+
+    case GET_USER:
+      return {
+        ...state,
+        loading: false,
+        user: payload,
+      };
+
+    case GET_USERS:
+      return {
+        ...state,
+        loading: false,
+        users: payload,
+        admins: payload.filter((user: Partial<IUser>) => user.isAdmin),
+        customers: payload.filter((user: Partial<IUser>) => !user.isAdmin),
+      };
+
+    case USER_FAILED:
       return { ...state, loading: false };
     case LOGOUT_USER:
       return {
         ...state,
-        userInfo: null,
+        user: null,
       };
     default:
       return state;

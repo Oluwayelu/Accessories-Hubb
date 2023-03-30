@@ -11,7 +11,6 @@ const handler = nc();
 handler.post(async (req: NextApiRequest, res: NextApiResponse) => {
   await db.connect();
   const user = await User.findOne({ email: req.body.email });
-  await db.disconnect();
 
   if (user && bcrypt.compareSync(req.body.password, user.password)) {
     if (user.status !== accountStatusEnum.ACTIVE) {
@@ -20,7 +19,11 @@ handler.post(async (req: NextApiRequest, res: NextApiResponse) => {
         .send({ message: "Pending Account. Please Verify Your Email!" });
     }
 
+    user.lastVisited = new Date();
+    await user.save();
     const token = signToken(user);
+
+    await db.disconnect();
     res.status(200).json({
       token,
       user: {

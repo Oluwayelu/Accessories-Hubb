@@ -20,8 +20,8 @@ const Error = ({ statusCode }: ErrorProps) => {
   const categories = useSelector((state: IState) => state.product.category);
 
   return (
-    <Landing title={`${statusCode} Error`}>
-      <div className="relative w-full h-[60vh] px-3 md:px-5 lg:px-10 flex flex-col justify-center items-center overflow-hidden space-y-5">
+    <Landing footer={false} title={`${statusCode} Error`}>
+      <div className="relative w-full h-[92vh] px-3 md:px-5 lg:px-10 flex flex-col justify-center items-center overflow-hidden space-y-5">
         <div className="w-full md:w-2/3 lg:w-1/2 bg-white p-5 text-center rounded shadow z-20">
           <h1 className="text-3xl md:text-6xl font-bold">{statusCode}</h1>
           <p className="text-lg">{statusCode && statusCodes[statusCode]}</p>

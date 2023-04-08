@@ -9,6 +9,7 @@ import order from "./orderReducer";
 import coupon from "./couponReducer";
 import product from "./productReducer";
 import favourite from "./favouriteReducer";
+import notification from "./notificationReducer";
 
 import {
   loadingReducer as loading,
@@ -28,4 +29,5 @@ export const rootReducer = combineReducers({
   product,
   loading,
   favourite,
+  notification,
 });

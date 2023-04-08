@@ -76,3 +76,10 @@ export const USER_FAILED = "USER_FAILED";
 
 export const GET_USERS = "GET_USERS";
 export const GET_USER = "GET_USER";
+
+// notification types
+export const NOTIFICATION_REQUEST = "NOTIFICATION_REQUEST";
+export const NOTIFICATION_FAILED = "NOTIFICATION_FAILED";
+
+export const GET_NOTIFICATION = "GET_NOTIFICATION";
+export const READ_NOTIFICATION = "READ_NOTIFICATION";

@@ -4,6 +4,7 @@ import { FaAngleDown } from "react-icons/fa";
 
 import type { ISidebarRoutes } from "interface";
 import { useState } from "react";
+import { useAppSelector } from "hooks";
 
 interface Props {
   open: boolean;
@@ -13,19 +14,31 @@ const Item = ({ open, routes }: Props) => {
   const [view, setView] = useState(false);
   const { pathname } = useRouter();
   const { name, Icon, link, dropdown } = routes;
+  const { unread } = useAppSelector((state) => state.notification);
 
   if (link) {
     return (
       <Link passHref href={link}>
-        <a
-          className={` w-full p-2 hover:bg-primary-100 flex justify-center items-center rounded-xl gap-2`}
-        >
-          <div className="w-5">
-            <Icon size={20} />
+        <a className="relative w-full p-2 hover:bg-primary-100 flex justify-between items-center rounded-xl gap-2">
+          <div className="w-full flex justify-center lg:justify-start items-center gap-2">
+            <div className="w-5">
+              <Icon size={20} />
+            </div>
+            <div className={`${open ? "block" : "hidden lg:block"} w-full`}>
+              <span className="text-lg">{name}</span>
+            </div>
           </div>
-          <div className={`${open ? "block" : "hidden lg:block"} w-full`}>
-            <span className="text-lg">{name}</span>
-          </div>
+          {name === "Notifications" && unread > 0 && (
+            <div
+              className={`${
+                open
+                  ? "w-5 h-7"
+                  : "h-5 w-5 lg:h-7 absolute lg:relative top-0 right-0"
+              } flex items-center justify-center bg-primary-100 rounded-full text-xs font-bold`}
+            >
+              {unread}
+            </div>
+          )}
         </a>
       </Link>
     );
@@ -62,7 +75,9 @@ const Item = ({ open, routes }: Props) => {
           </div>
         </button>
         {view && (
-          <div className={`${!open && "hidden lg:block"} pl-5 space-y-2`}>
+          <div
+            className={`${!open && "hidden lg:block"} pl-3 md:pl-5 space-y-2`}
+          >
             {dropdown?.map(({ name, Icon, link }, key) => (
               <Link key={key} passHref href={link}>
                 <a

@@ -9,3 +9,4 @@ export { default as ProductColumn } from "./ProductColumn";
 export { default as ProductSpecial } from "./ProductSpecial";
 export { default as CouponCard } from "./Coupon";
 export { default as UserCard } from "./User";
+export { default as NotificationCard } from "./Notification";

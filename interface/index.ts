@@ -148,6 +148,18 @@ export interface ISummary {
   usersCount: number;
 }
 
+export interface INotification {
+  _id: string;
+  user: IUser;
+  note: {
+    title: string;
+    description: string;
+  };
+  readBy: string[];
+  createdAt: Date;
+  updatedAt: Date;
+}
+
 export interface IState {
   auth: { loading: boolean; userInfo: IUser };
   user: {
@@ -158,6 +170,11 @@ export interface IState {
     customers: IUser[];
   };
   admin: { loading: boolean; summary: ISummary; error: string };
+  notification: {
+    unread: number;
+    loading: boolean;
+    notifications: INotification[];
+  };
   product: {
     loading: boolean;
     product: IProduct;

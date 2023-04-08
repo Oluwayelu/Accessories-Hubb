@@ -1,4 +1,6 @@
-import { FiLayout, FiUser, FiMessageCircle } from "react-icons/fi";
+import { FaOpencart, FaAd } from "react-icons/fa";
+import { RiCouponLine } from "react-icons/ri";
+import { FiLayout, FiUser, FiBell, FiTag } from "react-icons/fi";
 
 import { ISidebarRoutes } from "interface";
 
@@ -51,12 +53,12 @@ export const sidebar: ISidebarRoutes[] = [
   {
     name: "Orders",
     link: "/admin/dashboard/users",
-    Icon: FiLayout,
+    Icon: FaOpencart,
   },
   {
     name: "Coupons",
     link: "/admin/coupons",
-    Icon: FiLayout,
+    Icon: RiCouponLine,
   },
   {
     name: "Users",
@@ -64,24 +66,24 @@ export const sidebar: ISidebarRoutes[] = [
     Icon: FiUser,
   },
   {
-    name: "Banners",
+    name: "Promotions",
     dropdown: [
       {
-        name: "View Banners",
-        link: "/admin/banners",
-        Icon: FiLayout,
+        name: "View promotions",
+        link: "/admin/promotions",
+        Icon: FiTag,
       },
       {
-        name: "Create new banner",
-        link: "/admin/banners/create",
+        name: "Create new promotion",
+        link: "/admin/promotion/create",
         Icon: FiLayout,
       },
     ],
-    Icon: FiLayout,
+    Icon: FaAd,
   },
   {
-    name: "Messages",
-    link: "/admin/messages",
-    Icon: FiMessageCircle,
+    name: "Notifications",
+    link: "/admin/notifications",
+    Icon: FiBell,
   },
 ];

@@ -24,14 +24,14 @@ const Sidebar = ({ open }: Props) => {
     >
       <div
         className={`${
-          open ? "w-3/5 md:w-1/3" : "w-1/6 md:w-1/12"
+          open ? "w-3/5 md:w-1/3" : "pt-5 lg:pt-0 w-1/6 md:w-1/12"
         }  lg:w-1/4 xl:w-1/5 fixed h-[92vh] bg-white`}
       >
-        <div className="w-full h-full pt-5 lg:pt-8 pb-16 px-3 lg:px-5 xl:px-8 flex flex-col items-center md:items-start">
+        <div className="w-full h-full px-3 lg:px-5 xl:px-8 flex flex-col justify-between items-center md:items-start">
           <div
             className={`${
               !open && "hidden lg:flex"
-            } w-full pb-2 flex items-center gap-2`}
+            } w-full h-1/6 flex items-center gap-2`}
           >
             <div className="w-16 h-16 relative flex justify-center items-center rounded-full bg-gray-200 text-gray-600 overflow-hidden">
               <AiOutlineUser className="w-6 h-6 lg:w-8 lg:h-8 " />
@@ -41,15 +41,15 @@ const Sidebar = ({ open }: Props) => {
             </div>
           </div>
 
-          <div className="w-full h-fit py-2 space-y-1 overflow-y-auto">
+          <div className="w-full h-4/6 space-y-1 overflow-y-auto">
             {sidebar.map((routes, key) => (
               <Item key={key} open={open} routes={routes} />
             ))}
           </div>
 
-          <div className="w-full pt-2 space-y-1">
+          <div className="w-full h-1/6 space-y-1">
             <Link href={ADMIN_SETTINGS}>
-              <a className="w-full p-2 flex justify-center items-center space-x-2">
+              <a className="w-full p-2 hover:bg-primary-100 flex justify-center items-center rounded-xl gap-2">
                 <FiSettings className="w-5 h-5" />
                 <div className={`${open ? "block" : "hidden lg:block"} w-full`}>
                   <span className="text-lg">Settings</span>
@@ -59,7 +59,7 @@ const Sidebar = ({ open }: Props) => {
 
             <div
               onClick={() => dispatch(logoutUser())}
-              className="w-full p-2 flex justify-center items-center text-red-500 space-x-2"
+              className="w-full p-2 flex justify-center items-center text-error hover:text-white hover:bg-error rounded-xl gap-2 cursor-pointer"
             >
               <FiLogOut className="w-5 h-5" />
               <div className={`${open ? "block" : "hidden lg:block"} w-full`}>

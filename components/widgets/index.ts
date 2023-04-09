@@ -12,3 +12,4 @@ export * from "./badge";
 export * from "./button";
 export * from "./textarea";
 export * from "./avatar";
+export * from "./chart";

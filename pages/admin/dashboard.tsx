@@ -6,7 +6,7 @@ import { FaAngleUp, FaAngleDown } from "react-icons/fa";
 
 import { auth } from "utils/auth";
 import { fadeInUp, stagger } from "variants";
-import { Admin, AdminCard, Status } from "components";
+import { Admin, AdminCard, Chart, Status } from "components";
 import { useAppDispatch, useAppSelector } from "hooks";
 import { getDashboardSummary } from "redux/_actions/adminAction";
 
@@ -33,8 +33,21 @@ const AdminDashboard = () => {
       {/* Charts && Tables */}
       <div className="w-full flex flex-col lg:flex-row gap-5">
         {/* Chart */}
-        <div className="w-full lg:w-3/4 h-80 md:h-[60vh] flex items-center justify-center bg-white shadow rounded-xl">
-          chart
+        <div className="w-full lg:w-3/4 h-fit p-3 md:p-5 flex items-center justify-center bg-white shadow rounded-xl">
+          <Chart
+            type="Bar"
+            title="Sale's Data"
+            data={{
+              labels: summary.salesData.map((x) => x._id),
+              datasets: [
+                {
+                  label: "Sales",
+                  backgroundColor: "rgba(162, 222, 208, 1)",
+                  data: summary.salesData.map((x) => x.totalSales),
+                },
+              ],
+            }}
+          />
         </div>
 
         <div className="w-full lg:w-1/4 bg-white shadow rounded-xl overflow-x-auto">

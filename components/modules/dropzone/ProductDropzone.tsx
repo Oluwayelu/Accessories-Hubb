@@ -6,7 +6,7 @@ import { FaImage } from "react-icons/fa";
 import { useDropzone, FileWithPath } from "react-dropzone";
 
 import { Loader } from "components/widgets";
-import { upload, remove } from "redux/_actions/uploadAction";
+import { upload, remove } from "_redux/_actions/uploadAction";
 import { useAppDispatch, useAppSelector } from "hooks";
 
 interface Props {

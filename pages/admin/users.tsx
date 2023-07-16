@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import { auth } from "utils/auth";
 import { Admin, Loader, UserCard } from "components";
 import { useAppDispatch, useAppSelector } from "hooks";
-import { getUsers } from "redux/_actions/userAction";
+import { getUsers } from "_redux/_actions/userAction";
 
 import type { GetServerSideProps } from "next";
 

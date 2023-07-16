@@ -5,7 +5,7 @@ import { FaEdit, FaTrash } from "react-icons/fa";
 import { useAppDispatch } from "hooks";
 import { getDateLocale } from "utils/date";
 import { Button, Input, Modal } from "components";
-import { deleteCoupon, editCoupon } from "redux/_actions/couponAction";
+import { deleteCoupon, editCoupon } from "_redux/_actions/couponAction";
 
 import type { ICoupon } from "interface";
 

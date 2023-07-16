@@ -15,7 +15,7 @@ import {
   removeCart,
   selectAddress,
   selectPaymentMethod,
-} from "redux/_actions/cartAction";
+} from "_redux/_actions/cartAction";
 import { stagger } from "variants";
 import { CHECKOUT, LOGIN } from "routes";
 import { CheckoutCard, Input, Modal, Landing } from "components";
@@ -23,7 +23,7 @@ import { useAppDispatch, useAppSelector } from "hooks/useReactRedux";
 
 import type { IProduct } from "interface";
 import type { GetServerSideProps } from "next";
-import { placeOrder } from "redux/_actions/orderAction";
+import { placeOrder } from "_redux/_actions/orderAction";
 
 const Checkout = ({ session }: any) => {
   const dispatch = useAppDispatch();

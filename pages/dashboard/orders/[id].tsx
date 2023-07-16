@@ -6,7 +6,7 @@ import { motion } from "framer-motion";
 import { getSession } from "next-auth/react";
 import { Status, Landing, Loader } from "components";
 import { LOGIN } from "routes";
-import { getOrder } from "redux/_actions/orderAction";
+import { getOrder } from "_redux/_actions/orderAction";
 import { useAppDispatch, useAppSelector } from "hooks/useReactRedux";
 
 import type { GetServerSideProps } from "next";

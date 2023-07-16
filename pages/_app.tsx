@@ -18,7 +18,7 @@ import { ToastContainer } from "react-toastify";
 
 import SEO from "config/next-seo.config";
 import { Loader } from "components";
-import { persistor, wrapper } from "redux/store";
+import { persistor, wrapper } from "_redux/store";
 
 import type { AppProps } from "next/app";
 

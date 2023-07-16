@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { FiLogOut } from "react-icons/fi";
 
 import { dashboard } from "routes";
-import { logoutUser } from "redux/_actions/authAction";
+import { logoutUser } from "_redux/_actions/authAction";
 import { Button, Landing, Avatar, PageLoader  } from "components";
 import { useAppSelector, useAppDispatch } from "hooks/useReactRedux";
 

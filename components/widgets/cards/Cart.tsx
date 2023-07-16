@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import { useDispatch, useSelector } from "react-redux";
 
 import { fadeInUp, fadeInLeft } from "variants";
-import { addToCart, removeCart } from "redux/_actions/cartAction";
+import { addToCart, removeCart } from "_redux/_actions/cartAction";
 
 import { FaTrash } from "react-icons/fa";
 import { AiOutlinePlus, AiOutlineMinus } from "react-icons/ai";

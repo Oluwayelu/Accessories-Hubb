@@ -8,7 +8,7 @@ import { auth } from "utils/auth";
 import { fadeInUp, stagger } from "variants";
 import { Admin, AdminCard, Chart, Status } from "components";
 import { useAppDispatch, useAppSelector } from "hooks";
-import { getDashboardSummary } from "redux/_actions/adminAction";
+import { getDashboardSummary } from "_redux/_actions/adminAction";
 
 import type { GetServerSideProps } from "next";
 const AdminDashboard = () => {

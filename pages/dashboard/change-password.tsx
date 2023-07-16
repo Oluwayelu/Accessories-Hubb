@@ -5,7 +5,7 @@ import { getSession } from "next-auth/react";
 import { LOGIN, PROFILE } from "routes";
 import { Input, Button, Dashboard } from "components";
 import { useAppDispatch, useAppSelector } from "hooks/useReactRedux";
-import { updatePassword } from "redux/_actions/authAction";
+import { updatePassword } from "_redux/_actions/authAction";
 
 import type { GetServerSideProps } from "next";
 

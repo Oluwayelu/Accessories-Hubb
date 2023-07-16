@@ -5,7 +5,7 @@ import { getDateLocale } from "utils/date";
 import { Avatar, Badge, Button, Modal } from "components";
 
 import type { IUser } from "interface";
-import { deleteUser, makeAdmin } from "redux/_actions/userAction";
+import { deleteUser, makeAdmin } from "_redux/_actions/userAction";
 
 interface Props {
   user: IUser;

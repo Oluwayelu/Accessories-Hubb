@@ -3,7 +3,7 @@ import {
   GET_ORDER_HISTORY,
   GET_ORDER_REQUEST,
   GET_ORDER_SUCCESS,
-} from "redux/types";
+} from "_redux/types";
 
 import type { IAction } from "interface";
 

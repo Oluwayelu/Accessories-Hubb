@@ -6,7 +6,7 @@ import { getCsrfToken, getSession } from "next-auth/react";
 
 import { FORGOTPASSWORD } from "routes";
 import { Input, Auth, Button } from "components";
-import { loginUser } from "redux/_actions/authAction";
+import { loginUser } from "_redux/_actions/authAction";
 import { useAppSelector, useAppDispatch } from "hooks";
 
 import type { NextPage, GetServerSideProps } from "next";

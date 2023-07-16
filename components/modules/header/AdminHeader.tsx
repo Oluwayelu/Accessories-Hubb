@@ -7,7 +7,7 @@ import { useSession } from "next-auth/react";
 import { motion } from "framer-motion";
 import { FiLogOut } from "react-icons/fi";
 
-import { logoutUser } from "redux/_actions/authAction";
+import { logoutUser } from "_redux/_actions/authAction";
 import { Dropdown, MenuIcon, Avatar } from "components";
 import { LOGIN, ORDERS, PROFILE, REGISTER } from "routes";
 import { useAppDispatch, useAppSelector } from "hooks/useReactRedux";

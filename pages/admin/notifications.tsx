@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import { auth } from "utils/auth";
 import { useAppDispatch, useAppSelector } from "hooks";
 import { Admin, Loader, NotificationCard } from "components";
-import { getNotificationAdmin } from "redux/_actions/notificationAction";
+import { getNotificationAdmin } from "_redux/_actions/notificationAction";
 
 import type { GetServerSideProps } from "next";
 

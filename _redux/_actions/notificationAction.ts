@@ -7,7 +7,7 @@ import {
   READ_NOTIFICATION,
   NOTIFICATION_FAILED,
   NOTIFICATION_REQUEST,
-} from "redux/types";
+} from "_redux/types";
 import { getError } from "utils/error";
 
 const API_URL = "/api/v1";

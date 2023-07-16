@@ -10,7 +10,7 @@ import {
   LOGOUT_USER,
   USER_INFO_REQUEST,
   USER_INFO_FAILED,
-} from "redux/types";
+} from "_redux/types";
 
 type Login = {
   email: string;

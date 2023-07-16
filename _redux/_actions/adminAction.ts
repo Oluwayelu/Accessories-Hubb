@@ -6,7 +6,7 @@ import {
   GET_DASHBOARD_SUMMARY_FAILED,
   GET_DASHBOARD_SUMMARY_REQUEST,
   GET_DASHBOARD_SUMMARY_SUCCESS,
-} from "redux/types";
+} from "_redux/types";
 import { getError } from "utils/error";
 
 export const getDashboardSummary = () => async (dispatch: Function) => {

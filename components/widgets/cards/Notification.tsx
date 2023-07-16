@@ -5,7 +5,7 @@ import { FaAngleDown } from "react-icons/fa";
 import { Avatar } from "components";
 import { getDateLocale } from "utils/date";
 import { useAppDispatch, useAppSelector } from "hooks";
-import { readNotificationAdmin } from "redux/_actions/notificationAction";
+import { readNotificationAdmin } from "_redux/_actions/notificationAction";
 
 import type { INotification } from "interface";
 

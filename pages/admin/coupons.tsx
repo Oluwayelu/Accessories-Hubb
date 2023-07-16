@@ -6,7 +6,7 @@ import { FaPlus } from "react-icons/fa";
 
 import { auth } from "utils/auth";
 import { useAppDispatch, useAppSelector } from "hooks";
-import { createCoupon, getCoupons } from "redux/_actions/couponAction";
+import { createCoupon, getCoupons } from "_redux/_actions/couponAction";
 import { Admin, Button, CouponCard, Input, Loader, Modal } from "components";
 
 import type { GetServerSideProps } from "next";

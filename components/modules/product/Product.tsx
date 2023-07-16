@@ -2,7 +2,7 @@ import type { NextPage } from "next";
 import type { IProduct, AppState } from "interface";
 
 import { useDispatch, useSelector } from "react-redux";
-import { addToCart } from "redux/_actions/cartAction";
+import { addToCart } from "_redux/_actions/cartAction";
 
 import { ProductColumn, ProductRow, ProductSpecial } from "components";
 

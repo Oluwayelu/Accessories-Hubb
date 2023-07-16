@@ -6,7 +6,7 @@ import Item from "./Item";
 import { Avatar } from "components/widgets";
 import { ADMIN_SETTINGS, sidebar } from "routes";
 import { useAppDispatch, useAppSelector } from "hooks";
-import { logoutUser } from "redux/_actions/authAction";
+import { logoutUser } from "_redux/_actions/authAction";
 
 interface Props {
   open: boolean;

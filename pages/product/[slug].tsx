@@ -13,13 +13,13 @@ import db from "database";
 import { SEARCH } from "routes";
 import { Product } from "models";
 import { Input, RatingStars, ReviewCard, Landing } from "components";
-import { addToCart } from "redux/_actions/cartAction";
+import { addToCart } from "_redux/_actions/cartAction";
 import { fadeInUp, fadeInDown, fadeInRight, stagger } from "variants";
 import {
   addToFavourite,
   isFavourite,
   removeFavourite,
-} from "redux/_actions/favouriteAction";
+} from "_redux/_actions/favouriteAction";
 
 import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 import { FaOpencart, FaAngleLeft, FaStar, FaStarHalf } from "react-icons/fa";

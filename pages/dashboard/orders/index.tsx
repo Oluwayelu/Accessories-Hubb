@@ -16,7 +16,7 @@ import {
 import { Input, ProgressBar, Status, Landing, Dashboard } from "components";
 import { fadeInUp, fadeInLeft, stagger } from "variants";
 import { LOGIN, ORDERS, PROFILE } from "routes";
-import { getOrder, getOrderHistory } from "redux/_actions/orderAction";
+import { getOrder, getOrderHistory } from "_redux/_actions/orderAction";
 import { useAppDispatch, useAppSelector } from "hooks/useReactRedux";
 
 import type { Session } from "next-auth";

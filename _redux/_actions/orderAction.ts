@@ -9,7 +9,7 @@ import {
   GET_ORDER_REQUEST,
   GET_ORDER_FAIL,
   GET_ORDER_HISTORY,
-} from "redux/types";
+} from "_redux/types";
 
 import type { IOrder } from "interface";
 

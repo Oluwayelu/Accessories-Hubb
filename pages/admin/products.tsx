@@ -4,8 +4,8 @@ import { useEffect } from "react";
 
 import { auth } from "utils/auth";
 import { useAppDispatch, useAppSelector } from "hooks";
-import { Admin, RatingStars, Loader } from "components";
-import { getProducts } from "redux/_actions/productAction";
+import { Admin, RatingStars, Loader, Button } from "components";
+import { getProducts } from "_redux/_actions/productAction";
 
 import type { GetServerSideProps } from "next";
 
@@ -19,6 +19,9 @@ const Product = () => {
 
   return (
     <Admin title="View Products" goBack="/admin">
+      <div className="w-full flex justify-end">
+        <Button>Add new product</Button>
+      </div>
       <div className="w-full min-h-[50vh] bg-white shadow rounded-xl overflow-x-auto">
         <table className="w-full gap-5">
           <thead className="w-full bg-primary-100 rounded-t-xl border-b-2 border-b-black">

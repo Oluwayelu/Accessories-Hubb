@@ -11,7 +11,7 @@ import {
   addToFavourite,
   isFavourite,
   removeFavourite,
-} from "redux/_actions/favouriteAction";
+} from "_redux/_actions/favouriteAction";
 import { RatingStars } from "components";
 
 import type { IProduct, AppState, IState } from "interface";

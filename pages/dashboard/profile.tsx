@@ -8,7 +8,7 @@ import { FaMale, FaFemale, FaEdit } from "react-icons/fa";
 import { LOGIN, PROFILE } from "routes";
 import { Input, Button, Avatar, Modal, Dashboard } from "components";
 import { useAppDispatch, useAppSelector } from "hooks/useReactRedux";
-import { changeAvatar, updateProfile } from "redux/_actions/authAction";
+import { changeAvatar, updateProfile } from "_redux/_actions/authAction";
 
 import type { Session } from "next-auth";
 import type { GetServerSideProps } from "next";

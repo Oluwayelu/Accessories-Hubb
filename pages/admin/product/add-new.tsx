@@ -9,7 +9,7 @@ import db from "database";
 import { Product } from "models";
 import { auth } from "utils/auth";
 import { useAppDispatch, useAppSelector } from "hooks";
-import { addNewProduct } from "redux/_actions/productAction";
+import { addNewProduct } from "_redux/_actions/productAction";
 import { Admin, Input, TextArea, Select, Button, ProductDropzone } from "components";
 
 import type { GetServerSideProps } from "next/types";

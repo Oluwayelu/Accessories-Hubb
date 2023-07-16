@@ -7,7 +7,7 @@ import { ChangeEventHandler } from "react";
 import { ParsedUrlQuery } from "querystring";
 import { ThunkAction, AnyAction } from "@reduxjs/toolkit";
 
-import { makestore } from "redux/store";
+import { makestore } from "_redux/store";
 
 import type { IconType } from "react-icons/lib";
 

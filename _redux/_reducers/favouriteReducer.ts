@@ -1,5 +1,5 @@
 import Cookies from "js-cookie";
-import { ADD_TO_FAVOURITE, REMOVE_ITEM_FROM_FAVOURITES } from "redux/types";
+import { ADD_TO_FAVOURITE, REMOVE_ITEM_FROM_FAVOURITES } from "_redux/types";
 
 import type { IAction } from "interface";
 

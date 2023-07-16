@@ -4,7 +4,7 @@ import {
   READ_NOTIFICATION,
   NOTIFICATION_FAILED,
   NOTIFICATION_REQUEST,
-} from "redux/types";
+} from "_redux/types";
 
 import type { IAction } from "interface";
 

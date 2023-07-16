@@ -3,7 +3,7 @@ import Cookies from "js-cookie";
 import { toast } from "react-toastify";
 
 import { getError } from "utils/error";
-import { DELETE_UPLOAD, REMOVE_SUCCESS, UPLOAD_FAILED, UPLOAD_REQUEST, UPLOAD_SUCCESS } from "redux/types";
+import { DELETE_UPLOAD, REMOVE_SUCCESS, UPLOAD_FAILED, UPLOAD_REQUEST, UPLOAD_SUCCESS } from "_redux/types";
 
 export const upload: Function = (file: Blob) => async (dispatch: Function) => {
   const formData = new FormData();

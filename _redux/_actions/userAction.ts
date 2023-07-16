@@ -12,7 +12,7 @@ import {
   GET_USERS,
   GET_USER,
   USER_FAILED,
-} from "redux/types";
+} from "_redux/types";
 
 const API_URL = "/api/v1";
 

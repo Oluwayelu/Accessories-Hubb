@@ -10,7 +10,7 @@ import { auth } from "utils/auth";
 import { useAppDispatch, useAppSelector } from "hooks";
 import { fadeInUp, fadeInRight, stagger } from "variants";
 import { Admin, Button, Loader, RatingStars, Modal } from "components";
-import { deleteProduct, getProduct } from "redux/_actions/productAction";
+import { deleteProduct, getProduct } from "_redux/_actions/productAction";
 
 import type { GetServerSideProps } from "next";
 

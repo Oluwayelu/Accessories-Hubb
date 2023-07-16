@@ -6,7 +6,7 @@ import {
   SELECT_SHIPPING_ADDRESS,
   REMOVE_SHIPPING_ADDRESS,
   SAVE_PAYMENT_METHOD,
-} from "redux/types";
+} from "_redux/types";
 
 import type { IAction } from "interface";
 

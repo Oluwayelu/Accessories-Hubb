@@ -6,7 +6,7 @@ import {
   CLEAR_ERROR,
   ADD_TO_FAVOURITE,
   REMOVE_ITEM_FROM_FAVOURITES,
-} from "redux/types";
+} from "_redux/types";
 import { getError } from "utils/error";
 
 import type { IProduct } from "interface";

@@ -9,7 +9,7 @@ import {
   CREATE_COUPON_SUCCESS,
   DELETE_COUPON_SUCCESS,
   GET_COUPON_SUCCESS,
-} from "redux/types";
+} from "_redux/types";
 
 import type { ICoupon } from "interface";
 

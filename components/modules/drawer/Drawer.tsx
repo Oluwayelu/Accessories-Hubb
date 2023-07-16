@@ -20,9 +20,9 @@ import {
   PROFILE,
   REGISTER,
 } from "routes";
-import { Avatar } from "components"
-import { logoutUser } from "redux/_actions/authAction";
-import { getCategories } from "redux/_actions/productAction";
+import { Avatar } from "components";
+import { logoutUser } from "_redux/_actions/authAction";
+import { getCategories } from "_redux/_actions/productAction";
 import { useAppDispatch, useAppSelector } from "hooks/useReactRedux";
 
 import type { NextPage } from "next";
@@ -72,10 +72,10 @@ const Drawer: NextPage<Props> = ({ open }) => {
   const { pathname } = useRouter();
 
   const dispatch = useAppDispatch();
-  const { 
-    product: {category, loading },
-    auth: { userInfo }
-} = useAppSelector((state) => state);
+  const {
+    product: { category, loading },
+    auth: { userInfo },
+  } = useAppSelector((state) => state);
 
   useLayoutEffect(() => {
     dispatch(getCategories());

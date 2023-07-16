@@ -17,7 +17,7 @@ import {
   GET_PRODUCT_REQUEST,
   GET_PRODUCT_SUCCESS,
   GET_PRODUCT_FAILED,
-} from "redux/types";
+} from "_redux/types";
 import { getError } from "utils/error";
 
 export const getCategories: Function = () => async (dispatch: Function) => {

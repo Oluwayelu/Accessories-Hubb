@@ -10,7 +10,7 @@ import db from "database";
 import { Product } from "models";
 import { auth } from "utils/auth";
 import { useAppDispatch, useAppSelector } from "hooks";
-import { getProduct, updateProduct } from "redux/_actions/productAction";
+import { getProduct, updateProduct } from "_redux/_actions/productAction";
 import {
   Admin,
   Input,
@@ -23,7 +23,7 @@ import {
 } from "components";
 
 import type { GetServerSideProps } from "next/types";
-import { deleteFile } from "redux/_actions/uploadAction";
+import { deleteFile } from "_redux/_actions/uploadAction";
 
 interface Props {
   categories: any;

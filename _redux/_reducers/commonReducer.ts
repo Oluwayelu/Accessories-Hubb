@@ -1,4 +1,4 @@
-import { CLEAR_ERROR, GET_ERROR, LOADING } from "redux/types";
+import { CLEAR_ERROR, GET_ERROR, LOADING } from "_redux/types";
 import { IAction } from "interface";
 
 export const loadingReducer = (state = false, action: IAction) => {

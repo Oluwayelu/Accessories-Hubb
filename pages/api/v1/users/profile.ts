@@ -13,6 +13,7 @@ handler.put(async (req: INextApiRequest, res: NextApiResponse) => {
   await db.connect();
   const user = await User.findById(req.user._id);
 
+  console.log(req.body)
   user.email = req.body.email ? req.body.email : user.email;
   user.isAdmin = req.body.isAdmin ? req.body.isAdmin : user.isAdmin;
   user.lastname = req.body.lastname ? req.body.lastname : user.lastname;
@@ -28,7 +29,17 @@ handler.put(async (req: INextApiRequest, res: NextApiResponse) => {
   const token = signToken(user);
   res.status(200).json({
     token,
-    user,
+    user: {
+      _id: user._id,
+      name: user.name,
+      email: user.email,
+      imgUrl: user.imgUrl,
+      gender: user.gender,
+      isAdmin: user.isAdmin,
+      lastname: user.lastname,
+      firstname: user.firstname,
+      phoneNumber: user.phoneNumber
+    },
     message: "Profile updated successfully",
   });
 });

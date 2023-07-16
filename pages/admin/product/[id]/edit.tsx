@@ -1,19 +1,29 @@
 import Link from "next/link";
-import { useEffect } from "react";
+import Image from "next/image";
+import { useCallback, useEffect, useState } from "react";
 import { useRouter } from "next/router";
 
 import * as Yup from "yup";
 import { Formik } from "formik";
-import { FaImage } from "react-icons/fa";
 
 import db from "database";
 import { Product } from "models";
 import { auth } from "utils/auth";
 import { useAppDispatch, useAppSelector } from "hooks";
 import { getProduct, updateProduct } from "redux/_actions/productAction";
-import { Admin, Input, TextArea, Select, Button, Loader } from "components";
+import {
+  Admin,
+  Input,
+  TextArea,
+  Select,
+  Button,
+  Loader,
+  Dropzone,
+  ProductDropzone
+} from "components";
 
 import type { GetServerSideProps } from "next/types";
+import { deleteFile } from "redux/_actions/uploadAction";
 
 interface Props {
   categories: any;
@@ -22,7 +32,10 @@ interface Props {
 const AdminProductEdit = ({ categories }: Props) => {
   const { query } = useRouter();
   const dispatch = useAppDispatch();
-  const { loading, product } = useAppSelector((state) => state.product);
+    const {
+    upload: { images },
+    product: { loading, product },
+  } = useAppSelector((state) => state);
 
   useEffect(() => {
     dispatch(getProduct(query.id));
@@ -63,7 +76,7 @@ const AdminProductEdit = ({ categories }: Props) => {
           onSubmit={async (values, { setStatus, setSubmitting }) => {
             setStatus();
             setSubmitting(true);
-            dispatch(updateProduct(query.id, values));
+            dispatch(updateProduct(query.id, {...values, image: [...images , ...values.image]}));
             setSubmitting(false);
           }}
         >
@@ -134,35 +147,9 @@ const AdminProductEdit = ({ categories }: Props) => {
               </div>
 
               <div className="w-full space-y-5">
-                <div>
+                <div className="w-full">
                   <h2 className="text-lg font-semibold">Product Images</h2>
-                  <div className="w-full p-5 bg-white shadow rounded-xl space-y-2 lg:space-y-5">
-                    <div className="w-full h-60 border-2 rounded-xl overflow-auto">
-                      <div className="w-full h-full flex items-center oven">
-                        <div className="w-40 h-full flex flex-col items-center justify-center border-2 rounded-xl">
-                          <FaImage className="w-6 h-6" />
-                          <p className="text-sm text-center font-medium">
-                            Upload product image
-                          </p>
-                        </div>
-                        {/* {product?.image &&
-                          product?.image.map((image, index) => (
-                            <div
-                              key={index}
-                              className="w-32 h-full flex items-center justify-center border-2"
-                            >
-                              <div className="relative w-24 h-24">
-                                <Image
-                                  src={image}
-                                  layout="fill"
-                                  alt={`${product?.name}-${index}`}
-                                />
-                              </div>
-                            </div>
-                          ))} */}
-                      </div>
-                    </div>
-                  </div>
+                 {values.image &&  <ProductDropzone images={images.concat(values.image)} />}
                 </div>
 
                 <div>

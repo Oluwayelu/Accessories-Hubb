@@ -12,6 +12,7 @@ module.exports = {
       colors: {
         primary: {
           DEFAULT: "#F5BD10",
+          50: "#FFEBAE",
           100: "#FFEBAE",
         },
         dark: {
@@ -23,6 +24,7 @@ module.exports = {
           500: "#0a0b0e",
         },
         error: "#FD1B1B",
+        background: "rgb(245, 245, 245)",
       },
     },
   },

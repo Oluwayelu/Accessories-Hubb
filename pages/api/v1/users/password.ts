@@ -22,7 +22,17 @@ handler.put(async (req: INextApiRequest, res: NextApiResponse) => {
   const token = signToken(user);
   res.status(200).json({
     token,
-    user,
+    user: {
+      _id: user._id,
+      name: user.name,
+      email: user.email,
+      imgUrl: user.imgUrl,
+      gender: user.gender,
+      isAdmin: user.isAdmin,
+      lastname: user.lastname,
+      firstname: user.firstname,
+      phoneNumber: user.phoneNumber
+    },
     message: "Password updated successfully",
   });
 });

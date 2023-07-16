@@ -33,6 +33,9 @@ const LandingLayout: NextPage<Props> = ({
       className={`w-full min-h-screen flex flex-col justify-between`}
     >
       <NextSeo title={title} description={description} />
+      <div className="bg-primary w-full h-10 flex items-center justify-center">
+        <p>Get 10% discount on all purchase with the Coupon code <span className="font-medium">AHUBB</span></p>
+      </div>
       <Header />
       <div className={`${className} w-full min-h-[92vh]`}>{children}</div>
       {footer && <Footer />}

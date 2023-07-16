@@ -20,6 +20,7 @@ import {
   PROFILE,
   REGISTER,
 } from "routes";
+import { Avatar } from "components"
 import { logoutUser } from "redux/_actions/authAction";
 import { getCategories } from "redux/_actions/productAction";
 import { useAppDispatch, useAppSelector } from "hooks/useReactRedux";
@@ -71,7 +72,10 @@ const Drawer: NextPage<Props> = ({ open }) => {
   const { pathname } = useRouter();
 
   const dispatch = useAppDispatch();
-  const { category, loading } = useAppSelector((state) => state.product);
+  const { 
+    product: {category, loading },
+    auth: { userInfo }
+} = useAppSelector((state) => state);
 
   useLayoutEffect(() => {
     dispatch(getCategories());
@@ -97,18 +101,7 @@ const Drawer: NextPage<Props> = ({ open }) => {
         >
           {session?.user && (
             <motion.div variants={items} className="pb-2 space-y-1">
-              <div className="w-16 h-16 relative flex justify-center items-center rounded-full bg-gray-200 text-gray-600 hover:bg-primary hover:text-white overflow-hidden">
-                {session.user.image ? (
-                  <Image
-                    layout="fill"
-                    alt={session?.user?.name as string}
-                    src={session?.user?.image}
-                    className="filter object-cover"
-                  />
-                ) : (
-                  <AiOutlineUser className="w-8 h-8 " />
-                )}
-              </div>
+              <Avatar size="md" src={userInfo.imgUrl} alt={userInfo.name} />
               <p className="font-bold">{session?.user?.name}</p>
             </motion.div>
           )}

@@ -22,6 +22,8 @@ import { persistor, wrapper } from "redux/store";
 
 import type { AppProps } from "next/app";
 
+// global.__basedir = __dirname;
+
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <>

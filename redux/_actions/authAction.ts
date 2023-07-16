@@ -222,3 +222,33 @@ export const updateProfile: Function =
       });
     }
   };
+
+export const changeAvatar: Function =
+  (imgUrl: string) => async (dispatch: Function) => {
+    try {
+      dispatch({ type: USER_INFO_REQUEST });
+      const { data } = await axios.put(`${API_URL}/users/avatar`, { imgUrl }, {
+        headers: {
+          authorization: `Bearer ${Cookies.get("token")}`,
+        },
+      });
+      toast.success(data.message, {
+        position: "top-right",
+        autoClose: 5000,
+        closeOnClick: true,
+        draggable: true,
+      });
+
+      dispatch({ type: USER_INFO_SUCCESS, payload: data.user });
+      Cookies.set("token", data.token);
+      Cookies.set("userInfo", JSON.stringify(data.user));
+    } catch (err) {
+      dispatch({ type: USER_INFO_FAILED });
+      toast.error(getError(err), {
+        position: "bottom-left",
+        autoClose: 5000,
+        closeOnClick: true,
+        draggable: true,
+      });
+    }
+  };

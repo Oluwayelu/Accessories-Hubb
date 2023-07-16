@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 
 import * as Yup from "yup";
 import { Formik } from "formik";
@@ -9,7 +10,7 @@ import { Product } from "models";
 import { auth } from "utils/auth";
 import { useAppDispatch, useAppSelector } from "hooks";
 import { addNewProduct } from "redux/_actions/productAction";
-import { Admin, Input, TextArea, Select, Button } from "components";
+import { Admin, Input, TextArea, Select, Button, ProductDropzone } from "components";
 
 import type { GetServerSideProps } from "next/types";
 
@@ -19,7 +20,10 @@ interface Props {
 
 const AddNewProduct = ({ categories }: Props) => {
   const dispatch = useAppDispatch();
-  const { loading } = useAppSelector((state) => state.product);
+  const {
+    upload: { images },
+    product: { loading },
+  } = useAppSelector((state) => state);
 
   return (
     <Admin title="Add New Product" goBack="/admin/products">
@@ -27,7 +31,7 @@ const AddNewProduct = ({ categories }: Props) => {
         initialValues={{
           name: "",
           // sample image before upload functioality is created
-          image: ["/images/assets/earphones_a_1.webp"],
+          image: [],
           price: 0,
           oldPrice: 0,
           category: "",
@@ -53,14 +57,8 @@ const AddNewProduct = ({ categories }: Props) => {
         onSubmit={async (values, { setStatus, setSubmitting }) => {
           setStatus();
           setSubmitting(true);
-          dispatch(addNewProduct(values)).then(() => {
-            toast.success("Product Added", {
-              position: "top-right",
-              autoClose: 5000,
-              closeOnClick: true,
-              draggable: true,
-            });
-          });
+          console.log({ ...values, image: images });
+          dispatch(addNewProduct({...values, image: images}))
           setSubmitting(false);
         }}
       >
@@ -131,11 +129,9 @@ const AddNewProduct = ({ categories }: Props) => {
             </div>
 
             <div className="w-full space-y-5">
-              <div>
+              <div className="w-full">
                 <h2 className="text-lg font-semibold">Product Images</h2>
-                <div className="w-full p-5 bg-white shadow rounded-xl space-y-2 lg:space-y-5">
-                  <div className="w-full h-40 border-2 rounded-xl"></div>
-                </div>
+                <ProductDropzone images={images} />
               </div>
 
               <div>

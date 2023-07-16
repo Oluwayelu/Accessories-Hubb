@@ -87,3 +87,26 @@ export const sidebar: ISidebarRoutes[] = [
     Icon: FiBell,
   },
 ];
+
+export const dashboard = [
+  {
+    name: "Personal Information",
+    link: "/dashboard/profile"
+  },
+  {
+    name: "Billing and Payments",
+    link: "/dashboard/bill-payments"
+  },
+  {
+    name: "Change password",
+    link: "/dashboard/change-password"
+  },
+  {
+    name: "Order History",
+    link: "/dashboard/orders"
+  },
+  {
+    name: "Gift Cards",
+    link: "/dashboard/gift-cards"
+  },
+]

@@ -28,11 +28,14 @@ handler.post(async (req: NextApiRequest, res: NextApiResponse) => {
       token,
       user: {
         _id: user._id,
+        name: user.name,
         email: user.email,
+        imgUrl: user.imgUrl,
+        gender: user.gender,
         isAdmin: user.isAdmin,
         lastname: user.lastname,
         firstname: user.firstname,
-        middlename: user.middlename,
+        phoneNumber: user.phoneNumber
       },
       message: "Login successfull",
     });

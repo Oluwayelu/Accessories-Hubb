@@ -7,6 +7,7 @@ import cart from "./cartReducer";
 import admin from "./adminReducer";
 import order from "./orderReducer";
 import coupon from "./couponReducer";
+import upload from "./uploadReducer";
 import product from "./productReducer";
 import favourite from "./favouriteReducer";
 import notification from "./notificationReducer";
@@ -26,6 +27,7 @@ export const rootReducer = combineReducers({
   error,
   order,
   coupon,
+  upload,
   product,
   loading,
   favourite,

@@ -185,6 +185,10 @@ export interface IState {
     loading: boolean;
     coupons: ICoupon[];
   };
+  upload: {
+    loading: boolean;
+    images: string[];
+  };
   order: {
     loading: boolean;
     totalQuantity: number;
@@ -217,6 +221,7 @@ export interface ISidebarRoutes {
 }
 
 export interface INextApiRequest extends NextApiRequest {
+  file: any;
   user: IUser;
 }
 

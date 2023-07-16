@@ -1,9 +1,9 @@
 import Link from "next/link";
 
-import { AiOutlineUser } from "react-icons/ai";
 import { FiLogOut, FiSettings } from "react-icons/fi";
 
 import Item from "./Item";
+import { Avatar } from "components/widgets";
 import { ADMIN_SETTINGS, sidebar } from "routes";
 import { useAppDispatch, useAppSelector } from "hooks";
 import { logoutUser } from "redux/_actions/authAction";
@@ -14,7 +14,7 @@ interface Props {
 
 const Sidebar = ({ open }: Props) => {
   const dispatch = useAppDispatch();
-  const { firstname, lastname } = useAppSelector(
+  const { firstname, lastname, imgUrl } = useAppSelector(
     (state) => state.auth.userInfo
   );
 
@@ -25,7 +25,7 @@ const Sidebar = ({ open }: Props) => {
       <div
         className={`${
           open ? "w-3/5 md:w-1/3" : "pt-5 lg:pt-0 w-1/6 md:w-1/12"
-        }  lg:w-1/4 xl:w-1/5 fixed h-[92vh] bg-white`}
+        }  lg:w-1/4 xl:w-1/5 fixed h-[92vh] bg-white shadow-lg`}
       >
         <div className="w-full h-full px-3 lg:px-5 xl:px-8 flex flex-col justify-between items-center md:items-start">
           <div
@@ -33,9 +33,7 @@ const Sidebar = ({ open }: Props) => {
               !open && "hidden lg:flex"
             } w-full h-1/6 flex items-center gap-2`}
           >
-            <div className="w-16 h-16 relative flex justify-center items-center rounded-full bg-gray-200 text-gray-600 overflow-hidden">
-              <AiOutlineUser className="w-6 h-6 lg:w-8 lg:h-8 " />
-            </div>
+            <Avatar size="md" src={imgUrl} alt={firstname} />
             <div className="flex flex-col font-medium">
               <span>{firstname}</span> <span>{lastname}</span>
             </div>

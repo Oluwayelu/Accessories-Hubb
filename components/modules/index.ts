@@ -7,4 +7,5 @@ export * from "./status";
 export * from "./sidebar";
 export * from "./product";
 export * from "./parallax";
+export * from "./dropzone";
 export * from "./categorySection";

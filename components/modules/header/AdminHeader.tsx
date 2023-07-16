@@ -1,18 +1,16 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import Link from "next/link";
 import Image from "next/image";
-import { useState } from "react";
-import { motion } from "framer-motion";
 import { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
 
+import { motion } from "framer-motion";
 import { FiLogOut } from "react-icons/fi";
-import { AiOutlineSearch, AiOutlineUser, AiFillHeart } from "react-icons/ai";
 
-import { useAppDispatch } from "hooks/useReactRedux";
 import { logoutUser } from "redux/_actions/authAction";
+import { Dropdown, MenuIcon, Avatar } from "components";
 import { LOGIN, ORDERS, PROFILE, REGISTER } from "routes";
-import { Dropdown, MenuIcon, SearchMobile } from "components";
+import { useAppDispatch, useAppSelector } from "hooks/useReactRedux";
 
 type Props = {
   isOpen: boolean;
@@ -22,10 +20,7 @@ type Props = {
 const AdminHeader = ({ isOpen, toggleOpen }: Props) => {
   const { pathname } = useRouter();
   const { data: session } = useSession();
-  const [openSearch, toggleOpenSearch] = useState(false);
-
-  const home = pathname === "/";
-  const auth = pathname === LOGIN || pathname === REGISTER;
+  const { userInfo } = useAppSelector(state => state.auth)
 
   const dispatch = useAppDispatch();
   return (
@@ -37,7 +32,6 @@ const AdminHeader = ({ isOpen, toggleOpen }: Props) => {
       >
         <div className="w-full h-full inline-flex">
           <MenuIcon size="lg" toggle={() => toggleOpen()} />
-          {openSearch && <SearchMobile close={() => toggleOpenSearch(false)} />}
           <Link href="/" passHref>
             <div className="relative w-44 h-full cursor-pointer">
               <Image
@@ -51,53 +45,12 @@ const AdminHeader = ({ isOpen, toggleOpen }: Props) => {
         </div>
 
         <div
-          className={`${
-            auth && "hidden"
-          } w-full hidden lg:flex items-center justify-center gap-5`}
+          className="w-full flex items-center justify-end space-x-1"
         >
-          <Link href="/favourites">
-            <a className="inline-flex items-center">
-              <AiFillHeart className="w-5 h-5 text-primary" /> <p>Favourites</p>
-            </a>
-          </Link>
-          <Link href="/about">
-            <a className="hover:text-primary">About</a>
-          </Link>
-          <Link href="/contact">
-            <a className="hover:text-primary">Contacts</a>
-          </Link>
-          <Link href="/search?category=all">
-            <a className="hover:text-primary">Categories</a>
-          </Link>
-        </div>
-
-        <div
-          className={`${
-            auth && "hidden"
-          } w-full flex items-center justify-end space-x-1`}
-        >
-          <button
-            onClick={() => toggleOpenSearch(!openSearch)}
-            className={`${home && "hidden"}`}
-          >
-            <AiOutlineSearch className="w-7 h-7 text-gray-600 lg:hidden" />
-          </button>
-
-          {session?.user && (
+          {userInfo && (
             <Dropdown
               button={
-                <div className="w-8 h-8 relative flex justify-center items-center rounded-full bg-gray-200 text-gray-600 cursor-pointer overflow-hidden">
-                  {session.user.image ? (
-                    <Image
-                      layout="fill"
-                      alt={session?.user?.name as string}
-                      src={session?.user?.image}
-                      className="filter object-cover"
-                    />
-                  ) : (
-                    <AiOutlineUser className="w-5 h-5 " />
-                  )}
-                </div>
+                <Avatar size="sm" src={userInfo.imgUrl} alt={userInfo.name} />
               }
             >
               <div className="w-full pb-2 flex flex-col space-y-1">

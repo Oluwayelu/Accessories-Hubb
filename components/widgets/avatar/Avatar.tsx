@@ -8,24 +8,25 @@ interface Props {
   src?: string;
   alt?: string;
   size?: "sm" | "md" | "lg";
+  className?: string
 }
 
-const Avatar = ({ src, alt, size = "md" }: Props) => {
+const Avatar = ({ src, alt, className, size = "md" }: Props) => {
   const getSize = () => {
     switch (size) {
       case "sm":
-        return "w-8 h-8 md:w-12 md:h-12";
+        return "w-8 h-8";
       case "md":
-        return "w-10 h-10 md:w-16 md:h-16";
+        return "w-16 h-16";
       case "lg":
-        return "w-14 h-14 md:w-20 md:h-20";
+        return "w-28 h-28";
       default:
         return "";
     }
   };
   return (
     <div
-      className={`${getSize()} relative flex justify-center items-center rounded-full bg-gray-200 text-gray-600 overflow-hidden`}
+      className={`${getSize()} ${className && className} relative flex justify-center items-center rounded-full bg-gray-200 text-gray-600 overflow-hidden`}
     >
       {src ? (
         <div className="w-full h-full relative">

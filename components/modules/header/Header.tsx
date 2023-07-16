@@ -12,7 +12,7 @@ import { AiOutlineSearch, AiOutlineUser, AiFillHeart } from "react-icons/ai";
 
 import { CART, LOGIN, ORDERS, PROFILE, REGISTER } from "routes";
 import { logoutUser } from "redux/_actions/authAction";
-import { Drawer, Dropdown, MenuIcon, SearchMobile } from "components";
+import { Drawer, Dropdown, MenuIcon, SearchMobile, Avatar } from "components";
 import { useAppSelector, useAppDispatch } from "hooks/useReactRedux";
 
 import type { FC } from "react";
@@ -25,6 +25,7 @@ type Props = {
 const Header: FC<Props> = () => {
   const { data: session } = useSession();
   const { pathname, push } = useRouter();
+  const { userInfo } = useAppSelector(state => state.auth)
   const [openSearch, toggleOpenSearch] = useState(false);
   const [isOpen, toggleOpen] = useCycle(false, true);
 
@@ -35,7 +36,7 @@ const Header: FC<Props> = () => {
   const { totalQuantity } = useAppSelector((state) => state.cart);
 
   return (
-    <div className="w-full h-[8vh] shadow sticky top-0 left-0 right-0 bg-white py-1 flex flex-col items-center justify-around border-b-2 border-b-dark-500 z-50">
+    <div className="w-full h-[8vh] sticky top-0 bg-primary-100 py-1 flex flex-col items-center justify-around border-b border-b-dark-500 z-50">
       <motion.div
         initial={false}
         animate={isOpen ? "open" : "closed"}
@@ -106,18 +107,7 @@ const Header: FC<Props> = () => {
           {session?.user && (
             <Dropdown
               button={
-                <div className="w-8 h-8 relative flex justify-center items-center rounded-full bg-gray-200 text-gray-600 cursor-pointer overflow-hidden">
-                  {session.user.image ? (
-                    <Image
-                      layout="fill"
-                      alt={session?.user?.name as string}
-                      src={session?.user?.image}
-                      className="filter object-cover"
-                    />
-                  ) : (
-                    <AiOutlineUser className="w-5 h-5 " />
-                  )}
-                </div>
+                <Avatar size="sm" src={userInfo.imgUrl} alt={userInfo.name} />
               }
             >
               <div className="w-full pb-2 flex flex-col space-y-1">

@@ -29,7 +29,7 @@ handler.post(async (req: INextApiRequest, res: NextApiResponse) => {
   const product = await Product.findById(req.query.id);
   if (product) {
     const existReview = product.reviews.find(
-      (x: IProduct) => x.user == req.user._id
+      (x: IProduct) => x.reviews?.user == req.user._id
     );
     if (existReview) {
       await Product.updateOne(
